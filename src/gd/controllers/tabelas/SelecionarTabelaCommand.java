@@ -14,10 +14,10 @@ import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.ListaER;
 import gd.models.ER.Relacionamento;
 import gd.models.atributos.ColecaoAtributo;
-import gd.views.Lista;
-import gd.views.ModeloLista;
-import gd.views.principal.EntidadeTabela;
-import gd.views.principal.TabelasLista;
+import gd.views.base.Lista;
+import gd.views.base.ModeloLista;
+import gd.views.TelaPrincipalEntidadeTabela;
+import gd.views.TelaPrincipalTabelasLista;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +43,7 @@ public class SelecionarTabelaCommand extends Command {
     public void execute(Object... arg) {
         try {
             EntidadeRelacionamento er = null;
-            int i = TabelasLista.getInstancia().getSelectedIndex();
+            int i = TelaPrincipalTabelasLista.getInstancia().getSelectedIndex();
             if (ListaER.getInstancia().getLista().size() > i && i > -1){
                 er = ListaER.getInstancia().getLista().get(i);
             }
@@ -55,20 +55,21 @@ public class SelecionarTabelaCommand extends Command {
     }
 
     public void selecionarER(EntidadeRelacionamento e){
-        EntidadeTabela tabela = EntidadeTabela.getInstancia();
+        TelaPrincipalEntidadeTabela tabela = TelaPrincipalEntidadeTabela.getInstancia();
         tabela.setEntidadeRelacionamento(e);
         if (e == null){
-            tabela.setModel(Arrays.asList("Selecione uma tabela"));  
+            tabela.setModel(Arrays.asList("Selecione uma tabela"), null, false);
         } else if (e instanceof Entidade) {
             Entidade entidade = (Entidade) e;
-            tabela.setModel((List<String>) Colecao.processar(
-                    entidade.getAtributos(),
-                    ColecaoAtributo.processos.getNome()
-            ));
+            tabela.setModel(
+               (List<String>) Colecao.processar(entidade.getAtributos(), ColecaoAtributo.processos.getNome()),
+               (List<Class>) Colecao.processar(entidade.getAtributos(), ColecaoAtributo.processos.getClasse()),
+               true
+            );
             tabela.getPainel().setVisible(true);
         } else {
             Relacionamento relacionamento = (Relacionamento) e;
-            tabela.setModel(Arrays.asList("Tabela", "Atributo", "Tabela Referenciada", "Código", "Atributo de Busca"));
+            tabela.setModel(Arrays.asList("Tabela", "Atributo", "Tabela Referenciada", "Código", "Atributo de Busca"), null, false);
             tabela.getModelo().insertRow(0, relacionamento.getRow());
             tabela.getPainel().setVisible(false);
         }

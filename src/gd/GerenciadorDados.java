@@ -6,7 +6,7 @@ package gd;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
-import gd.views.principal.TelaPrincipal;
+import gd.views.TelaPrincipalView;
 import javax.swing.JFrame;
 
 /**
@@ -33,8 +33,8 @@ public class GerenciadorDados extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
-        show(TelaPrincipal.getInstance());
-        TelaPrincipal.getInstance().getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        show(TelaPrincipalView.getInstance());
+        TelaPrincipalView.getInstance()./*getFrame().*/setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**

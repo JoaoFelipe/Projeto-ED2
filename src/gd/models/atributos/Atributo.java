@@ -84,5 +84,6 @@ public abstract class Atributo{
     public abstract String getTipo();
     public abstract boolean getPK();
     public abstract int getTamanho();
+    public abstract Class getClasse();
 
 }

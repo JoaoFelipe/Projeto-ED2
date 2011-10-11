@@ -20,7 +20,6 @@ public class AbrirRemoverRegistrosCommand extends OpenDialogCommand{
         super();
     }
 
-    @Override
     public JDialog instanciarJanela() {
         throw new NotImplementedException();
     }

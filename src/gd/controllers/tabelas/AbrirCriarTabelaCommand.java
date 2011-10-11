@@ -7,7 +7,7 @@ package gd.controllers.tabelas;
 
 import gd.controllers.OpenDialogCommand;
 import javax.swing.JDialog;
-import gd.views.criartabela.CriarTabelaView;
+import gd.views.CriarTabelaView;
 
 /**
  *
@@ -19,7 +19,6 @@ public class AbrirCriarTabelaCommand extends OpenDialogCommand{
         super();
     }
 
-    @Override
     public JDialog instanciarJanela() {
         return new CriarTabelaView(mainFrame);
     }

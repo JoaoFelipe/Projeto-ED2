@@ -6,7 +6,7 @@
 package gd.controllers.criartabela;
 
 import gd.controllers.*;
-import gd.views.criartabela.AtributosTabela;
+import gd.views.CriarTabelaAtributosTabela;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -18,10 +18,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class RemoverAtributoCommand extends Command{
 
-    AtributosTabela table = null;
+    CriarTabelaAtributosTabela table = null;
 
 
-    public RemoverAtributoCommand(AtributosTabela table) {
+    public RemoverAtributoCommand(CriarTabelaAtributosTabela table) {
         super();
         this.table = table;
     }

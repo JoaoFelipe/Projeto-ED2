@@ -5,7 +5,7 @@
 
 package gd.controllers;
 
-import gd.views.criarreferencia.CriarReferenciaView;
+import gd.views.CriarReferenciaView;
 import gd.views.SobreView;
 import javax.swing.JDialog;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -20,7 +20,6 @@ public class AbrirSobreCommand extends OpenDialogCommand{
         super();
     }
 
-    @Override
     public JDialog instanciarJanela() {
         return new SobreView(mainFrame);
     }

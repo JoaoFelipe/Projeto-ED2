@@ -14,8 +14,8 @@ import gd.models.atributos.Atributo;
 public class IntAttr extends Atributo{
 
 
-    protected String nome;
-    protected boolean pk;
+    private String nome;
+    private boolean pk;
 
     public IntAttr(String nome, boolean pk) {
         this.nome = nome;
@@ -40,6 +40,11 @@ public class IntAttr extends Atributo{
     @Override
     public int getTamanho() {
         return 4;
+    }
+
+    @Override
+    public Class getClasse() {
+        return Integer.class;
     }
 
 

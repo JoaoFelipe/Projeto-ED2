@@ -14,8 +14,8 @@ import gd.models.atributos.Atributo;
 public class DoubleAttr extends Atributo{
 
 
-    protected String nome;
-    protected boolean pk;
+    private String nome;
+    private boolean pk;
 
     public DoubleAttr(String nome, boolean pk) {
         this.nome = nome;
@@ -40,6 +40,11 @@ public class DoubleAttr extends Atributo{
     @Override
     public int getTamanho() {
         return 8;
+    }
+
+    @Override
+    public Class getClasse() {
+        return Double.class;
     }
 
 

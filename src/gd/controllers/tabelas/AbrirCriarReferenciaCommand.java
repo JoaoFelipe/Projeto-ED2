@@ -7,7 +7,7 @@ package gd.controllers.tabelas;
 
 import gd.controllers.Command;
 import gd.controllers.OpenDialogCommand;
-import gd.views.criarreferencia.CriarReferenciaView;
+import gd.views.CriarReferenciaView;
 import javax.swing.JDialog;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -21,7 +21,6 @@ public class AbrirCriarReferenciaCommand extends OpenDialogCommand{
         super();
     }
 
-    @Override
     public JDialog instanciarJanela() {
         return new CriarReferenciaView(mainFrame);
     }

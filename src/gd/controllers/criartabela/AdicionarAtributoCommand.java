@@ -7,7 +7,7 @@ package gd.controllers.criartabela;
 
 import gd.controllers.*;
 import gd.models.atributos.Atributo;
-import gd.views.criartabela.AtributosTabela;
+import gd.views.CriarTabelaAtributosTabela;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -21,10 +21,10 @@ public class AdicionarAtributoCommand extends Command{
 
     JTextField textField = null;
     JComboBox comboBox = null;
-    AtributosTabela table = null;
+    CriarTabelaAtributosTabela table = null;
 
 
-    public AdicionarAtributoCommand(JTextField textField, JComboBox comboBox, AtributosTabela table) {
+    public AdicionarAtributoCommand(JTextField textField, JComboBox comboBox, CriarTabelaAtributosTabela table) {
         super();
         this.textField = textField;
         this.comboBox = comboBox;

@@ -9,7 +9,7 @@ import gd.controllers.Command;
 import gd.exceptions.ModelException;
 import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.ListaER;
-import gd.views.principal.TabelasLista;
+import gd.views.TelaPrincipalTabelasLista;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -25,7 +25,7 @@ public class ExcluirTabelaCommand extends Command{
 
     @Override
     public void execute(Object... arg) {
-        TabelasLista tabela = TabelasLista.getInstancia();
+        TelaPrincipalTabelasLista tabela = TelaPrincipalTabelasLista.getInstancia();
 
         int indice = tabela.getSelectedIndex();
         if (indice > -1) {

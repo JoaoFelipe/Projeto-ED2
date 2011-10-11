@@ -6,6 +6,7 @@
 package gd.models.atributos;
 
 import gd.models.atributos.Atributo;
+import java.lang.String;
 
 /**
  *
@@ -42,6 +43,11 @@ public class CharAttr extends Atributo{
     @Override
     public int getTamanho() {
         return tamanho;
+    }
+
+    @Override
+    public Class getClasse() {
+        return String.class;
     }
 
     @Override

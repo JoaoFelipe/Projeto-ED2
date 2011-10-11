@@ -129,6 +129,7 @@ public class Relacionamento extends EntidadeRelacionamento{
 
     public void adicionarNaEntidade(){
         entidade.getRelacionamentos().add(this);
+        entidadeReferenciada.getRelacionamentos().add(this);
     }
 
     public void deletar(){}

@@ -21,7 +21,6 @@ public class AbrirModificarRegistrosCommand extends OpenDialogCommand{
         super();
     }
 
-    @Override
     public JDialog instanciarJanela() {
         throw new NotImplementedException();
     }

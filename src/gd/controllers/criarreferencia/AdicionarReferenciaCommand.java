@@ -12,7 +12,7 @@ import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.ListaER;
 import gd.models.ER.Relacionamento;
 import gd.models.atributos.Atributo;
-import gd.views.principal.TabelasLista;
+import gd.views.TelaPrincipalTabelasLista;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -64,6 +64,6 @@ public class AdicionarReferenciaCommand extends Command {
         } catch (ModelException ex) {
             ex.execute();
         }
-        TabelasLista.getInstancia().atualizar();
+        TelaPrincipalTabelasLista.getInstancia().atualizar();
     }
 }

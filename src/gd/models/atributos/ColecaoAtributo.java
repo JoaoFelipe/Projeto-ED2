@@ -23,5 +23,13 @@ public class ColecaoAtributo {
             };
         }
 
+        public static Processo<Atributo, Class> getClasse(){
+            return new Processo<Atributo, Class>(){
+                public Class processar(Atributo a) {
+                    return a.getClasse();
+                }
+            };
+        }
+
     }
 }

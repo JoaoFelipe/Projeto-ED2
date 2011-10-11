@@ -9,8 +9,8 @@ import gd.GerenciadorDados;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import gd.views.criarreferencia.CriarReferenciaView;
-import gd.views.criartabela.CriarTabelaView;
+import gd.views.CriarReferenciaView;
+import gd.views.CriarTabelaView;
 import gd.views.SobreView;
 
 /**
