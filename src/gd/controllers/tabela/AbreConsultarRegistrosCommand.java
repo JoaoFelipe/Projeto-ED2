@@ -7,6 +7,7 @@ package gd.controllers.tabela;
 
 import gd.controllers.Command;
 import gd.controllers.OpenDialogCommand;
+import gd.views.ConsultarView;
 import javax.swing.JDialog;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -21,7 +22,7 @@ public class AbreConsultarRegistrosCommand extends OpenDialogCommand {
     }
 
     public JDialog instanciarJanela() {
-        throw new NotImplementedException();
+        return new ConsultarView(mainFrame);
     }
 
 

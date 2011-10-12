@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 import gd.exceptions.NonUniqueException;
 import gd.exceptions.NotFoundException;
+import gd.models.Colecao;
+import gd.models.atributos.ColecaoAtributo;
 
 /**
  *
@@ -123,6 +125,20 @@ public class Entidade extends EntidadeRelacionamento{
         return atributos;
     }
 
+    public List<String> getAtributosBuscaveis(){
+        List<String> retorno = new ArrayList<String>();
+        retorno.addAll(Colecao.processar(atributos, ColecaoAtributo.processos.getNome()));
+        for (Relacionamento relacionamento : relacionamentos) {
+            if (relacionamento.getEntidade() == this){
+                retorno.add(relacionamento.getEntidadeReferenciada().getNome()+"-"+relacionamento.getCampoReferenciado());
+                retorno.add(relacionamento.getEntidadeReferenciada().getNome()+"-"+relacionamento.getCampoAlternativo());
+            } else {
+                retorno.add("#"+relacionamento.getEntidade().getNome());
+            }
+        }
+
+        return retorno;
+    }
 
 
 }

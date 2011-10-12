@@ -135,6 +135,22 @@ public class Relacionamento extends EntidadeRelacionamento{
     public void deletar(){}
 
   
+    public Entidade getEntidade(){
+        return entidade;
+    }
+
+    public Entidade getEntidadeReferenciada(){
+        return entidadeReferenciada;
+    }
+
+    public String getCampoAlternativo() {
+        return campoAlternativo;
+    }
+
+    public String getCampoReferenciado() {
+        return campoReferenciado;
+    }
+
     
 
 
