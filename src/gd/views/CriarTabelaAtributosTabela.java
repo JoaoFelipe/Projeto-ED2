@@ -51,6 +51,8 @@ public class CriarTabelaAtributosTabela extends JTable {
     }
 
     public void removerAtributo() {
-        modelo.removeRow(this.convertRowIndexToModel(this.getSelectedRow()));
+        int i= this.convertRowIndexToModel(this.getSelectedRow());
+        if (i >= 0 && i < modelo.getRowCount())
+            modelo.removeRow(i);
     }
 }

@@ -7,6 +7,7 @@ package gd.controllers.tabela;
 
 import gd.controllers.Command;
 import gd.controllers.OpenDialogCommand;
+import gd.views.ModificarView;
 import gd.views.SobreView;
 import javax.swing.JDialog;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -22,7 +23,7 @@ public class AbrirModificarRegistrosCommand extends OpenDialogCommand{
     }
 
     public JDialog instanciarJanela() {
-        throw new NotImplementedException();
+        return new ModificarView(mainFrame);
     }
 
 

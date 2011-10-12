@@ -56,7 +56,7 @@ public class TelaPrincipalView extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         tabelasLabel = new javax.swing.JLabel();
         tabelasScrollPane = new javax.swing.JScrollPane();
-        tabelasList = TelaPrincipalTabelasLista.getInstancia();
+        tabelasList = gd.views.TelaPrincipalTabelasLista.getInstancia();
         tabelasButtonPanel = new javax.swing.JPanel();
         criarTabelaButton = new javax.swing.JButton();
         excluirTabelaButton = new javax.swing.JButton();
@@ -68,7 +68,7 @@ public class TelaPrincipalView extends JFrame {
         modificarRegistrosButton = new javax.swing.JButton();
         removerRegistrosButton = new javax.swing.JButton();
         tabelaScrollPane = new javax.swing.JScrollPane();
-        tabelaTable = TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel);
+        tabelaTable = gd.views.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel);
         menuBar = new javax.swing.JMenuBar();
         arquivoMenu = new javax.swing.JMenu();
         criarTabelaMenuItem = new javax.swing.JMenuItem();
@@ -215,6 +215,11 @@ public class TelaPrincipalView extends JFrame {
 
         removerRegistrosButton.setText(resourceMap.getString("removerRegistrosButton.text")); // NOI18N
         removerRegistrosButton.setName("removerRegistrosButton"); // NOI18N
+        removerRegistrosButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removerRegistrosButtonMouseClicked(evt);
+            }
+        });
         removerRegistrosButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removerRegistrosActionPerformed(evt);
@@ -382,9 +387,9 @@ public class TelaPrincipalView extends JFrame {
 
         sobreMenuItem.setText(resourceMap.getString("sobreMenuItem.text")); // NOI18N
         sobreMenuItem.setName("sobreMenuItem"); // NOI18N
-        sobreMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sobreMenuItemMouseClicked(evt);
+        sobreMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sobreMenuItemActionPerformed(evt);
             }
         });
         sobreMenu.add(sobreMenuItem);
@@ -410,10 +415,6 @@ public class TelaPrincipalView extends JFrame {
     private void sairMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_sairMenuItemActionPerformed
-
-    private void sobreMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sobreMenuItemMouseClicked
-        new AbrirSobreCommand().execute();
-    }//GEN-LAST:event_sobreMenuItemMouseClicked
 
     private void criarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarTabelaActionPerformed
         new AbrirCriarTabelaCommand().execute();
@@ -443,6 +444,14 @@ public class TelaPrincipalView extends JFrame {
     private void removerRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistrosActionPerformed
         new AbrirRemoverRegistrosCommand().execute();
     }//GEN-LAST:event_removerRegistrosActionPerformed
+
+    private void removerRegistrosButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerRegistrosButtonMouseClicked
+        new AbreConsultarRegistrosCommand().execute();// Remover
+    }//GEN-LAST:event_removerRegistrosButtonMouseClicked
+
+    private void sobreMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobreMenuItemActionPerformed
+        new AbrirSobreCommand().execute();
+    }//GEN-LAST:event_sobreMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
