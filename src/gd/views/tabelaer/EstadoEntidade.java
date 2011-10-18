@@ -18,10 +18,10 @@ import java.util.List;
 public class EstadoEntidade implements EstadoTabela {
 
     Entidade entidade = null;
-    TelaPrincipalEntidadeTabela tabela = null;
+    TabelaPrincipal tabela = null;
 
 
-    public EstadoEntidade(TelaPrincipalEntidadeTabela tabela, EntidadeRelacionamento entidade) {
+    public EstadoEntidade(TabelaPrincipal tabela, EntidadeRelacionamento entidade) {
         this.tabela = tabela;
         this.entidade = (Entidade) entidade;
     }

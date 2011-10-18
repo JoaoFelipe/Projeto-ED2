@@ -11,8 +11,11 @@ import org.jdesktop.application.Action;
 
 public class CriarReferenciaView extends javax.swing.JDialog {
 
-    public CriarReferenciaView(java.awt.Frame parent) {
+    ListaTabelas tabelas = null;
+
+    public CriarReferenciaView(java.awt.Frame parent, ListaTabelas tabelas) {
         super(parent);
+        this.tabelas = tabelas;
         initComponents();
    //     getRootPane().setDefaultButton(closeButton);
     }
@@ -154,6 +157,7 @@ public class CriarReferenciaView extends javax.swing.JDialog {
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
         new AdicionarReferenciaCommand(this, tabelaComboBox, atributoComboBox, referenciadaComboBox, codigoComboBox, buscaComboBox).execute();
+        tabelas.atualizar();
     }//GEN-LAST:event_okActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed

@@ -4,7 +4,7 @@
 
 package gd.views;
 
-import gd.views.tabelaer.TelaPrincipalEntidadeTabela;
+import gd.views.tabelaer.TabelaPrincipal;
 import gd.controllers.CloseDialogCommand;
 import gd.controllers.criarreferencia.AdicionarReferenciaCommand;
 import gd.models.ER.Entidade;
@@ -38,13 +38,13 @@ public class ModificarView extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new ConsultarTabela((Entidade)TelaPrincipalEntidadeTabela.getInstancia().getEr());
+        jTable1 = new ConsultarTabela((Entidade)TabelaPrincipal.getInstancia().getEr());
         jPanel1 = new javax.swing.JPanel();
         adicionarButton = new javax.swing.JButton();
         adicionarButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tabelaComboBox = new ModificarCombo((Entidade)TelaPrincipalEntidadeTabela.getInstancia().getEr())
+        tabelaComboBox = new ModificarCombo((Entidade)TabelaPrincipal.getInstancia().getEr())
         ;
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();

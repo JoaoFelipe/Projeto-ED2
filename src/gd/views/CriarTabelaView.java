@@ -12,10 +12,12 @@ import org.jdesktop.application.Action;
 
 public class CriarTabelaView extends javax.swing.JDialog {
 
-    public CriarTabelaView(java.awt.Frame parent) {
+    ListaTabelas tabelas = null;
+
+    public CriarTabelaView(java.awt.Frame parent, ListaTabelas tabelas) {
         super(parent);
+        this.tabelas = tabelas;
         initComponents();
-   //     getRootPane().setDefaultButton(closeButton);
 
     }
 
@@ -257,6 +259,7 @@ public class CriarTabelaView extends javax.swing.JDialog {
 
     private void criarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarActionPerformed
         new CriarTabelaCommand(this, nomeTabelaTextField, atributosTable).execute();
+        tabelas.atualizar();
     }//GEN-LAST:event_criarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed

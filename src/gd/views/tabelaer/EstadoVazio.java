@@ -14,9 +14,9 @@ import java.util.Arrays;
  */
 public class EstadoVazio implements EstadoTabela {
 
-    TelaPrincipalEntidadeTabela tabela = null;
+    TabelaPrincipal tabela = null;
 
-    public EstadoVazio(TelaPrincipalEntidadeTabela tabela) {
+    public EstadoVazio(TabelaPrincipal tabela) {
         this.tabela = tabela;
     }
 

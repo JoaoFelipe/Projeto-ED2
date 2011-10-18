@@ -5,6 +5,8 @@
 
 package gd.views.tabelaer;
 
+import gd.models.ER.EntidadeRelacionamento;
+
 /**
  *
  * @author Joao

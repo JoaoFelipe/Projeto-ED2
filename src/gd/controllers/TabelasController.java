@@ -7,7 +7,7 @@ package gd.controllers;
 
 import gd.exceptions.ModelException;
 import gd.models.ER.ListaER;
-import gd.views.TelaPrincipalTabelasLista;
+import gd.views.ListaTabelas;
 
 /**
  *

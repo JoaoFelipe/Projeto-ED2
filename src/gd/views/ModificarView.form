@@ -63,7 +63,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ConsultarTabela((Entidade)TelaPrincipalEntidadeTabela.getInstancia().getEr())"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ConsultarTabela((Entidade)gd.views.tabelaer.TabelaPrincipal.getInstancia().getEr())"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -172,7 +172,7 @@
             <Property name="name" type="java.lang.String" value="tabelaComboBox" noResource="true"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ModificarCombo((Entidade)TelaPrincipalEntidadeTabela.getInstancia().getEr())&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ModificarCombo((Entidade)gd.views.tabelaer.TabelaPrincipal.getInstancia().getEr())&#xa;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

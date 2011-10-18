@@ -245,7 +245,7 @@
                         <Property name="name" type="java.lang.String" value="tabelasList" noResource="true"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new TelaPrincipalTabelasLista()"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.ListaTabelas()"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -451,7 +451,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="gd.views.tabelaer.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel)"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="gd.views.tabelaer.TabelaPrincipal.instanciar(tabelaButtonPanel)"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

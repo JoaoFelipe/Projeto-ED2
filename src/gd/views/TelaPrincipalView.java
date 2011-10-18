@@ -14,6 +14,7 @@ package gd.views;
 import gd.GerenciadorDados;
 import gd.controllers.OpenDialogCommand;
 import gd.controllers.TabelasController;
+import gd.views.tabelaer.TabelaPrincipal;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,7 +52,7 @@ public class TelaPrincipalView extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         tabelasLabel = new javax.swing.JLabel();
         tabelasScrollPane = new javax.swing.JScrollPane();
-        tabelasList = new TelaPrincipalTabelasLista();
+        tabelasList = new ListaTabelas();
         tabelasButtonPanel = new javax.swing.JPanel();
         criarTabelaButton = new javax.swing.JButton();
         excluirTabelaButton = new javax.swing.JButton();
@@ -63,7 +64,7 @@ public class TelaPrincipalView extends JFrame {
         modificarRegistrosButton = new javax.swing.JButton();
         removerRegistrosButton = new javax.swing.JButton();
         tabelaScrollPane = new javax.swing.JScrollPane();
-        tabelaTable = gd.views.tabelaer.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel);
+        tabelaTable = gd.views.tabelaer.TabelaPrincipal.instanciar(tabelaButtonPanel);
         menuBar = new javax.swing.JMenuBar();
         arquivoMenu = new javax.swing.JMenu();
         criarTabelaMenuItem = new javax.swing.JMenuItem();
@@ -407,22 +408,21 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_sairMenuItemActionPerformed
 
     private void criarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarTabelaActionPerformed
-        new OpenDialogCommand(new CriarTabelaView(GerenciadorDados.getApplication().getMainFrame())).execute();
+        new OpenDialogCommand(new CriarTabelaView(GerenciadorDados.getApplication().getMainFrame(), (ListaTabelas) tabelasList)).execute();
     }//GEN-LAST:event_criarTabelaActionPerformed
 
     private void criarReferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarReferenciaActionPerformed
-        new OpenDialogCommand(new CriarReferenciaView(GerenciadorDados.getApplication().getMainFrame())).execute();
+        new OpenDialogCommand(new CriarReferenciaView(GerenciadorDados.getApplication().getMainFrame(), (ListaTabelas) tabelasList)).execute();
     }//GEN-LAST:event_criarReferenciaActionPerformed
 
     private void excluirTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirTabelaActionPerformed
-        TelaPrincipalTabelasLista tabela = (TelaPrincipalTabelasLista) tabelasList;
+        ListaTabelas tabela = (ListaTabelas) tabelasList;
         TabelasController.excluirTabela(tabela.getSelectedName());
         tabela.atualizar();
     }//GEN-LAST:event_excluirTabelaActionPerformed
 
     private void inserirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirRegistroActionPerformed
-        ((DefaultTableModel) TelaPrincipalEntidadeTabela.getInstancia().getModel()).addRow(new Object[]{});
-        TelaPrincipalEntidadeTabela.getInstancia().setEditingRow(TelaPrincipalEntidadeTabela.getInstancia().getRowCount()-1);
+        ((TabelaPrincipal) tabelaTable).addRow(new Object[]{});
     }//GEN-LAST:event_inserirRegistroActionPerformed
 
     private void consultarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarRegistrosActionPerformed

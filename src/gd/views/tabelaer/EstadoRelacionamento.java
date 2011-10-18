@@ -16,10 +16,10 @@ import java.util.Arrays;
 public class EstadoRelacionamento implements EstadoTabela {
 
     Relacionamento relacionamento = null;
-    TelaPrincipalEntidadeTabela tabela = null;
+    TabelaPrincipal tabela = null;
 
 
-    public EstadoRelacionamento(TelaPrincipalEntidadeTabela tabela, EntidadeRelacionamento relacionamento) {
+    public EstadoRelacionamento(TabelaPrincipal tabela, EntidadeRelacionamento relacionamento) {
         this.tabela = tabela;
         this.relacionamento = (Relacionamento) relacionamento;
     }
