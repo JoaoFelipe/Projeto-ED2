@@ -12,13 +12,8 @@
 package gd.views;
 
 import gd.GerenciadorDados;
-import gd.controllers.AbrirSobreCommand;
-import gd.controllers.tabela.AbreConsultarRegistrosCommand;
-import gd.controllers.tabela.AbrirModificarRegistrosCommand;
-import gd.controllers.tabela.AbrirRemoverRegistrosCommand;
-import gd.controllers.tabelas.AbrirCriarReferenciaCommand;
-import gd.controllers.tabelas.AbrirCriarTabelaCommand;
-import gd.controllers.tabelas.ExcluirTabelaCommand;
+import gd.controllers.OpenDialogCommand;
+import gd.controllers.TabelasController;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
@@ -56,7 +51,7 @@ public class TelaPrincipalView extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         tabelasLabel = new javax.swing.JLabel();
         tabelasScrollPane = new javax.swing.JScrollPane();
-        tabelasList = gd.views.TelaPrincipalTabelasLista.getInstancia();
+        tabelasList = new TelaPrincipalTabelasLista();
         tabelasButtonPanel = new javax.swing.JPanel();
         criarTabelaButton = new javax.swing.JButton();
         excluirTabelaButton = new javax.swing.JButton();
@@ -68,7 +63,7 @@ public class TelaPrincipalView extends JFrame {
         modificarRegistrosButton = new javax.swing.JButton();
         removerRegistrosButton = new javax.swing.JButton();
         tabelaScrollPane = new javax.swing.JScrollPane();
-        tabelaTable = gd.views.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel);
+        tabelaTable = gd.views.tabelaer.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel);
         menuBar = new javax.swing.JMenuBar();
         arquivoMenu = new javax.swing.JMenu();
         criarTabelaMenuItem = new javax.swing.JMenuItem();
@@ -215,11 +210,6 @@ public class TelaPrincipalView extends JFrame {
 
         removerRegistrosButton.setText(resourceMap.getString("removerRegistrosButton.text")); // NOI18N
         removerRegistrosButton.setName("removerRegistrosButton"); // NOI18N
-        removerRegistrosButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                removerRegistrosButtonMouseClicked(evt);
-            }
-        });
         removerRegistrosButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removerRegistrosActionPerformed(evt);
@@ -417,15 +407,17 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_sairMenuItemActionPerformed
 
     private void criarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarTabelaActionPerformed
-        new AbrirCriarTabelaCommand().execute();
+        new OpenDialogCommand(new CriarTabelaView(GerenciadorDados.getApplication().getMainFrame())).execute();
     }//GEN-LAST:event_criarTabelaActionPerformed
 
     private void criarReferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarReferenciaActionPerformed
-        new AbrirCriarReferenciaCommand().execute();
+        new OpenDialogCommand(new CriarReferenciaView(GerenciadorDados.getApplication().getMainFrame())).execute();
     }//GEN-LAST:event_criarReferenciaActionPerformed
 
     private void excluirTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirTabelaActionPerformed
-        new ExcluirTabelaCommand().execute();
+        TelaPrincipalTabelasLista tabela = (TelaPrincipalTabelasLista) tabelasList;
+        TabelasController.excluirTabela(tabela.getSelectedName());
+        tabela.atualizar();
     }//GEN-LAST:event_excluirTabelaActionPerformed
 
     private void inserirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirRegistroActionPerformed
@@ -434,23 +426,19 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_inserirRegistroActionPerformed
 
     private void consultarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarRegistrosActionPerformed
-        new AbreConsultarRegistrosCommand().execute();
+        new OpenDialogCommand(new ConsultarView(GerenciadorDados.getApplication().getMainFrame())).execute();
     }//GEN-LAST:event_consultarRegistrosActionPerformed
 
     private void modificarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarRegistrosActionPerformed
-        new AbrirModificarRegistrosCommand().execute();
+        new OpenDialogCommand(new ModificarView(GerenciadorDados.getApplication().getMainFrame())).execute();
     }//GEN-LAST:event_modificarRegistrosActionPerformed
 
     private void removerRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistrosActionPerformed
-        new AbrirRemoverRegistrosCommand().execute();
+        new OpenDialogCommand(new ConsultarView(GerenciadorDados.getApplication().getMainFrame())).execute();
     }//GEN-LAST:event_removerRegistrosActionPerformed
 
-    private void removerRegistrosButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerRegistrosButtonMouseClicked
-        new AbreConsultarRegistrosCommand().execute();// Remover
-    }//GEN-LAST:event_removerRegistrosButtonMouseClicked
-
     private void sobreMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobreMenuItemActionPerformed
-        new AbrirSobreCommand().execute();
+        new OpenDialogCommand(new SobreView(GerenciadorDados.getApplication().getMainFrame())).execute();
     }//GEN-LAST:event_sobreMenuItemActionPerformed
 
 

@@ -245,7 +245,7 @@
                         <Property name="name" type="java.lang.String" value="tabelasList" noResource="true"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="gd.views.TelaPrincipalTabelasLista.getInstancia()"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new TelaPrincipalTabelasLista()"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -428,7 +428,6 @@
                         <Property name="name" type="java.lang.String" value="removerRegistrosButton" noResource="true"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="removerRegistrosButtonMouseClicked"/>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removerRegistrosActionPerformed"/>
                       </Events>
                     </Component>
@@ -452,7 +451,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="gd.views.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel)"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="gd.views.tabelaer.TelaPrincipalEntidadeTabela.instanciar(tabelaButtonPanel)"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

@@ -13,26 +13,23 @@ import javax.swing.JFrame;
  *
  * @author Joao
  */
-public abstract class OpenDialogCommand extends Command{
+public class OpenDialogCommand extends Command{
 
     //Templete Method
 
     public JDialog dialog;
     public JFrame mainFrame;
 
-    public OpenDialogCommand(){
+    public OpenDialogCommand(JDialog dialog){
         super();
+        this.dialog = dialog;
         mainFrame = GerenciadorDados.getApplication().getMainFrame();
     }
 
-    public abstract JDialog instanciarJanela();
 
     @Override
     public void execute(Object... arg) {
-        if (dialog == null) {
-            dialog = instanciarJanela();
-            dialog.setLocationRelativeTo(mainFrame);
-        }
+        dialog.setLocationRelativeTo(mainFrame);
         GerenciadorDados.getApplication().show(dialog);
     }
 

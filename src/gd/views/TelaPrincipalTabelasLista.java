@@ -5,21 +5,24 @@
 
 package gd.views;
 
+import gd.views.tabelaer.TelaPrincipalEntidadeTabela;
 import gd.controllers.Command;
-import gd.controllers.tabela.AbreConsultarRegistrosCommand;
-import gd.controllers.tabela.AbrirInserirRegistroCommand;
-import gd.controllers.tabelas.AbrirCriarReferenciaCommand;
-import gd.controllers.tabelas.AbrirCriarTabelaCommand;
 import gd.controllers.tabelas.SelecionarTabelaCommand;
 import gd.exceptions.ModelException;
 import gd.exceptions.NonUniqueException;
 import gd.exceptions.NotFoundException;
+import gd.models.Colecao;
+import gd.models.ER.Entidade;
+import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.ListaER;
+import gd.models.ER.Relacionamento;
+import gd.models.atributos.ColecaoAtributo;
 import gd.views.base.Lista;
 import gd.views.base.ModeloLista;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,24 +34,16 @@ import javax.swing.event.ListSelectionEvent;
  */
 public class TelaPrincipalTabelasLista extends Lista {
 
-    public static TelaPrincipalTabelasLista instancia = null;
 
     Command command = null;
     ModeloLista modelo = null;
 
-    private TelaPrincipalTabelasLista() {
+    public TelaPrincipalTabelasLista() {
         super();
         modelo = new ModeloLista();
         this.setModel(modelo);
         command = new SelecionarTabelaCommand();
         this.atualizar();
-    }
-
-    public static TelaPrincipalTabelasLista getInstancia(){
-        if (instancia == null){
-            instancia = new TelaPrincipalTabelasLista();
-        }
-        return instancia;
     }
 
     public void atualizar(){
@@ -65,8 +60,32 @@ public class TelaPrincipalTabelasLista extends Lista {
 
     }
 
-    public void valueChanged(ListSelectionEvent e) {
-        command.execute(this);
+  
+
+    public String getSelectedName(){
+        int indice = this.getSelectedIndex();
+        if (indice > -1) {
+            return (String) this.getModel().getElementAt(indice);
+        }
+        return null;
+
     }
+    
+    
+    public void valueChanged(ListSelectionEvent e) {
+         try {
+            EntidadeRelacionamento er = null;
+            int i = this.getSelectedIndex();
+            if (ListaER.getInstancia().getLista().size() > i && i > -1){
+                er = ListaER.getInstancia().getLista().get(i);
+            }
+            TelaPrincipalEntidadeTabela tabela = TelaPrincipalEntidadeTabela.getInstancia();
+            tabela.setEstado(er);
+        } catch (ModelException ex) {
+            ex.execute();
+        }
+    }
+
+
 
 }

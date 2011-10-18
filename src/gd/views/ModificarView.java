@@ -4,6 +4,7 @@
 
 package gd.views;
 
+import gd.views.tabelaer.TelaPrincipalEntidadeTabela;
 import gd.controllers.CloseDialogCommand;
 import gd.controllers.criarreferencia.AdicionarReferenciaCommand;
 import gd.models.ER.Entidade;
