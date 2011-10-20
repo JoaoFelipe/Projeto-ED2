@@ -25,8 +25,8 @@ public class EstadoRelacionamento implements EstadoTabela {
     }
 
     public void show() {
-        tabela.setModel(Arrays.asList("Tabela", "Atributo", "Tabela Referenciada", "Código", "Atributo de Busca"), null, false);
-        tabela.getModelo().insertRow(0, relacionamento.getRow());
+        tabela.setModel(Arrays.asList("Tabela", "Atributo", "Tabela Referenciada", "Código"), null, false);
+        tabela.getModelo().addRow(relacionamento.getRow());
         tabela.getPainel().setVisible(false);
     }
 

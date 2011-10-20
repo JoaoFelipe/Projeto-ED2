@@ -25,24 +25,21 @@ import gd.models.atributos.ColecaoAtributo;
 public class Entidade extends EntidadeRelacionamento{
 
 
-    String nome;
-    List<Atributo> atributos = null;
-    List<Relacionamento> relacionamentos = null;
+    private String nome;
+    private List<Atributo> atributos = null;
+    private List<Relacionamento> relacionamentos = null;
 
     public Entidade(List<String> definicao) throws ModelException {
         this.nome = definicao.get(0);
         this.atributos = new ArrayList<Atributo>();
         this.relacionamentos = new ArrayList<Relacionamento>();
-        Set<String> set = new HashSet<String>();
+        
         for (int i = 1; i < definicao.size(); i++) {
             String def = definicao.get(i);
             Atributo attr = Atributo.criarAtributo(def);
             atributos.add(attr);
-            if (!set.add(attr.getNome())){
-                throw new NonUniqueException("Atributo não é único");
-            }
-
         }
+
         this.verificar();
     }
 
@@ -54,21 +51,36 @@ public class Entidade extends EntidadeRelacionamento{
     }
 
     public void verificar() throws ModelException {
-        if (nome == null || nome.equals(""))
+        if (nome == null || nome.equals("")) {
             throw new NotFoundException("O nome não pode estar em branco");
+        }
 
         int count = 0;
+        Set<String> set = new HashSet<String>();
+
         for (Atributo atributo : atributos) {
+            if (!set.add(atributo.getNome())){
+                throw new NonUniqueException("Atributo não é único");
+            }
             if (atributo.getPK()){
                 count++;
             }
         }
-        if (count == 0)
+        if (count == 0) {
             throw new NotFoundException("Nenhuma chave primária encontrada");
-        if (count > 1)
+        }
+        if (count > 1) {
             throw new NonUniqueException("Mais de uma chave primária encontrada");
+        }
+    }
 
-
+    public Atributo buscarAtributo(String nome){
+        for (Atributo atributo : atributos) {
+            if (atributo.getNome().equals(nome)){
+                return atributo;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -82,20 +94,6 @@ public class Entidade extends EntidadeRelacionamento{
         } catch (IOException e) {
             throw new ModelException(e);
         }
-    }
-
-    @Override
-    public String getNome() {
-        return nome;
-    }
-
-    public Atributo buscarAtributo(String nome){
-        for (Atributo atributo : atributos) {
-            if (atributo.getNome().equals(nome)){
-                return atributo;
-            }
-        }
-        return null;
     }
 
     @Override
@@ -117,6 +115,11 @@ public class Entidade extends EntidadeRelacionamento{
         return true;
     }
 
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
     public List<Relacionamento> getRelacionamentos(){
         return relacionamentos;
     }
@@ -131,13 +134,28 @@ public class Entidade extends EntidadeRelacionamento{
         for (Relacionamento relacionamento : relacionamentos) {
             if (relacionamento.getEntidade() == this){
                 retorno.add(relacionamento.getEntidadeReferenciada().getNome()+"-"+relacionamento.getCampoReferenciado());
-                retorno.add(relacionamento.getEntidadeReferenciada().getNome()+"-"+relacionamento.getCampoAlternativo());
             } else {
                 retorno.add("#"+relacionamento.getEntidade().getNome());
             }
         }
 
         return retorno;
+    }
+
+    public int getTamanho(){
+        int retorno = 0;
+        for (Atributo atributo : atributos) {
+            retorno += atributo.getTamanho();
+        }
+        return retorno;
+    }
+
+    public Atributo getPk(){
+        for (Atributo atributo : atributos) {
+            if (atributo.getPK())
+                return atributo;
+        }
+        return null;
     }
 
 

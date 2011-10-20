@@ -12,7 +12,7 @@
 package gd.views;
 
 import gd.GerenciadorDados;
-import gd.controllers.OpenDialogCommand;
+import gd.controllers.JanelaController;
 import gd.controllers.TabelasController;
 import gd.views.tabelaer.TabelaPrincipal;
 import javax.swing.JFrame;
@@ -52,7 +52,7 @@ public class TelaPrincipalView extends JFrame {
         jPanel1 = new javax.swing.JPanel();
         tabelasLabel = new javax.swing.JLabel();
         tabelasScrollPane = new javax.swing.JScrollPane();
-        tabelasList = new ListaTabelas();
+        tabelasList = new gd.views.ListaTabelas();
         tabelasButtonPanel = new javax.swing.JPanel();
         criarTabelaButton = new javax.swing.JButton();
         excluirTabelaButton = new javax.swing.JButton();
@@ -408,11 +408,11 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_sairMenuItemActionPerformed
 
     private void criarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarTabelaActionPerformed
-        new OpenDialogCommand(new CriarTabelaView(GerenciadorDados.getApplication().getMainFrame(), (ListaTabelas) tabelasList)).execute();
+        JanelaController.abrir(new CriarTabelaView(GerenciadorDados.getApplication().getMainFrame(), (ListaTabelas) tabelasList));
     }//GEN-LAST:event_criarTabelaActionPerformed
 
     private void criarReferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarReferenciaActionPerformed
-        new OpenDialogCommand(new CriarReferenciaView(GerenciadorDados.getApplication().getMainFrame(), (ListaTabelas) tabelasList)).execute();
+        JanelaController.abrir(new CriarReferenciaView(GerenciadorDados.getApplication().getMainFrame(), (ListaTabelas) tabelasList));
     }//GEN-LAST:event_criarReferenciaActionPerformed
 
     private void excluirTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirTabelaActionPerformed
@@ -426,19 +426,19 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_inserirRegistroActionPerformed
 
     private void consultarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarRegistrosActionPerformed
-        new OpenDialogCommand(new ConsultarView(GerenciadorDados.getApplication().getMainFrame())).execute();
+        JanelaController.abrir(new ConsultarView(GerenciadorDados.getApplication().getMainFrame()));
     }//GEN-LAST:event_consultarRegistrosActionPerformed
 
     private void modificarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarRegistrosActionPerformed
-        new OpenDialogCommand(new ModificarView(GerenciadorDados.getApplication().getMainFrame())).execute();
+        JanelaController.abrir(new ModificarView(GerenciadorDados.getApplication().getMainFrame()));
     }//GEN-LAST:event_modificarRegistrosActionPerformed
 
     private void removerRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistrosActionPerformed
-        new OpenDialogCommand(new ConsultarView(GerenciadorDados.getApplication().getMainFrame())).execute();
+        JanelaController.abrir(new ConsultarView(GerenciadorDados.getApplication().getMainFrame()));
     }//GEN-LAST:event_removerRegistrosActionPerformed
 
     private void sobreMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobreMenuItemActionPerformed
-        new OpenDialogCommand(new SobreView(GerenciadorDados.getApplication().getMainFrame())).execute();
+        JanelaController.abrir(new SobreView(GerenciadorDados.getApplication().getMainFrame()));
     }//GEN-LAST:event_sobreMenuItemActionPerformed
 
 

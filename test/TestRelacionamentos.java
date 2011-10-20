@@ -64,24 +64,11 @@ public class TestRelacionamentos {
 
     @Test
     public void criaRelacionamento() throws Exception {
-        EntidadeRelacionamento relacionamento = new Relacionamento(e2, "cod_emp", e1, "cod", "nome");
-        EntidadeRelacionamento relacionamentoTestado = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod", "nome"));
-        assertEquals(relacionamento, relacionamentoTestado);
-    }
-
-    @Test
-    public void criaRelacionamentoSemChaveAlternativa() throws Exception {
         EntidadeRelacionamento relacionamento = new Relacionamento(e2, "cod_emp", e1, "cod");
         EntidadeRelacionamento relacionamentoTestado = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
         assertEquals(relacionamento, relacionamentoTestado);
     }
-
-    @Test
-    public void criaRelacionamentoSemChaveAlternativaIgualChaveReferenciada() throws Exception {
-        EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
-        EntidadeRelacionamento relacionamentoTestado = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod", "cod"));
-        assertEquals(relacionamento, relacionamentoTestado);
-    }
+    
 
     @Test
     public void naoPermitirCriarRelacionamentoComEntidadeInvalida() throws Exception {
@@ -124,16 +111,6 @@ public class TestRelacionamentos {
     }
 
     @Test
-    public void naoPermitirCriarRelacionamentoComAtributoAlternativoDaEntidadeReferenciadaDaEntidadeInvalida() throws Exception {
-        try {
-            EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod", "ahh"));
-            assertTrue(false);
-        } catch (NotFoundException e){
-            assertEquals("Atributo alterenativo não encontrado na Entidade Referenciada", e.getMessage());
-        }
-    }
-
-    @Test
     public void gravarRelacionamento() throws Exception {
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
         EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")).grava(arq);
@@ -142,7 +119,7 @@ public class TestRelacionamentos {
         List<String> listaVerificada = ArquivoSequencial.fileToList(metaDadosPath);
         assertArrayEquals(
             Arrays.asList(
-                "REFERENCIA", "Dependente", "cod_emp", "Empregado", "cod", "cod").toArray(),
+                "REFERENCIA", "Dependente", "cod_emp", "Empregado", "cod").toArray(),
             listaVerificada.toArray()
         );
     }
@@ -220,7 +197,7 @@ public class TestRelacionamentos {
 
     @Test
     public void aoCriarRelacionamentoAReferenciaDeveSerAdicionadaAEntidade() throws Exception {
-        EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod", "nome"));
+        EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
 
         Class c = relacionamento.getClass();
         Field f = c.getDeclaredField("entidade");

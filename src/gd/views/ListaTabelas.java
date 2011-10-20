@@ -7,7 +7,6 @@ package gd.views;
 
 import gd.views.tabelaer.TabelaPrincipal;
 import gd.controllers.Command;
-import gd.controllers.tabelas.SelecionarTabelaCommand;
 import gd.exceptions.ModelException;
 import gd.exceptions.NonUniqueException;
 import gd.exceptions.NotFoundException;
@@ -34,20 +33,15 @@ import javax.swing.event.ListSelectionEvent;
  */
 public class ListaTabelas extends Lista {
 
-
-    Command command = null;
-    ModeloLista modelo = null;
-
     public ListaTabelas() {
         super();
-        modelo = new ModeloLista();
-        this.setModel(modelo);
-        command = new SelecionarTabelaCommand();
+        this.setModel(new ModeloLista());
         this.atualizar();
     }
 
     public void atualizar(){
         try {
+            ModeloLista modelo = (ModeloLista) this.getModel();
             modelo.clear();
             List<String> lista = ListaER.getInstancia().getNomes();
             for (int i = 0; i < lista.size(); i++) {
@@ -56,11 +50,7 @@ public class ListaTabelas extends Lista {
         } catch (ModelException ex) {
             ex.execute();
         }
-
-
     }
-
-  
 
     public String getSelectedName(){
         int indice = this.getSelectedIndex();
@@ -70,7 +60,6 @@ public class ListaTabelas extends Lista {
         return null;
 
     }
-    
     
     public void valueChanged(ListSelectionEvent e) {
          try {
@@ -85,7 +74,6 @@ public class ListaTabelas extends Lista {
             ex.execute();
         }
     }
-
 
 
 }

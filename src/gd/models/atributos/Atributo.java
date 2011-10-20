@@ -5,6 +5,9 @@
 
 package gd.models.atributos;
 
+import gd.models.arquivo.Valor;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
@@ -85,5 +88,10 @@ public abstract class Atributo{
     public abstract boolean getPK();
     public abstract int getTamanho();
     public abstract Class getClasse();
+
+    public abstract int getHash(Valor valor);
+    public abstract Valor getDefault();
+    public abstract Valor ler(RandomAccessFile in) throws IOException;
+    public abstract void grava(RandomAccessFile out, Valor valor) throws IOException;
 
 }

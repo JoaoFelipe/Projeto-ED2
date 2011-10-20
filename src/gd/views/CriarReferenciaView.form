@@ -42,14 +42,6 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buscaLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buscaComboBox" pref="247" max="32767" attributes="1"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="113" max="-2" attributes="0"/>
                       <EmptySpace pref="21" max="32767" attributes="0"/>
                       <Component id="jButton2" min="-2" pref="113" max="-2" attributes="0"/>
@@ -78,16 +70,12 @@
               <Component id="codigoLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="codigoComboBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-              <Component id="buscaLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="buscaComboBox" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -118,7 +106,7 @@
         <Property name="name" type="java.lang.String" value="tabelaComboBox" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.CriarReferenciaTabelasCombo(atributoComboBox)"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.TabelasCombo(atributoComboBox)"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="codigoLabel">
@@ -135,20 +123,6 @@
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ComboBoxNaoEditavel()"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="buscaLabel">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="buscaLabel.text"/>
-        <Property name="name" type="java.lang.String" value="buscaLabel" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="buscaComboBox">
-      <Properties>
-        <Property name="name" type="java.lang.String" value="buscaComboBox" noResource="true"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ComboBoxNaoEditavel()"/>
-      </AuxValues>
-    </Component>
     <Component class="javax.swing.JLabel" name="referenciadaLabel">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="referenciadaLabel.text"/>
@@ -160,7 +134,7 @@
         <Property name="name" type="java.lang.String" value="referenciadaComboBox" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.CriarReferenciaReferenciadasCombo(codigoComboBox, buscaComboBox)"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.TabelasCombo(codigoComboBox)"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">

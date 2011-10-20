@@ -5,7 +5,10 @@
 
 package gd.models.atributos;
 
+import gd.models.arquivo.Valor;
 import gd.models.atributos.Atributo;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /**
  *
@@ -66,7 +69,25 @@ public class DoubleAttr extends Atributo{
         return true;
     }
 
+    @Override
+    public int getHash(Valor valor) {
+        Double d = (Double) valor.getInfo();
+        return d.hashCode();
+    }
 
+    @Override
+    public Valor ler(RandomAccessFile in) throws IOException{
+        return new Valor<Double>(this, in.readDouble());
+    }
 
+    @Override
+    public Valor getDefault() {
+        return new Valor<Double>(this, new Double(0));
+    }
+
+    @Override
+    public void grava(RandomAccessFile in, Valor valor) throws IOException {
+        in.writeDouble(((Double) valor.getInfo()).doubleValue());
+    }
 
 }

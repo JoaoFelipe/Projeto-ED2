@@ -89,7 +89,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.CriarTabelaAtributosTabela()"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.TabelaDeAtributos()"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -194,7 +194,7 @@
                 <Property name="name" type="java.lang.String" value="tipoAtributoComboBox" noResource="true"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.CriarTabelaComboAtributos()"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gd.views.ComboDeAtributos()"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="adicionarButton">

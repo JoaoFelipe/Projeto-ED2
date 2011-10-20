@@ -5,15 +5,8 @@
 package gd.views;
 
 import gd.views.tabelaer.TabelaPrincipal;
-import gd.controllers.CloseDialogCommand;
-import gd.controllers.criarreferencia.AdicionarReferenciaCommand;
+import gd.controllers.JanelaController;
 import gd.models.ER.Entidade;
-import gd.views.base.ComboBoxNaoEditavel;
-import java.awt.BorderLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.application.Action;
 
@@ -191,7 +184,7 @@ public class ModificarView extends javax.swing.JDialog {
     }//GEN-LAST:event_okActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        new CloseDialogCommand(this).execute();
+        JanelaController.fecharDialog(this);
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void adicionarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarButtonActionPerformed

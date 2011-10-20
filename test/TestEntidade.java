@@ -152,7 +152,7 @@ public class TestEntidade {
         boolean ok = false;
         for (EntidadeRelacionamento e : listaOriginal) {
             try {
-                ListaER.getInstancia().add(e);
+                ListaER.instanciarTeste(metaDadosPath, prefix).add(e);
             } catch (NonUniqueException exc) {
                 assertEquals("Não é possível ter tabelas de mesmo nome ou referencias de mesmo <Entidade, Campo>!", exc.getMessage());
                 ok = true;

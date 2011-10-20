@@ -26,27 +26,20 @@ public class Relacionamento extends EntidadeRelacionamento{
 
     private Entidade entidadeReferenciada;
     private String campoReferenciado;
-    private String campoAlternativo;
 
-    public Relacionamento(EntidadeRelacionamento entidade, String campo, EntidadeRelacionamento entidadeReferenciada, String campoReferenciado, String campoAlternativo) throws ModelException {
+    public Relacionamento(EntidadeRelacionamento entidade, String campo, EntidadeRelacionamento entidadeReferenciada, String campoReferenciado) throws ModelException {
         this.entidade = (Entidade) entidade;
         this.campo = campo;
         this.entidadeReferenciada = (Entidade) entidadeReferenciada;
         this.campoReferenciado = campoReferenciado;
-        this.campoAlternativo = campoAlternativo;
         
         this.validar();
     }
 
-    public Relacionamento(EntidadeRelacionamento entidade, String campo, EntidadeRelacionamento entidadeReferenciada, String campoReferenciado) throws ModelException {
-        this(entidade, campo, entidadeReferenciada, campoReferenciado, campoReferenciado);
-    }
-
+ 
     public Relacionamento(List<String> defs) throws ModelException{
         this(ListaER.getInstancia().buscar(defs.get(0)), defs.get(1), ListaER.getInstancia().buscar(defs.get(2)), defs.get(3));
-        if (defs.size() == 5) {
-            this.campoAlternativo = defs.get(4);
-        } else if (defs.size() != 4) {
+        if (defs.size() != 4) {
             throw new NotFoundException("Elementos não encontrados");
         }
         this.validar();
@@ -65,9 +58,7 @@ public class Relacionamento extends EntidadeRelacionamento{
         if (entidadeReferenciada.buscarAtributo(campoReferenciado) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade Referenciada");
         }
-        if (entidadeReferenciada.buscarAtributo(campoAlternativo) == null) {
-            throw new NotFoundException("Atributo alterenativo não encontrado na Entidade Referenciada");
-        }
+  
 
     }
 
@@ -79,7 +70,6 @@ public class Relacionamento extends EntidadeRelacionamento{
             saida.writeUTF(campo);
             saida.writeUTF(entidadeReferenciada.getNome());
             saida.writeUTF(campoReferenciado);
-            saida.writeUTF(campoAlternativo);
         } catch (IOException ex) {
             throw new ModelException(ex);
         }
@@ -90,8 +80,7 @@ public class Relacionamento extends EntidadeRelacionamento{
            entidade.getNome(),
            campo,
            entidadeReferenciada.getNome(),
-           campoReferenciado,
-           campoAlternativo
+           campoReferenciado
         };
     }
 
@@ -121,9 +110,6 @@ public class Relacionamento extends EntidadeRelacionamento{
         if ((this.campoReferenciado == null) ? (other.campoReferenciado != null) : !this.campoReferenciado.equals(other.campoReferenciado)) {
             return false;
         }
-        if ((this.campoAlternativo == null) ? (other.campoAlternativo != null) : !this.campoAlternativo.equals(other.campoAlternativo)) {
-            return false;
-        }
         return true;
     }
 
@@ -141,10 +127,6 @@ public class Relacionamento extends EntidadeRelacionamento{
 
     public Entidade getEntidadeReferenciada(){
         return entidadeReferenciada;
-    }
-
-    public String getCampoAlternativo() {
-        return campoAlternativo;
     }
 
     public String getCampoReferenciado() {

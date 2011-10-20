@@ -5,7 +5,10 @@
 
 package gd.models.atributos;
 
+import gd.models.arquivo.Valor;
 import gd.models.atributos.Atributo;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 /**
  *
@@ -66,7 +69,25 @@ public class IntAttr extends Atributo{
         return true;
     }
 
+    @Override
+    public int getHash(Valor valor) {
+        Integer i = (Integer) valor.getInfo();
+        return i.hashCode();
+    }
 
+    @Override
+    public Valor ler(RandomAccessFile in) throws IOException{
+        return new Valor<Integer>(this, in.readInt());
+    }
 
+    @Override
+    public Valor getDefault() {
+        return new Valor<Integer>(this, new Integer(0));
+    }
+
+    @Override
+    public void grava(RandomAccessFile in, Valor valor) throws IOException {
+        in.writeInt(((Integer) valor.getInfo()).intValue());
+    }
 
 }

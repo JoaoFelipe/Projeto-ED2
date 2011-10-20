@@ -31,10 +31,9 @@ public abstract class EntidadeRelacionamento {
         if (tipo.equals("TABELA")) {
             return new Entidade(defs);
         } else if (tipo.equals("REFERENCIA")) {
-            Relacionamento r;
-            r = new Relacionamento(defs);
-            r.adicionarNaEntidade();
-            return r;
+            Relacionamento relacionamento = new Relacionamento(defs);
+            relacionamento.adicionarNaEntidade();
+            return relacionamento;
         } else {
             return null;
         }

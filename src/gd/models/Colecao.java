@@ -6,6 +6,7 @@ package gd.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -41,5 +42,6 @@ public class Colecao {
     }
 
 
+    
 
 }

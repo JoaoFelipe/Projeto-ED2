@@ -5,7 +5,6 @@
 
 package gd.views;
 
-import gd.controllers.MensagemErroCommand;
 import gd.models.ER.Entidade;
 import gd.models.atributos.Atributo;
 import gd.views.base.ComboBoxEditor;
@@ -40,14 +39,15 @@ public class ConsultarTabela extends JTable {
         col.setCellEditor(new ComboBoxEditor(lista));
         col.setCellRenderer(new ComboBoxRenderer(lista));
 
-        lista = Arrays.asList("=","!=",">", ">=", "<", "<=");
+        lista = Arrays.asList("=", "!=", ">", ">=", "<", "<=");
         col = this.getColumnModel().getColumn(1);
         col.setCellEditor(new ComboBoxEditor(lista));
         col.setCellRenderer(new ComboBoxRenderer(lista));
+        
     }
 
     public void removeSelectedRow(){
-        int i= this.convertRowIndexToModel(this.getSelectedRow());
+        int i = this.convertRowIndexToModel(this.getSelectedRow());
         if (i >= 0 && i < modelo.getRowCount())
             modelo.removeRow(i);
     }

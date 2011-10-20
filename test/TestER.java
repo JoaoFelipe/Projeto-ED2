@@ -148,7 +148,7 @@ public class TestER {
             Arrays.asList(
                 "TABELA", "Empregado", "*cod:int", "nome:char30", "idade:int",
                 "TABELA", "Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int",
-                "REFERENCIA", "Dependente", "cod_emp", "Empregado", "cod", "cod").toArray(),
+                "REFERENCIA", "Dependente", "cod_emp", "Empregado", "cod").toArray(),
             listaVerificada.toArray()
         );
     }

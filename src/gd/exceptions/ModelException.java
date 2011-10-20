@@ -6,7 +6,7 @@
 package gd.exceptions;
 
 import gd.controllers.Command;
-import gd.controllers.MensagemErroCommand;
+import gd.controllers.JanelaController;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
  * @author Joao
  */
 public class ModelException extends Exception{
-    private Command command = new MensagemErroCommand();
 
     public ModelException(String message){
         super(message);
@@ -29,7 +28,7 @@ public class ModelException extends Exception{
     }
 
     public void execute(){
-        command.execute(this.getMessage());
+        JanelaController.mensagem(this.getMessage());
     }
 
 }

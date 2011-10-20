@@ -4,10 +4,10 @@
 
 package gd.views;
 
-import gd.controllers.CloseDialogCommand;
-import gd.controllers.criartabela.AdicionarAtributoCommand;
-import gd.controllers.criartabela.CriarTabelaCommand;
-import gd.controllers.criartabela.RemoverAtributoCommand;
+import gd.controllers.CriarEntidadeController;
+import gd.controllers.JanelaController;
+import gd.controllers.TabelasController;
+import gd.exceptions.ModelException;
 import org.jdesktop.application.Action;
 
 public class CriarTabelaView extends javax.swing.JDialog {
@@ -35,14 +35,14 @@ public class CriarTabelaView extends javax.swing.JDialog {
 
         painelA = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        atributosTable = new CriarTabelaAtributosTabela();
+        atributosTable = new TabelaDeAtributos();
         apagarButton = new javax.swing.JButton();
         painelB = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         nomeAtributoLabel = new javax.swing.JLabel();
         nomeAtributoTextField = new javax.swing.JTextField();
         tipoAtributoLabel = new javax.swing.JLabel();
-        tipoAtributoComboBox = new CriarTabelaComboAtributos();
+        tipoAtributoComboBox = new ComboDeAtributos();
         adicionarButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         nomeTabelaLabel = new javax.swing.JLabel();
@@ -250,20 +250,29 @@ public class CriarTabelaView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adicionarAtributoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarAtributoActionPerformed
-        new AdicionarAtributoCommand(nomeAtributoTextField, tipoAtributoComboBox, (CriarTabelaAtributosTabela)atributosTable).execute();
+        CriarEntidadeController.inserirAtributo(
+            (TabelaDeAtributos) atributosTable,
+            nomeAtributoTextField.getText(),
+            (String) tipoAtributoComboBox.getSelectedItem()
+        );
     }//GEN-LAST:event_adicionarAtributoActionPerformed
 
     private void apagarAtributoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_apagarAtributoActionPerformed
-        new RemoverAtributoCommand((CriarTabelaAtributosTabela)atributosTable).execute();
+        CriarEntidadeController.removerAtributo((TabelaDeAtributos) atributosTable);
     }//GEN-LAST:event_apagarAtributoActionPerformed
 
     private void criarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarActionPerformed
-        new CriarTabelaCommand(this, nomeTabelaTextField, atributosTable).execute();
-        tabelas.atualizar();
+        try {
+            TabelasController.criarTabela(atributosTable.getModel(), nomeTabelaTextField.getText());
+            this.dispose();
+            tabelas.atualizar();
+        } catch (ModelException ex) {
+            ex.execute();
+        }
     }//GEN-LAST:event_criarActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        new CloseDialogCommand(this).execute();
+        JanelaController.fecharDialog(this);
     }//GEN-LAST:event_cancelarActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

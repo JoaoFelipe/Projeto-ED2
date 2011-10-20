@@ -4,8 +4,9 @@
 
 package gd.views;
 
-import gd.controllers.CloseDialogCommand;
-import gd.controllers.criarreferencia.AdicionarReferenciaCommand;
+import gd.controllers.JanelaController;
+import gd.controllers.TabelasController;
+import gd.exceptions.ModelException;
 import gd.views.base.ComboBoxNaoEditavel;
 import org.jdesktop.application.Action;
 
@@ -35,13 +36,11 @@ public class CriarReferenciaView extends javax.swing.JDialog {
         atributoLabel = new javax.swing.JLabel();
         atributoComboBox = new ComboBoxNaoEditavel();
         tabelaLabel = new javax.swing.JLabel();
-        tabelaComboBox = new gd.views.CriarReferenciaTabelasCombo(atributoComboBox);
+        tabelaComboBox = new gd.views.TabelasCombo(atributoComboBox);
         codigoLabel = new javax.swing.JLabel();
         codigoComboBox = new ComboBoxNaoEditavel();
-        buscaLabel = new javax.swing.JLabel();
-        buscaComboBox = new ComboBoxNaoEditavel();
         referenciadaLabel = new javax.swing.JLabel();
-        referenciadaComboBox = new CriarReferenciaReferenciadasCombo(codigoComboBox, buscaComboBox);
+        referenciadaComboBox = new gd.views.TabelasCombo(codigoComboBox);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -65,11 +64,6 @@ public class CriarReferenciaView extends javax.swing.JDialog {
         codigoLabel.setName("codigoLabel"); // NOI18N
 
         codigoComboBox.setName("codigoComboBox"); // NOI18N
-
-        buscaLabel.setText(resourceMap.getString("buscaLabel.text")); // NOI18N
-        buscaLabel.setName("buscaLabel"); // NOI18N
-
-        buscaComboBox.setName("buscaComboBox"); // NOI18N
 
         referenciadaLabel.setText(resourceMap.getString("referenciadaLabel.text")); // NOI18N
         referenciadaLabel.setName("referenciadaLabel"); // NOI18N
@@ -111,12 +105,6 @@ public class CriarReferenciaView extends javax.swing.JDialog {
                             .addComponent(atributoComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 247, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(buscaLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buscaComboBox, 0, 247, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -141,34 +129,38 @@ public class CriarReferenciaView extends javax.swing.JDialog {
                 .addComponent(codigoLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(codigoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(buscaLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buscaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-        new AdicionarReferenciaCommand(this, tabelaComboBox, atributoComboBox, referenciadaComboBox, codigoComboBox, buscaComboBox).execute();
+        try {
+            TabelasController.criarReferencia(
+                (String)tabelaComboBox.getSelectedItem(),
+                (String)atributoComboBox.getSelectedItem(),
+                (String)referenciadaComboBox.getSelectedItem(),
+                (String)codigoComboBox.getSelectedItem()
+            );
+            JanelaController.fecharDialog(this);
+        } catch (ModelException ex) {
+            ex.execute();
+        }
         tabelas.atualizar();
     }//GEN-LAST:event_okActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
-        new CloseDialogCommand(this).execute();
+        JanelaController.fecharDialog(this);
     }//GEN-LAST:event_cancelarActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox atributoComboBox;
     private javax.swing.JLabel atributoLabel;
-    private javax.swing.JComboBox buscaComboBox;
-    private javax.swing.JLabel buscaLabel;
     private javax.swing.JComboBox codigoComboBox;
     private javax.swing.JLabel codigoLabel;
     private javax.swing.JButton jButton1;
