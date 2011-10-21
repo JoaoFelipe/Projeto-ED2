@@ -36,7 +36,7 @@ public class Valor <T> {
     }
 
     public void grava(RandomAccessFile out) throws IOException{
-        tipo.grava(out, this);
+        getTipo().grava(out, this);
     }
 
     @Override
@@ -48,13 +48,20 @@ public class Valor <T> {
             return false;
         }
         final Valor<T> other = (Valor<T>) obj;
-        if (this.tipo == null || !this.tipo.equals(other.tipo)) {
-            return false;
-        }
+//        if (this.getTipo() == null || !this.tipo.equals(other.tipo)) {
+//            return false;
+//        }
         if (this.info == null || !this.info.equals(other.info)) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(Atributo tipo) {
+        this.tipo = tipo;
     }
 
 

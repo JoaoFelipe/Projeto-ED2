@@ -108,6 +108,10 @@ public class Registro {
         return (estado == 0);
     }
 
+    public boolean isUsado(){
+        return (estado == 1);
+    }
+
     public boolean isRemovido(){
         return (estado == 2);
     }

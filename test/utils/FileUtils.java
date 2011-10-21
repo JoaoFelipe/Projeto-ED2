@@ -31,7 +31,7 @@ public class FileUtils {
             //Abre o arquivo para leitura e escrita (rw)
             arquivo = new RandomAccessFile(f, "rw");
             //Grava os clientes no arquivo
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < registros.size(); i++) {
                 registros.get(i).grava(arquivo);
             }
         } catch (Exception e) {

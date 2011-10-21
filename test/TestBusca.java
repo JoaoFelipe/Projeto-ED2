@@ -334,4 +334,18 @@ public class TestBusca {
         arquivo.fechar();
     }
 
+    @Test
+    public void buscarExistenteComRemovidoNoCaminho() throws Exception {
+        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
+            new Registro(e1, 2),
+            new Registro(e1, Arrays.asList(0, "Ana", 20)),
+            new Registro(e1, 2),
+            new Registro(e1)
+        ));
+        Arquivo arquivo = new Arquivo(e1);
+        arquivo.abrir(prefix);
+        assertEquals(new Resultado(1, true),arquivo.busca(new Valor(e1.getPk(), 0)));
+        arquivo.fechar();
+    }
+
 }

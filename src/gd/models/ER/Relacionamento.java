@@ -49,13 +49,13 @@ public class Relacionamento extends EntidadeRelacionamento{
         if (entidade == null) {
             throw new NotFoundException("Entidade não encontrada");
         }
-        if (entidadeReferenciada == null) {
+        if (getEntidadeReferenciada() == null) {
             throw new NotFoundException("Entidade Referenciada não encontrada");
         }
-        if (entidade.buscarAtributo(campo) == null) {
+        if (entidade.buscarAtributo(getCampo()) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade");
         }
-        if (entidadeReferenciada.buscarAtributo(campoReferenciado) == null) {
+        if (getEntidadeReferenciada().buscarAtributo(campoReferenciado) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade Referenciada");
         }
   
@@ -67,8 +67,8 @@ public class Relacionamento extends EntidadeRelacionamento{
         try {
             saida.writeUTF("REFERENCIA");
             saida.writeUTF(entidade.getNome());
-            saida.writeUTF(campo);
-            saida.writeUTF(entidadeReferenciada.getNome());
+            saida.writeUTF(getCampo());
+            saida.writeUTF(getEntidadeReferenciada().getNome());
             saida.writeUTF(campoReferenciado);
         } catch (IOException ex) {
             throw new ModelException(ex);
@@ -78,15 +78,14 @@ public class Relacionamento extends EntidadeRelacionamento{
     public Object[] getRow(){
         return new Object[]{
            entidade.getNome(),
-           campo,
-           entidadeReferenciada.getNome(),
+           getCampo(), getEntidadeReferenciada().getNome(),
            campoReferenciado
         };
     }
 
     @Override
     public String getNome() {
-        return "R: "+entidade.getNome()+" "+campo;
+        return "R: "+entidade.getNome()+" "+getCampo();
     }
 
     @Override
@@ -101,10 +100,10 @@ public class Relacionamento extends EntidadeRelacionamento{
         if (this.entidade != other.entidade && (this.entidade == null || !this.entidade.equals(other.entidade))) {
             return false;
         }
-        if ((this.campo == null) ? (other.campo != null) : !this.campo.equals(other.campo)) {
+        if ((this.getCampo() == null) ? (other.getCampo() != null) : !this.campo.equals(other.campo)) {
             return false;
         }
-        if (this.entidadeReferenciada != other.entidadeReferenciada && (this.entidadeReferenciada == null || !this.entidadeReferenciada.equals(other.entidadeReferenciada))) {
+        if (this.getEntidadeReferenciada() != other.getEntidadeReferenciada() && (this.getEntidadeReferenciada() == null || !this.entidadeReferenciada.equals(other.entidadeReferenciada))) {
             return false;
         }
         if ((this.campoReferenciado == null) ? (other.campoReferenciado != null) : !this.campoReferenciado.equals(other.campoReferenciado)) {
@@ -115,7 +114,7 @@ public class Relacionamento extends EntidadeRelacionamento{
 
     public void adicionarNaEntidade(){
         entidade.getRelacionamentos().add(this);
-        entidadeReferenciada.getRelacionamentos().add(this);
+        getEntidadeReferenciada().getRelacionamentos().add(this);
     }
 
     public void deletar(){}
@@ -131,6 +130,27 @@ public class Relacionamento extends EntidadeRelacionamento{
 
     public String getCampoReferenciado() {
         return campoReferenciado;
+    }
+
+    /**
+     * @return the campo
+     */
+    public String getCampo() {
+        return campo;
+    }
+
+    /**
+     * @param campo the campo to set
+     */
+    public void setCampo(String campo) {
+        this.campo = campo;
+    }
+
+    /**
+     * @param entidadeReferenciada the entidadeReferenciada to set
+     */
+    public void setEntidadeReferenciada(Entidade entidadeReferenciada) {
+        this.entidadeReferenciada = entidadeReferenciada;
     }
 
     

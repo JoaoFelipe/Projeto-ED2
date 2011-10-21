@@ -101,15 +101,15 @@ public class TestAtributos {
     }
 
     @Test
-    public void pegarTamanhoDoChar10() {
+    public void pegarTamanhoDoChar10como12() {
         Atributo atributo = Atributo.criarAtributo("s:char10");
-        assertEquals(10, atributo.getTamanho());
+        assertEquals(12, atributo.getTamanho());
     }
 
     @Test
-    public void pegar1ComoTamanhoDoCharSemDefinirTamanho() {
+    public void pegar3ComoTamanhoDoChar1SemDefinirTamanho() {
         Atributo atributo = Atributo.criarAtributo("s:char");
-        assertEquals(1, atributo.getTamanho());
+        assertEquals(3, atributo.getTamanho());
     }
 
     @Test

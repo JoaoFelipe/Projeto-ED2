@@ -28,6 +28,7 @@ public class Entidade extends EntidadeRelacionamento{
     private String nome;
     private List<Atributo> atributos = null;
     private List<Relacionamento> relacionamentos = null;
+    private int numeroRegistros = 0;
 
     public Entidade(List<String> definicao) throws ModelException {
         this.nome = definicao.get(0);
@@ -156,6 +157,20 @@ public class Entidade extends EntidadeRelacionamento{
                 return atributo;
         }
         return null;
+    }
+
+    /**
+     * @return the numeroRegistros
+     */
+    public int getNumeroRegistros() {
+        return numeroRegistros;
+    }
+
+    /**
+     * @param numeroRegistros the numeroRegistros to set
+     */
+    public void setNumeroRegistros(int numeroRegistros) {
+        this.numeroRegistros = numeroRegistros;
     }
 
 
