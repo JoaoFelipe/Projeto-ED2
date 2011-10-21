@@ -1,16 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.atributos;
 
 import gd.models.Processo;
 
-/**
- *
- * @author Joao
- */
 public class ColecaoAtributo {
 
     public static class processos {
@@ -32,4 +23,5 @@ public class ColecaoAtributo {
         }
 
     }
+    
 }

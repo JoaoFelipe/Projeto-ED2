@@ -1,23 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.views.tabelaer;
 
 import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.Relacionamento;
 import java.util.Arrays;
 
-/**
- *
- * @author Joao
- */
 public class EstadoRelacionamento implements EstadoTabela {
 
-    Relacionamento relacionamento = null;
-    TabelaPrincipal tabela = null;
-
+    private Relacionamento relacionamento = null;
+    private TabelaPrincipal tabela = null;
 
     public EstadoRelacionamento(TabelaPrincipal tabela, EntidadeRelacionamento relacionamento) {
         this.tabela = tabela;
@@ -25,15 +15,29 @@ public class EstadoRelacionamento implements EstadoTabela {
     }
 
     public void show() {
-        tabela.setModel(Arrays.asList("Tabela", "Atributo", "Tabela Referenciada", "Código"), null, false);
-        tabela.getModelo().addRow(relacionamento.getRow());
-        tabela.getPainel().setVisible(false);
+        getTabela().setModelo(Arrays.asList("Tabela", "Atributo", "Tabela Referenciada", "Código"), null, false);
+        getTabela().getModelo().addRow(getRelacionamento().getRow());
+        getTabela().getPainel().setVisible(false);
     }
 
     public EntidadeRelacionamento getEr() {
+        return getRelacionamento();
+    }
+
+    public Relacionamento getRelacionamento() {
         return relacionamento;
     }
 
+    public void setRelacionamento(Relacionamento relacionamento) {
+        this.relacionamento = relacionamento;
+    }
 
+    public TabelaPrincipal getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(TabelaPrincipal tabela) {
+        this.tabela = tabela;
+    }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.arquivo;
 
 import gd.models.atributos.Atributo;
@@ -10,11 +5,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.List;
 
-/**
- *
- * @author Joao
- */
 public class Valor <T> {
+    
     private Atributo tipo;
     private T info;
 
@@ -48,25 +40,14 @@ public class Valor <T> {
             return false;
         }
         final Valor<T> other = (Valor<T>) obj;
-//        if (this.getTipo() == null || !this.tipo.equals(other.tipo)) {
-//            return false;
-//        }
         if (this.info == null || !this.info.equals(other.info)) {
             return false;
         }
         return true;
     }
 
-    /**
-     * @param tipo the tipo to set
-     */
     public void setTipo(Atributo tipo) {
         this.tipo = tipo;
     }
-
-
-
-
-
 
 }

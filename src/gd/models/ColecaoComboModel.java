@@ -1,18 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models;
 
 import java.util.Collection;
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author Joao
- */
 public class ColecaoComboModel {
+    
     public static <T, G> DefaultComboBoxModel filtrarEProcessar(Collection<T> target, Filtro<T> filtro, Processo<T, G> processo, DefaultComboBoxModel model) {
         model.removeAllElements();
         int i = 0;
@@ -56,4 +48,5 @@ public class ColecaoComboModel {
         };
         return filtrarEProcessar(target, filtro, processo, model);
     }
+    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.arquivo;
 
 import gd.models.ER.Entidade;
@@ -12,17 +7,12 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Joao
- */
 public class Registro {
 
-    Entidade entidade;
-    List<Valor> valores;
-    int estado; // 0: não usado; 1: usado; 2:apagado
-    Valor pk;
-
+    private Entidade entidade;
+    private List<Valor> valores;
+    private int estado; // 0: não usado; 1: usado; 2:apagado
+    private Valor pk;
 
     public Registro(Entidade entidade, int estado, List valoresAtributos) {
         this.entidade = entidade;
@@ -37,7 +27,6 @@ public class Registro {
             }
             this.valores.add(valor);
         }
-
     }
 
     public Registro(Entidade entidade, List valoresAtributos) {
@@ -58,7 +47,6 @@ public class Registro {
         }
     }
 
-
     public Registro(Entidade entidade) {
         this(entidade, 0);
     }
@@ -77,8 +65,8 @@ public class Registro {
     }
 
     public void grava(RandomAccessFile out) throws IOException {
-        out.writeInt(estado);
-        for (Valor valor : valores) {
+        out.writeInt(getEstado());
+        for (Valor valor : getValores()) {
             valor.grava(out);
         }
     }
@@ -92,33 +80,61 @@ public class Registro {
             return false;
         }
         final Registro other = (Registro) obj;
-        if (this.entidade == null || !this.entidade.equals(other.entidade)) {
+        if (this.getEntidade() == null || !this.entidade.equals(other.entidade)) {
             return false;
         }
-        if (this.valores == null || !this.valores.equals(other.valores)) {
+        if (this.getValores() == null || !this.valores.equals(other.valores)) {
             return false;
         }
-        if (this.estado != other.estado) {
+        if (this.getEstado() != other.getEstado()) {
             return false;
         }
         return true;
     }
 
     public boolean isVazio(){
-        return (estado == 0);
+        return (getEstado() == 0);
     }
 
     public boolean isUsado(){
-        return (estado == 1);
+        return (getEstado() == 1);
     }
 
     public boolean isRemovido(){
-        return (estado == 2);
+        return (getEstado() == 2);
     }
 
     public Valor getPk(){
         return this.pk;
     }
+    
+    public void setPk(Valor pk) {
+        this.pk = pk;
+    }
 
+
+    public Entidade getEntidade() {
+        return entidade;
+    }
+
+    public void setEntidade(Entidade entidade) {
+        this.entidade = entidade;
+    }
+
+    public List<Valor> getValores() {
+        return valores;
+    }
+
+    public void setValores(List<Valor> valores) {
+        this.setValores(valores);
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 
 }

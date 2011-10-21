@@ -1,29 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.controllers;
 
 import gd.exceptions.ModelException;
-import gd.models.Colecao;
 import gd.models.ColecaoComboModel;
 import gd.models.ER.Entidade;
 import gd.models.ER.ListaER;
 import gd.models.ER.Relacionamento;
 import gd.models.atributos.Atributo;
 import gd.models.atributos.ColecaoAtributo;
-import gd.views.ListaTabelas;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author Joao
- */
 public class TabelasController {
 
     public static void excluirTabela(String tabela) {
@@ -61,9 +49,6 @@ public class TabelasController {
         inst.grava();
     }
 
-
-    
-
     public static void entidadesToComboBoxModel(DefaultComboBoxModel modelo){
         try {
             ListaER inst = ListaER.getInstancia();
@@ -89,4 +74,5 @@ public class TabelasController {
             ex.execute();
         }
     }
+    
 }

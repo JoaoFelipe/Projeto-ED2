@@ -1,14 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.exceptions;
 
-/**
- *
- * @author Joao
- */
 public class NotFoundException extends ModelException{
 
     private String message ;

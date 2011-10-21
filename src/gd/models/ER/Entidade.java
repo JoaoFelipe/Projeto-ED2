@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.ER;
 
 import gd.exceptions.ModelException;
@@ -18,12 +13,7 @@ import gd.exceptions.NotFoundException;
 import gd.models.Colecao;
 import gd.models.atributos.ColecaoAtributo;
 
-/**
- *
- * @author Joao
- */
-public class Entidade extends EntidadeRelacionamento{
-
+public class Entidade extends EntidadeRelacionamento {
 
     private String nome;
     private List<Atributo> atributos = null;
@@ -55,15 +45,13 @@ public class Entidade extends EntidadeRelacionamento{
         if (nome == null || nome.equals("")) {
             throw new NotFoundException("O nome não pode estar em branco");
         }
-
         int count = 0;
         Set<String> set = new HashSet<String>();
-
         for (Atributo atributo : atributos) {
             if (!set.add(atributo.getNome())){
                 throw new NonUniqueException("Atributo não é único");
             }
-            if (atributo.getPK()){
+            if (atributo.getPK()) {
                 count++;
             }
         }
@@ -85,7 +73,7 @@ public class Entidade extends EntidadeRelacionamento{
     }
 
     @Override
-    public void grava(DataOutputStream saida) throws ModelException{
+    public void grava(DataOutputStream saida) throws ModelException {
         try {
             saida.writeUTF("TABELA");
             saida.writeUTF(nome);
@@ -139,7 +127,6 @@ public class Entidade extends EntidadeRelacionamento{
                 retorno.add("#"+relacionamento.getEntidade().getNome());
             }
         }
-
         return retorno;
     }
 
@@ -159,19 +146,12 @@ public class Entidade extends EntidadeRelacionamento{
         return null;
     }
 
-    /**
-     * @return the numeroRegistros
-     */
     public int getNumeroRegistros() {
         return numeroRegistros;
     }
 
-    /**
-     * @param numeroRegistros the numeroRegistros to set
-     */
     public void setNumeroRegistros(int numeroRegistros) {
         this.numeroRegistros = numeroRegistros;
     }
-
 
 }

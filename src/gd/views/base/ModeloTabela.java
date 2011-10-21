@@ -1,20 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gd.views.base;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Joao
- */
 public class ModeloTabela extends DefaultTableModel {
 
-    List<Class> types = null;
-    boolean editavel = true;
+    private List<Class> types = null;
+    private boolean editavel = true;
 
     public ModeloTabela(Object[] columnNames, List<Class> types, boolean edit) {
         super(new Object[][]{}, columnNames);
@@ -24,13 +16,30 @@ public class ModeloTabela extends DefaultTableModel {
 
     @Override
     public boolean isCellEditable(int row, int column) {
-        return ((row == this.getRowCount() - 1) && editavel);
+        return ((row == this.getRowCount() - 1) && isEditavel());
     }
 
     public Class getColumnClass(int columnIndex) {
-        if (types != null)
-            return types.get(columnIndex);
+        if (getTypes() != null)
+            return getTypes().get(columnIndex);
         else
             return String.class;
     }
+
+    public List<Class> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Class> types) {
+        this.types = types;
+    }
+
+    public boolean isEditavel() {
+        return editavel;
+    }
+
+    public void setEditavel(boolean editavel) {
+        this.editavel = editavel;
+    }
+    
 }

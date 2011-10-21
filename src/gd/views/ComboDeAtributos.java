@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.views;
 
 import gd.models.atributos.Atributo;
@@ -10,13 +5,9 @@ import gd.views.base.ComboBoxEditavel;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author Joao
- */
 public class ComboDeAtributos extends ComboBoxEditavel {
 
-    DefaultComboBoxModel modelo = null;
+    private DefaultComboBoxModel modelo = null;
 
     public ComboDeAtributos() {
         super();
@@ -26,13 +17,19 @@ public class ComboDeAtributos extends ComboBoxEditavel {
     }
 
     public void listarAtributos() {
-        modelo.removeAllElements();
+        getModelo().removeAllElements();
         List<String> temp = Atributo.todasOpcoes();
         for (int i = 0; i < temp.size(); i++) {
-            modelo.insertElementAt(temp.get(i), i);
+            getModelo().insertElementAt(temp.get(i), i);
         }
+    }
 
+    public DefaultComboBoxModel getModelo() {
+        return modelo;
+    }
 
+    public void setModelo(DefaultComboBoxModel modelo) {
+        this.modelo = modelo;
     }
 
 }

@@ -1,35 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gd.models.ER;
 
 import gd.exceptions.ModelException;
-import gd.models.ER.EntidadeRelacionamento;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import gd.exceptions.NonUniqueException;
-import gd.exceptions.NotFoundException;
 import gd.models.Colecao;
-import gd.models.Filtro;
-import gd.models.Processo;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 
-/**
- *
- * @author Joao
- */
 public class ListaER {
 
-    // Padrão de projeto Singleton: só pode haver uma lista de ER
     private static ListaER instancia = null;
     private String nomeArquivo = "metadados.dat";
     private String prefix = "";
@@ -94,11 +79,9 @@ public class ListaER {
                     } else {
                         attrs.add(texto);
                     }
-
                 }
             } catch (EOFException e) {
                 add(EntidadeRelacionamento.criarER(tipo, attrs));
-
             } catch (FileNotFoundException e) {
             } finally {
                 if (arquivo != null) {
@@ -153,6 +136,7 @@ public class ListaER {
     public static void apagarInstancia() {
         instancia = null;
     }
+    
     public static ListaER instanciarTeste(String nomeArquivo, String prefix) throws ModelException {
         if (instancia == null) {
             instancia = new ListaER(nomeArquivo, prefix);
@@ -160,6 +144,6 @@ public class ListaER {
 
         }
         return instancia;
-
     }
+    
 }

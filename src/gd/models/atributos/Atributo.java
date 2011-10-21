@@ -1,27 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.atributos;
 
 import gd.models.arquivo.Valor;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author Joao
- */
 public abstract class Atributo{
-
-    //Aqui estão sendo usados os padrões Factory Method (criarAtributo)
-    //e Template Method (getRepr está usando os metodos abstratos)
 
     public static Atributo criarAtributo(String nome, String tipo, Boolean pk){
         if (tipo.contains("char")){
@@ -40,7 +27,6 @@ public abstract class Atributo{
         }
         return null;
     }
-
 
     public static Atributo criarAtributo(String texto){
         Pattern p = Pattern.compile("(\\*)?(.+):(.+)");
@@ -62,7 +48,6 @@ public abstract class Atributo{
                     return new CharAttr(nome, pk, 1);
                 }
             }
-
         }
         return null;
     }
@@ -88,7 +73,6 @@ public abstract class Atributo{
     public abstract boolean getPK();
     public abstract int getTamanho();
     public abstract Class getClasse();
-
     public abstract int getHash(Valor valor);
     public abstract Valor getDefault();
     public abstract Valor ler(RandomAccessFile in) throws IOException;
