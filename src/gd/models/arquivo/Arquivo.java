@@ -6,6 +6,7 @@ package gd.models.arquivo;
 
 import gd.models.ER.Entidade;
 import gd.models.ER.Relacionamento;
+import gd.models.atributos.Atributo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,6 +32,14 @@ public class Arquivo {
         }
     }
 
+    public void seek(int position) throws IOException {
+        arq.seek(position * tamanhoRegistro);
+    }
+
+    public Registro lerRegistro() throws IOException{
+        return new Registro(entidade, arq);
+    }
+
     public Arquivo(Entidade entidade) {
         this.entidade = entidade;
         this.arq = null;
@@ -43,6 +52,7 @@ public class Arquivo {
         this.arq = new RandomAccessFile(arquivo, "rw");
         if (arq.length() == 0) {
             this.tamanho = 8;
+            this.criar();
         } else {
             this.tamanho = (int) (arq.length() / tamanhoRegistro);
         }
@@ -73,7 +83,7 @@ public class Arquivo {
             if (r.getPk().equals(valor)) {
                 if (resultado == null) {
                     resultado = new Resultado(endereco, !r.isRemovido());
-                } else if (!r.isRemovido() && !resultado.isEncontrado()){
+                } else if (!r.isRemovido() && !resultado.isEncontrado()) {
                     resultado = new Resultado(endereco, true);
                 }
             }
@@ -106,7 +116,6 @@ public class Arquivo {
         Resultado resultado = busca(registro.pk);
 
         arq.seek(resultado.getPosicao() * tamanhoRegistro);
-
         Registro atual = new Registro(entidade, arq);
 
         if (!resultado.isEncontrado() && !atual.isUsado() && existeReferencia(atual)) {
@@ -192,5 +201,39 @@ public class Arquivo {
 
         this.setTamanho(tamanho * 2);
         entidade.setNumeroRegistros(numero);
+    }
+
+    public boolean remove(Valor valor, int modo) throws IOException {
+        // modo == 0: restrict
+        // modo == 1: cascade
+
+        Resultado resultado = busca(valor);
+        if (resultado.isEncontrado()) {
+
+            for (Relacionamento relacionamento : entidade.getRelacionamentos()) {
+                if (relacionamento.getEntidadeReferenciada() == entidade) {
+                    Entidade referenciadora = relacionamento.getEntidade();
+                    Arquivo temp = new Arquivo(referenciadora);
+                    Atributo buscado = referenciadora.buscarAtributo(relacionamento.getCampo());
+                    Consulta consulta = new Consulta(temp, null).
+                            busca(buscado, "=", resultado.getPosicao()).
+                            compila(prefix);
+                    if (modo == 0 && !consulta.getCodigos().isEmpty()) {
+                        return false;
+                    } else if (modo == 1) {
+                        temp.abrir(prefix);
+                        for (Valor codigo : consulta.getCodigos()) {
+                            temp.remove(codigo, modo);
+                        }
+                        temp.fechar();
+                    }
+                }
+            }
+
+            arq.seek(resultado.getPosicao() * tamanhoRegistro);
+            new Registro(entidade, 2).grava(arq);
+            return true;
+        }
+        return false;
     }
 }

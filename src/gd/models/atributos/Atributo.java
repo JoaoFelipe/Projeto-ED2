@@ -94,4 +94,7 @@ public abstract class Atributo{
     public abstract Valor ler(RandomAccessFile in) throws IOException;
     public abstract void grava(RandomAccessFile out, Valor valor) throws IOException;
 
+    public abstract boolean compara(String operador, Valor valor, Object condicao);
+    public abstract List<String> comparadores();
+
 }

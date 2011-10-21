@@ -9,6 +9,8 @@ import gd.models.arquivo.Valor;
 import gd.models.atributos.Atributo;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -90,4 +92,46 @@ public class IntAttr extends Atributo{
         in.writeInt(((Integer) valor.getInfo()).intValue());
     }
 
+    public boolean buscaEqual(Valor valor, Integer condicao){
+        return ((Integer) valor.getInfo()).compareTo(condicao) == 0;
+    }
+
+    public boolean buscaLT(Valor valor, Integer condicao){
+        return ((Integer) valor.getInfo()).compareTo(condicao) < 0;
+    }
+
+    public boolean buscaLE(Valor valor, Integer condicao){
+        return ((Integer) valor.getInfo()).compareTo(condicao) <= 0;
+    }
+
+    public boolean buscaGT(Valor valor, Integer condicao){
+        return ((Integer) valor.getInfo()).compareTo(condicao) > 0;
+    }
+
+    public boolean buscaGE(Valor valor, Integer condicao){
+        return ((Integer) valor.getInfo()).compareTo(condicao) >= 0;
+    }
+
+    @Override
+    public boolean compara(String operador, Valor valor, Object condicao) {
+        if(operador.equals("="))
+            return buscaEqual(valor, (Integer)condicao);
+        else if(operador.equals("!="))
+            return !buscaEqual(valor, (Integer)condicao);
+        else if(operador.equals(">"))
+            return buscaGT(valor, (Integer)condicao);
+        else if(operador.equals("<"))
+            return buscaLT(valor, (Integer)condicao);
+        else if(operador.equals(">="))
+            return buscaGE(valor, (Integer)condicao);
+        else if(operador.equals("<="))
+            return buscaLE(valor, (Integer)condicao);
+        else
+            return true;
+    }
+
+    @Override
+    public List<String> comparadores() {
+        return Arrays.asList("=", "!=", ">", "<", ">=", "<=");
+    }
 }
