@@ -7,36 +7,35 @@ import gd.models.ER.ListaER;
 import java.io.File;
 import java.util.Arrays;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
-/**
- *
- * @author Joao
- */
 public class TestRemocao {
 
     String masterE1 = "test\\EmpregadoMaster.dat";
     String masterE2 = "test\\DependenteMaster.dat";
     String arqE1 = "test\\Dependente.dat";
-    String arqE2 = "test\\Empregadp.dat";
+    String arqE2 = "test\\Empregado.dat";
     String metaDadosPath = "test\\metadados-teste.dat";
     String prefix = "test\\";
     Entidade e1 = null;
     Entidade e2 = null;
 
-    @Before
-    public void setUp() throws Exception {
-        for (String string : Arrays.asList(metaDadosPath, masterE1, masterE2, arqE1, arqE2)) {
+    public void deletarArquivos() {
+        for (String string : Arrays.asList(metaDadosPath, arqE1, arqE2, masterE1, masterE2)) {
             File file = new File(string);
             if (file.exists()) {
                 file.delete();
             }
         }
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        deletarArquivos();
+
         ListaER.apagarInstancia();
         ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
 
@@ -51,7 +50,10 @@ public class TestRemocao {
 
     }
 
-
+    @After
+    public void tearDown() throws Exception {
+        deletarArquivos();
+    }
 
     @Test
     public void removerElemento0NaPosicao0() throws Exception {

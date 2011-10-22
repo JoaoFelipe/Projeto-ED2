@@ -1,27 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import gd.models.atributos.DoubleAttr;
 import gd.models.atributos.CharAttr;
 import gd.models.atributos.IntAttr;
 import gd.models.atributos.Atributo;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Joao
- */
 public class TestAtributos {
-
-    public TestAtributos() {
-    }
 
     @Test
     public void criarAtributoInt() {

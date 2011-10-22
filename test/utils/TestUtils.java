@@ -1,10 +1,5 @@
 package utils;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import gd.models.arquivo.Registro;
 import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.Entidade;
@@ -16,11 +11,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
-
-/**
- *
- * @author Joao
- */
 public class TestUtils {
 
     String nomeArquivo = "clientes.dat";
@@ -47,8 +37,6 @@ public class TestUtils {
         ListaER.getInstancia().add(e2);
 
     }
-
-
 
     @Test
     public void CompararArquivosVazios() throws Exception {

@@ -1,42 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import utils.ArquivoSequencial;
 import gd.exceptions.NotFoundException;
 import gd.models.ER.Relacionamento;
 import gd.exceptions.NonUniqueException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.Field;
 import gd.models.ER.ListaER;
 import gd.models.ER.EntidadeRelacionamento;
 import java.io.File;
-import java.io.EOFException;
-import java.util.ArrayList;
-import java.io.FileInputStream;
-import java.io.DataInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import gd.models.ER.Entidade;
-import gd.models.atributos.Atributo;
-import gd.models.atributos.IntAttr;
 import java.util.List;
 import java.util.Arrays;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Joao
- */
 public class TestRelacionamentos {
 
     String metaDadosPath = "test\\metadados-teste.dat";
@@ -44,12 +23,19 @@ public class TestRelacionamentos {
     EntidadeRelacionamento e1 = null;
     EntidadeRelacionamento e2 = null;
 
+    public void deletarArquivos() {
+        for (String string : Arrays.asList(metaDadosPath)) {
+            File file = new File(string);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
-        File file = new File(metaDadosPath);
-        if (file.exists()) {
-            file.delete();
-        }
+        deletarArquivos();
+        
         ListaER.apagarInstancia();
         ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
 
@@ -59,6 +45,11 @@ public class TestRelacionamentos {
         ListaER.getInstancia().add(e1);
         ListaER.getInstancia().add(e2);
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        deletarArquivos();
     }
  
 
@@ -208,13 +199,5 @@ public class TestRelacionamentos {
         assertEquals(e.getRelacionamentos().size(), 1);
         assertEquals(e.getRelacionamentos().get(0), relacionamento);
     }
-
-    
-
-    
-
-    
-
-    
 
 }

@@ -1,45 +1,43 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import gd.exceptions.NonUniqueException;
 import gd.models.ER.ListaER;
 import java.io.File;
 import utils.ArquivoSequencial;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import gd.models.ER.EntidadeRelacionamento;
 import gd.models.ER.Entidade;
 import gd.models.atributos.IntAttr;
 import gd.models.atributos.Atributo;
 import java.util.List;
 import java.util.Arrays;
-import java.io.FileNotFoundException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Joao
- */
 public class TestEntidade {
 
     String metaDadosPath = "test\\metadados-teste.dat";
     String prefix = "test\\";
 
+    public void deletarArquivos() {
+        for (String string : Arrays.asList(metaDadosPath)) {
+            File file = new File(string);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
     @Before
     public void setUp() {
-        File file = new File(metaDadosPath);
-        if (file.exists()) {
-            file.delete();
-        }
+        deletarArquivos();
         ListaER.apagarInstancia();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        deletarArquivos();
     }
 
     @Test

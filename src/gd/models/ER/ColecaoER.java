@@ -1,17 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.ER;
 
 import gd.models.Filtro;
 import gd.models.Processo;
 
-/**
- *
- * @author Joao
- */
 public class ColecaoER {
 
     public static class processos {
@@ -35,5 +26,7 @@ public class ColecaoER {
                 }
             };
         }
+        
     }
+    
 }

@@ -1,17 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gd.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author Joao
- */
 public class Colecao {
 
     public static <T, G> Collection<G> filtrarEProcessar(Collection<T> target, Filtro<T> filtro, Processo<T, G> processo) {
@@ -40,8 +31,5 @@ public class Colecao {
         };
         return filtrarEProcessar(target, filtro, processo);
     }
-
-
-    
 
 }

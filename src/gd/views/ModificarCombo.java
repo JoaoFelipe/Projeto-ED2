@@ -1,26 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.views;
 
 import gd.models.Colecao;
 import gd.models.ER.Entidade;
-import gd.models.atributos.Atributo;
 import gd.models.atributos.ColecaoAtributo;
-import gd.views.base.ComboBoxEditavel;
 import gd.views.base.ComboBoxNaoEditavel;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author Joao
- */
 public class ModificarCombo extends ComboBoxNaoEditavel {
 
-    DefaultComboBoxModel modelo = null;
+    private DefaultComboBoxModel modelo = null;
 
     public ModificarCombo(Entidade entidade) {
         super();
@@ -33,5 +22,12 @@ public class ModificarCombo extends ComboBoxNaoEditavel {
         }
     }
 
+    public DefaultComboBoxModel getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(DefaultComboBoxModel modelo) {
+        this.modelo = modelo;
+    }
 
 }

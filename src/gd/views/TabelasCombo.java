@@ -1,30 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.views;
 
 import gd.controllers.Command;
-import gd.controllers.CriarEntidadeController;
 import gd.controllers.TabelasController;
-import gd.models.atributos.Atributo;
-import gd.views.base.ComboBoxEditavel;
 import gd.views.base.ComboBoxNaoEditavel;
 import java.awt.event.ActionEvent;
-import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
-/**
- *
- * @author Joao
- */
 public class TabelasCombo extends ComboBoxNaoEditavel {
 
-    Command listarEntidadesCommand = null;
-    JComboBox comboAtributos = null;
-
+    private Command listarEntidadesCommand = null;
+    private JComboBox comboAtributos = null;
 
     public TabelasCombo(JComboBox comboAtributos) {
         super();
@@ -32,12 +18,28 @@ public class TabelasCombo extends ComboBoxNaoEditavel {
         TabelasController.entidadesToComboBoxModel((DefaultComboBoxModel) this.getModel());
     }
 
-     public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {
         e.getActionCommand();
         TabelasController.atributosToComboBoxModel(
             (String) this.getModel().getSelectedItem(),
-            (DefaultComboBoxModel) comboAtributos.getModel()
+            (DefaultComboBoxModel) getComboAtributos().getModel()
         );
+    }
+
+    public Command getListarEntidadesCommand() {
+        return listarEntidadesCommand;
+    }
+
+    public void setListarEntidadesCommand(Command listarEntidadesCommand) {
+        this.listarEntidadesCommand = listarEntidadesCommand;
+    }
+
+    public JComboBox getComboAtributos() {
+        return comboAtributos;
+    }
+
+    public void setComboAtributos(JComboBox comboAtributos) {
+        this.comboAtributos = comboAtributos;
     }
 
 }

@@ -1,23 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.atributos;
 
 import gd.models.arquivo.Valor;
-import gd.models.atributos.Atributo;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *
- * @author Joao
- */
 public class DoubleAttr extends Atributo{
-
 
     private String nome;
     private boolean pk;
@@ -51,7 +40,6 @@ public class DoubleAttr extends Atributo{
     public Class getClasse() {
         return Double.class;
     }
-
 
     @Override
     public boolean equals(Object obj) {

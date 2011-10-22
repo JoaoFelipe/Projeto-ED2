@@ -80,7 +80,7 @@ public class Consulta {
 
     private boolean verificaCondicoes(Registro registro) {
         boolean condicao = true;
-        for (Valor valor : registro.valores) {
+        for (Valor valor : registro.getValores()) {
             for (Busca busca : buscas) {
                 if (valor.getTipo() == busca.getAtributo()){
                     condicao = condicao && busca.compara(valor);

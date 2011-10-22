@@ -1,26 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.atributos;
 
 import gd.models.arquivo.Valor;
-import gd.models.atributos.Atributo;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.lang.String;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author Joao
- */
 public class CharAttr extends Atributo{
-
 
     private String nome;
     private boolean pk;

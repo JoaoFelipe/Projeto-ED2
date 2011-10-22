@@ -19,28 +19,31 @@ import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
-/**
- *
- * @author Joao
- */
 public class TestBusca {
 
     String metaDadosPath = "test\\metadados-teste.dat";
+    String arqE1 = "test\\Dependente.dat";
+    String arqE2 = "test\\Empregado.dat";
     String prefix = "test\\";
     Entidade e1 = null;
     Entidade e2 = null;
 
+    public void deletarArquivos() {
+        for (String string : Arrays.asList(metaDadosPath, arqE1, arqE2)) {
+            File file = new File(string);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
-        File file = new File(metaDadosPath);
-        if (file.exists()) {
-            file.delete();
-        }
+        deletarArquivos();
         ListaER.apagarInstancia();
         ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
 
@@ -50,6 +53,11 @@ public class TestBusca {
         ListaER.getInstancia().add(e1);
         ListaER.getInstancia().add(e2);
 
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        deletarArquivos();
     }
 
     @Test

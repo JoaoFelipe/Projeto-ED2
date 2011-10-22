@@ -1,29 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.models.ER;
 
 import gd.exceptions.ModelException;
-import gd.models.ER.ListaER;
-import gd.models.ER.EntidadeRelacionamento;
-import gd.models.ER.Entidade;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
-import gd.exceptions.NonUniqueException;
 import gd.exceptions.NotFoundException;
 
-/**
- *
- * @author Joao
- */
 public class Relacionamento extends EntidadeRelacionamento{
 
     private Entidade entidade;
     private String campo;
-
     private Entidade entidadeReferenciada;
     private String campoReferenciado;
 
@@ -32,10 +18,8 @@ public class Relacionamento extends EntidadeRelacionamento{
         this.campo = campo;
         this.entidadeReferenciada = (Entidade) entidadeReferenciada;
         this.campoReferenciado = campoReferenciado;
-        
         this.validar();
     }
-
  
     public Relacionamento(List<String> defs) throws ModelException{
         this(ListaER.getInstancia().buscar(defs.get(0)), defs.get(1), ListaER.getInstancia().buscar(defs.get(2)), defs.get(3));
@@ -45,7 +29,7 @@ public class Relacionamento extends EntidadeRelacionamento{
         this.validar();
     }
 
-    public void validar() throws ModelException {// throws NotFoundException{
+    public void validar() throws ModelException {
         if (entidade == null) {
             throw new NotFoundException("Entidade não encontrada");
         }
@@ -58,8 +42,6 @@ public class Relacionamento extends EntidadeRelacionamento{
         if (getEntidadeReferenciada().buscarAtributo(campoReferenciado) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade Referenciada");
         }
-  
-
     }
 
     @Override
@@ -132,23 +114,14 @@ public class Relacionamento extends EntidadeRelacionamento{
         return campoReferenciado;
     }
 
-    /**
-     * @return the campo
-     */
     public String getCampo() {
         return campo;
     }
 
-    /**
-     * @param campo the campo to set
-     */
     public void setCampo(String campo) {
         this.campo = campo;
     }
 
-    /**
-     * @param entidadeReferenciada the entidadeReferenciada to set
-     */
     public void setEntidadeReferenciada(Entidade entidadeReferenciada) {
         this.entidadeReferenciada = entidadeReferenciada;
     }

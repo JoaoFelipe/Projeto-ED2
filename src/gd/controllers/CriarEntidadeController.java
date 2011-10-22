@@ -1,23 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gd.controllers;
 
-import gd.exceptions.ModelException;
-import gd.models.ER.Entidade;
-import gd.models.ER.ListaER;
 import gd.models.atributos.Atributo;
 import gd.views.TabelaDeAtributos;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Joao
- */
 public class CriarEntidadeController {
 
     public static void inserirAtributo(TabelaDeAtributos table, String nome, String tipo) {
@@ -47,6 +33,5 @@ public class CriarEntidadeController {
             modelo.removeRow(i);
         }
     }
-
 
 }

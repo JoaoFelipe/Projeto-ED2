@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import gd.models.arquivo.Consulta;
 import gd.models.arquivo.Arquivo;
 import gd.models.arquivo.Registro;
@@ -14,22 +9,16 @@ import gd.models.ER.ListaER;
 import java.io.File;
 import gd.models.ER.Entidade;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
 
-/**
- *
- * @author Joao
- */
 public class TestConsulta {
 
-
     String metaDadosPath = "test\\metadados-teste.dat";
+    String arqE2 = "test\\Empregado.dat";
     String prefix = "test\\";
     Entidade e1 = null;
     Atributo cod;
@@ -37,12 +26,19 @@ public class TestConsulta {
     Atributo idade;
     Atributo salario;
 
+    public void deletarArquivos() {
+        for (String string : Arrays.asList(metaDadosPath, arqE2)) {
+            File file = new File(string);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
-        File file = new File(metaDadosPath);
-        if (file.exists()) {
-            file.delete();
-        }
+        deletarArquivos();
+        
         ListaER.apagarInstancia();
         ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
 
@@ -61,16 +57,13 @@ public class TestConsulta {
         nome = e1.buscarAtributo("nome");
         idade = e1.buscarAtributo("idade");
         salario = e1.buscarAtributo("salario");
-
-
     }
 
-    public TestConsulta() {
+    @After
+    public void tearDown() throws Exception {
+        deletarArquivos();
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
     @Test
     public void TestComparaInt() {
         Atributo atributo = e1.buscarAtributo("cod");
