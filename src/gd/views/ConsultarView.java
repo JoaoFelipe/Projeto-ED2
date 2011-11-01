@@ -4,11 +4,17 @@
 
 package gd.views;
 
+import gd.controllers.Command;
+import gd.controllers.ConsultaCommand;
 import gd.views.tabelaer.TabelaPrincipal;
 import gd.controllers.JanelaController;
 import gd.models.ER.Entidade;
+import gd.models.ER.ListaER;
+import gd.models.arquivo.Arquivo;
+import gd.models.arquivo.Consulta;
 import gd.views.base.ComboBoxNaoEditavel;
 import java.awt.BorderLayout;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,9 +24,12 @@ import org.jdesktop.application.Action;
 
 public class ConsultarView extends javax.swing.JDialog {
 
-    public ConsultarView(java.awt.Frame parent) {
+    ConsultaCommand command;
+    
+    public ConsultarView(java.awt.Frame parent, ConsultaCommand command) {
         super(parent);
         initComponents();
+        this.command = command;
    //     getRootPane().setDefaultButton(closeButton);
     }
 
@@ -37,7 +46,7 @@ public class ConsultarView extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new ConsultarTabela((Entidade)TabelaPrincipal.getInstancia().getEr());
+        tabelaConsulta = new ConsultarTabela((Entidade)ListaER.getSelecionado());
         jPanel1 = new javax.swing.JPanel();
         adicionarButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
@@ -51,9 +60,9 @@ public class ConsultarView extends javax.swing.JDialog {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1.setName("jTable1"); // NOI18N
-        jTable1.setRowHeight(25);
-        jScrollPane1.setViewportView(jTable1);
+        tabelaConsulta.setName("tabelaConsulta"); // NOI18N
+        tabelaConsulta.setRowHeight(25);
+        jScrollPane1.setViewportView(tabelaConsulta);
 
         jPanel1.setName("jPanel1"); // NOI18N
 
@@ -138,7 +147,18 @@ public class ConsultarView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-       // new AdicionarReferenciaCommand(this, tabelaComboBox, atributoComboBox, referenciadaComboBox, codigoComboBox, buscaComboBox).execute();
+        try {
+            Consulta consulta = command.getConsulta();
+            Entidade entidade = consulta.getArquivo().getEntidade();
+            for (int i = 0; i < tabelaConsulta.getModel().getRowCount(); i++) {
+                consulta.busca(entidade.buscarAtributo((String)tabelaConsulta.getValueAt(i, 0)), (String)tabelaConsulta.getValueAt(i, 1), tabelaConsulta.getValueAt(i, 2));        
+            }
+            consulta.compila();
+            command.execute();
+            JanelaController.fecharDialog(this);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao abrir arquivo");
+        }
     }//GEN-LAST:event_okActionPerformed
 
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
@@ -146,11 +166,11 @@ public class ConsultarView extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelarActionPerformed
 
     private void adicionarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarButtonActionPerformed
-        ((DefaultTableModel) jTable1.getModel()).addRow(new Object[]{});
+        ((DefaultTableModel) tabelaConsulta.getModel()).addRow(new Object[]{});
     }//GEN-LAST:event_adicionarButtonActionPerformed
 
     private void adicionarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarButton1ActionPerformed
-        ((ConsultarTabela) jTable1).removeSelectedRow();
+        ((ConsultarTabela) tabelaConsulta).removeSelectedRow();
     }//GEN-LAST:event_adicionarButton1ActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -159,8 +179,8 @@ public class ConsultarView extends javax.swing.JDialog {
     private javax.swing.JButton cancelarButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton okButton;
+    private javax.swing.JTable tabelaConsulta;
     // End of variables declaration//GEN-END:variables
     
 }

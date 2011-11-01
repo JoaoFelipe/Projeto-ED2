@@ -28,7 +28,7 @@ public class ConsultarTabela extends JTable {
         col.setCellEditor(new ComboBoxEditor(lista));
         col.setCellRenderer(new ComboBoxRenderer(lista));
 
-        lista = Arrays.asList("=", "!=", ">", ">=", "<", "<=");
+        lista = Arrays.asList("=", "!=", ">", ">=", "<", "<=", "LIKE", "REGEX");
         col = this.getColumnModel().getColumn(1);
         col.setCellEditor(new ComboBoxEditor(lista));
         col.setCellRenderer(new ComboBoxRenderer(lista));

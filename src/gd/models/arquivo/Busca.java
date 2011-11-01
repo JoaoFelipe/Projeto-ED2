@@ -17,7 +17,7 @@ public class Busca {
     public Busca(Atributo atributo, String operador, Object valor) {
         this.atributo = atributo;
         this.operador = operador;
-        this.valor = valor;
+        this.valor = atributo.cast(valor);
     }
 
     public Atributo getAtributo() {
@@ -41,7 +41,7 @@ public class Busca {
     }
 
     public void setValor(Object valor) {
-        this.valor = valor;
+        this.valor = atributo.cast(valor);
     }
 
     public boolean compara(Valor buscado){

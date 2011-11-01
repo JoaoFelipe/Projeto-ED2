@@ -61,7 +61,7 @@ public class IntAttr extends Atributo{
 
     @Override
     public int getHash(Valor valor) {
-        Integer i = (Integer) valor.getInfo();
+        Integer i = (Integer) (valor.getInfo());
         return i.hashCode();
     }
 
@@ -121,5 +121,14 @@ public class IntAttr extends Atributo{
     @Override
     public List<String> comparadores() {
         return Arrays.asList("=", "!=", ">", "<", ">=", "<=");
+    }
+    
+    @Override
+    public Object cast(Object valor) {
+        if (valor instanceof Integer){
+            return valor;
+        } else {
+            return Integer.parseInt(valor+"");
+        }
     }
 }

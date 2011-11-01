@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import gd.models.arquivo.Consulta;
 import gd.models.arquivo.Arquivo;
 import gd.models.arquivo.Registro;
@@ -232,6 +233,37 @@ public class TestConsulta {
                 compila(prefix).getCodigos().toArray();
 
         assertArrayEquals(esperado, codigos);
+    }
+    
+    @Test
+    public void TestConsultaIgualdadeCod() throws Exception {
+        Arquivo arquivo = new Arquivo(e1);
+        Consulta consulta = new Consulta(arquivo, null);
+
+        Object[] esperado = Arrays.asList(
+                new Valor(cod, 0)
+        ).toArray();
+        Object[] codigos = consulta.
+                busca(cod, "=", 0).
+                compila(prefix).getCodigos().toArray();
+
+        assertArrayEquals(esperado, codigos);
+
+    }
+    
+    @Test
+    public void TestConsultaIgualdade2Cods() throws Exception {
+        Arquivo arquivo = new Arquivo(e1);
+        Consulta consulta = new Consulta(arquivo, null);
+
+        Object[] esperado = new Object[0];
+        Object[] codigos = consulta.
+                busca(cod, "=", 0).
+                busca(cod, "=", 1).
+                compila(prefix).getCodigos().toArray();
+
+        assertArrayEquals(esperado, codigos);
+
     }
 
 }

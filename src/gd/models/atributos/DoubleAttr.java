@@ -122,4 +122,13 @@ public class DoubleAttr extends Atributo{
     public List<String> comparadores() {
         return Arrays.asList("=", "!=", ">", "<", ">=", "<=");
     }
+    
+    @Override
+    public Object cast(Object valor) {
+        if (valor instanceof Double){
+            return valor;
+        } else {
+            return Double.parseDouble(valor+"");
+        }
+    }
 }

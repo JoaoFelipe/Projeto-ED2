@@ -19,6 +19,8 @@ public class ListaER {
     private String nomeArquivo = "metadados.dat";
     private String prefix = "";
     private List<EntidadeRelacionamento> lista = null;
+    
+    private static EntidadeRelacionamento selecionado = null;
 
     private ListaER() throws ModelException {
     }
@@ -132,6 +134,18 @@ public class ListaER {
         }
     }
 
+    
+    public static EntidadeRelacionamento getSelecionado() {
+        return selecionado;
+    }
+
+    public static void setSelecionado(EntidadeRelacionamento selecionado) {
+        ListaER.selecionado = selecionado;
+    }
+
+    
+    
+    
     // Os métodos abaixo foram criados para facilitar os testes. Não usar na aplicação
     public static void apagarInstancia() {
         instancia = null;

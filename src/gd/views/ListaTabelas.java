@@ -46,6 +46,7 @@ public class ListaTabelas extends Lista {
                 er = ListaER.getInstancia().getLista().get(i);
             }
             TabelaPrincipal tabela = TabelaPrincipal.getInstancia();
+            ListaER.setSelecionado(er);
             tabela.setEstado(er);
         } catch (ModelException ex) {
             ex.execute();

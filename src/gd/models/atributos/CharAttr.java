@@ -179,4 +179,9 @@ public class CharAttr extends Atributo{
         return Arrays.asList("LIKE", "REGEX", "=", "!=", ">", "<", ">=", "<=");
     }
 
+    @Override
+    public Object cast(Object valor) {
+        return valor + "";
+    }
+
 }

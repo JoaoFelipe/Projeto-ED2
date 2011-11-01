@@ -50,13 +50,13 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tabelaConsulta">
           <Properties>
-            <Property name="name" type="java.lang.String" value="jTable1" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="tabelaConsulta" noResource="true"/>
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ConsultarTabela((Entidade)gd.views.tabelaer.TabelaPrincipal.getInstancia().getEr())"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ConsultarTabela((Entidade)ListaER.getSelecionado())"/>
           </AuxValues>
         </Component>
       </SubComponents>

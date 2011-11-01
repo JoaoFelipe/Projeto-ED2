@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TabelaPrincipal extends JTable {
 
-    private DefaultTableModel modelo = null;
+    private ModeloTabela modelo = null;
     private static TabelaPrincipal instancia = null;
     private JPanel painel = null;
 
@@ -58,9 +58,6 @@ public class TabelaPrincipal extends JTable {
         getEstado().show();
     }
 
-    public EntidadeRelacionamento getEr() {
-        return getEstado().getEr();
-    }
 
     public JPanel getPainel() {
         return painel;
@@ -73,6 +70,11 @@ public class TabelaPrincipal extends JTable {
     public void addRow(Object[] rowData) {
         this.getModelo().addRow(rowData);
         this.setEditingRow(this.getRowCount()-1);
+    }
+    
+    public void removeRow() {
+        this.getModelo().removeRow(this.getRowCount()-1);
+        modelo.setEditavel(false);
     }
 
     public EstadoTabela getEstado() {

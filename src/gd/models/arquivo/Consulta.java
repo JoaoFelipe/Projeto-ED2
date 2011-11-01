@@ -5,10 +5,14 @@
 
 package gd.models.arquivo;
 
+import gd.models.ER.Entidade;
 import gd.models.atributos.Atributo;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -25,11 +29,22 @@ public class Consulta {
         this.codigos = codigos;
         this.buscas = new ArrayList<Busca>();
     }
+    
+    public Consulta(Entidade entidade, List<Valor> codigos) {
+        this.arquivo = new Arquivo(entidade);
+        this.codigos = codigos;
+        this.buscas = new ArrayList<Busca>();
+    }
+
 
     public Consulta busca(Atributo atributo, String operador, Object valor) {
         if (atributo.getPK() && operador.equals("=")){
-            codigos = new ArrayList<Valor>();
-            codigos.add(new Valor(atributo, valor));
+            if (codigos == null) {
+                codigos = new ArrayList<Valor>();
+                codigos.add(new Valor(atributo, valor));
+            } else {
+                codigos.retainAll(Arrays.asList(new Valor(atributo, valor)));
+            }
         } else {
             buscas.add(new Busca(atributo, operador, valor));
         }
@@ -96,6 +111,10 @@ public class Consulta {
      */
     public List<Valor> getCodigos() {
         return codigos;
+    }
+    
+    public Arquivo getArquivo() {
+        return this.arquivo;
     }
 
 

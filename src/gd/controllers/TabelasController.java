@@ -5,11 +5,18 @@ import gd.models.ColecaoComboModel;
 import gd.models.ER.Entidade;
 import gd.models.ER.ListaER;
 import gd.models.ER.Relacionamento;
+import gd.models.arquivo.Arquivo;
+import gd.models.arquivo.Consulta;
+import gd.models.arquivo.Registro;
+import gd.models.arquivo.Resultado;
+import gd.models.arquivo.Valor;
 import gd.models.atributos.Atributo;
 import gd.models.atributos.ColecaoAtributo;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 public class TabelasController {
@@ -73,6 +80,25 @@ public class TabelasController {
         } catch (ModelException ex) {
             ex.execute();
         }
+    }
+    
+    public static void registrosToTabelaModel(Consulta consulta, DefaultTableModel modelo) throws IOException {
+        while (modelo.getRowCount() != 0){
+            modelo.removeRow(0);
+        }
+ 
+        
+        Arquivo arquivo = consulta.getArquivo();
+        arquivo.abrir();
+        Entidade entidade = arquivo.getEntidade();
+        
+        for (int i = 0; i < consulta.getCodigos().size(); i++) {
+            Valor pk = consulta.getCodigos().get(i);
+            Resultado resultado = arquivo.busca(pk);
+            Registro registro = arquivo.lerRegistro(resultado.getPosicao());
+            modelo.addRow(registro.getRow());
+        }
+        arquivo.fechar();
     }
     
 }

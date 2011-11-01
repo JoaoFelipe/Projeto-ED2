@@ -6,30 +6,87 @@ import gd.models.atributos.Atributo;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Arquivo {
 
+    class RegistroIterador implements Iterator<Registro> {
+
+        private int passo;
+        private int endereco;
+        private Valor valor;
+        private int anterior;
+        
+        public RegistroIterador(Valor valor) {
+            passo = 0;
+            this.valor = valor;
+        }
+        
+        public int hash() {
+            if (passo == 0) {
+                anterior = valor.getHash() % tamanho;
+            } else {
+                anterior = (anterior + passo) % tamanho;//(hash(valor, passo - 1) + passo) % tamanho();
+            }
+            return anterior;
+        }
+        
+        public boolean hasNext() {
+            return passo < tamanho;
+        }
+
+        public Registro next() {
+            endereco = hash();
+            passo += 1;
+            try {
+                return lerRegistro(endereco);
+            } catch (IOException ex) {
+                return null;
+            }
+        }
+
+        public void endLoop() {
+            passo = tamanho;
+        }
+   
+        public void remove() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
+        public int getEndereco() {
+            return endereco;
+        }
+        
+    }
+    class RegistroIterable implements Iterable<Registro> {
+
+        private RegistroIterador iterador = null;
+        
+        public RegistroIterable(Valor valor){
+            iterador = new RegistroIterador(valor);
+        }
+        
+        public Iterator<Registro> iterator() {
+            return iterador;
+        }
+        
+        public int getEndereco(){
+            return iterador.getEndereco();
+        }
+        
+        public void endLoop() {
+            iterador.endLoop();
+        }
+        
+    }
+    
     private Entidade entidade;
     private int tamanho;
     private RandomAccessFile arq;
     private int tamanhoRegistro;
     private String prefix = "";
-
-    public int hash(Valor valor, int passo) {
-        if (passo == 0) {
-            return valor.getHash() % getTamanho();
-        } else {
-            return (hash(valor, passo - 1) + passo) % getTamanho();
-        }
-    }
-
-    public void seek(int position) throws IOException {
-        arq.seek(position * tamanhoRegistro);
-    }
-
-    public Registro lerRegistro() throws IOException{
-        return new Registro(entidade, arq);
-    }
 
     public Arquivo(Entidade entidade) {
         this.entidade = entidade;
@@ -39,13 +96,13 @@ public class Arquivo {
 
     public void abrir(String prefix, int tamanho) throws IOException {
         this.setPrefix(prefix);
-        File arquivo = new File(prefix + getEntidade().getNome() + ".dat");
+        File arquivo = new File(prefix + entidade.getNome() + ".dat");
         this.setArq(new RandomAccessFile(arquivo, "rw"));
-        if (getArq().length() == 0) {
+        if (arq.length() == 0) {
             this.tamanho = tamanho;
             this.criar();
         } else {
-            this.tamanho = (int) (getArq().length() / getTamanhoRegistro());
+            this.tamanho = (int) (arq.length() / tamanhoRegistro);
         }
         this.contarRegistros();
     }
@@ -62,39 +119,6 @@ public class Arquivo {
         this.getArq().close();
     }
 
-    public Resultado busca(Valor valor) throws IOException {
-        Resultado retorno = null;
-        int endereco;
-        int passo = 0;
-        int removido = -1;
-        Resultado resultado = null;
-        endereco = hash(valor, passo);
-        while (retorno == null) {
-            getArq().seek(endereco * getTamanhoRegistro());
-            Registro r = new Registro(getEntidade(), getArq());
-            if (r.isVazio()) {
-                retorno = resultado != null ? resultado : new Resultado(removido == -1 ? endereco : removido, false);
-            }
-            if (r.getPk().equals(valor)) {
-                if (resultado == null) {
-                    resultado = new Resultado(endereco, !r.isRemovido());
-                } else if (!r.isRemovido() && !resultado.isEncontrado()) {
-                    resultado = new Resultado(endereco, true);
-                }
-            }
-            if (r.isRemovido() && removido == -1) {
-                removido = endereco;
-            }
-            passo += 1;
-            endereco = hash(valor, passo);
-            if (passo >= tamanho) {
-                retorno = resultado != null ? resultado : new Resultado(removido, false);
-            }
-        }
-
-        return retorno;
-    }
-
     public int getTamanho() {
         return tamanho;
     }
@@ -103,84 +127,126 @@ public class Arquivo {
         this.tamanho = tamanho;
     }
 
+    public void seek(int position) throws IOException {
+        arq.seek(position * tamanhoRegistro);
+    }
+
+    public Registro lerRegistro() throws IOException{
+        return new Registro(entidade, arq);
+    }
+    
+    public Registro lerRegistro(int position) throws IOException{
+        this.seek(position);
+        return this.lerRegistro();
+    }
+    
+    public void gravaRegistro(Registro registro) throws IOException{
+        registro.grava(arq);
+    }
+    
+    public void gravaRegistro(Registro registro, int position) throws IOException{
+        this.seek(position);
+        registro.grava(arq);
+    }
+
+    
+    public Resultado busca(Valor valor) throws IOException {
+        Resultado retorno = null;
+        Resultado resultado = null;
+        int removido = -1;
+        
+        RegistroIterable iterador = new RegistroIterable(valor);
+        for (Registro registro : iterador) {
+            int endereco = iterador.getEndereco();
+            
+            if (registro.isVazio()) {
+                retorno = resultado != null ? resultado : new Resultado(removido == -1 ? endereco : removido, false);
+                iterador.endLoop();
+            } 
+            if (registro.getPk().equals(valor)) {
+                if (resultado == null) {
+                    resultado = new Resultado(endereco, !registro.isRemovido());
+                } else if (!registro.isRemovido() && !resultado.isEncontrado()) {
+                    resultado = new Resultado(endereco, true);
+                }
+            }
+            if (registro.isRemovido() && removido == -1) {
+                removido = endereco;
+            }
+            
+        }
+        if (retorno == null) {
+           retorno = resultado != null ? resultado : new Resultado(removido, false); 
+        }
+        return retorno;
+    }
+    
     public boolean insere(Registro registro) throws IOException {
         boolean retorno = true;
-
         Resultado resultado = busca(registro.getPk());
 
-        arq.seek(resultado.getPosicao() * tamanhoRegistro);
-        Registro atual = new Registro(entidade, arq);
+        Registro atual = this.lerRegistro(resultado.getPosicao());
 
         if (!resultado.isEncontrado() && !atual.isUsado() && existeReferencia(atual)) {
-
-            getArq().seek(resultado.getPosicao() * getTamanhoRegistro());
-            registro.grava(getArq());
-            getEntidade().setNumeroRegistros(getEntidade().getNumeroRegistros() + 1);
+            this.gravaRegistro(registro, resultado.getPosicao());
+            this.entidade.setNumeroRegistros(this.entidade.getNumeroRegistros() + 1);
         } else {
             retorno = false;
         }
 
-        if ((getEntidade().getNumeroRegistros()) * 3 > tamanho * 2) {
+        if ((entidade.getNumeroRegistros()) * 3 > tamanho * 2) {
             reorganizar();
         }
-
 
         return retorno;
     }
 
     public boolean existeReferencia(Registro atual) throws IOException {
         boolean retorno = true;
-        for (Relacionamento relacionamento : getEntidade().getRelacionamentos()) {
-            if (relacionamento.getEntidade() == getEntidade()) {
-                for (Valor valor : atual.getValores()) {
-                    if (valor.getTipo().getNome().equals(relacionamento.getCampo())) {
-                        Arquivo temp = new Arquivo(relacionamento.getEntidadeReferenciada());
-                        temp.abrir(getPrefix());
-                        retorno = retorno & temp.busca(valor).isEncontrado();
-                        temp.fechar();
+        for (Relacionamento relacionamento : entidade.getRelacionamentos()) {
+            if (relacionamento.getEntidade() == entidade) {
+                Valor valor = atual.getValorByAttrName(relacionamento.getCampo());
 
-                    }
-
-                }
+                Arquivo temp = new Arquivo(relacionamento.getEntidadeReferenciada());
+                temp.abrir(prefix);
+                retorno = retorno & temp.busca(valor).isEncontrado();
+                temp.fechar();
             }
         }
         return retorno;
-
     }
 
     public void contarRegistros() throws IOException {
         int contador = 0;
-        getArq().seek(0);
-        while (getArq().getFilePointer() < getArq().length()) {
-            Registro r = new Registro(getEntidade(), getArq());
-            if (r.isUsado()) {
+        arq.seek(0);
+        while (arq.getFilePointer() < arq.length()) {
+            if (this.lerRegistro().isUsado()) {
                 contador++;
             }
         }
-        getEntidade().setNumeroRegistros(contador);
+        entidade.setNumeroRegistros(contador);
     }
 
     public void criar() throws IOException {
-        Registro r = new Registro(getEntidade());
+        Registro branco = new Registro(entidade);
         for (int i = 0; i < tamanho; i++) {
-            r.grava(getArq());
+            this.gravaRegistro(branco);
         }
     }
 
     public void reorganizar() throws IOException {
-        int numero = getEntidade().getNumeroRegistros();
+        int numero = entidade.getNumeroRegistros();
 
-        File oldFile = new File(getPrefix() + getEntidade().getNome() + ".dat");
-        File tempFile = new File(getPrefix() + "temp" + getEntidade().getNome() + ".dat");
+        File oldFile = new File(prefix + entidade.getNome() + ".dat");
+        File tempFile = new File(prefix + "temp" + entidade.getNome() + ".dat");
         tempFile.delete();
 
-        Arquivo temp = new Arquivo(getEntidade());
-        temp.abrir(getPrefix() + "temp", tamanho*2);
+        Arquivo temp = new Arquivo(entidade);
+        temp.abrir(prefix + "temp", tamanho*2);
         for (int i = 0; i < tamanho; i++) {
-            getArq().seek(i * getTamanhoRegistro());
-            Registro r = new Registro(getEntidade(), getArq());
-            if (r.isUsado()) {
-                temp.insere(r);
+            Registro registro = this.lerRegistro(i);
+            if (registro.isUsado()) {
+                temp.insere(registro);
             }
         }
         temp.fechar();
@@ -253,8 +319,7 @@ public class Arquivo {
                 }
             }
 
-            arq.seek(resultado.getPosicao() * tamanhoRegistro);
-            new Registro(entidade, 2).grava(arq);
+            this.gravaRegistro(new Registro(entidade, 2), resultado.getPosicao());
             return true;
         }
         return false;

@@ -168,7 +168,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="divisaoPrincipal" alignment="0" pref="616" max="32767" attributes="0"/>
+              <Component id="divisaoPrincipal" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -341,7 +341,7 @@
                       <Component id="tabelaButtonPanel" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                          <Component id="tabelaScrollPane" pref="415" max="32767" attributes="0"/>
+                          <Component id="tabelaScrollPane" pref="423" max="32767" attributes="0"/>
                           <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                       </Group>
                   </Group>
@@ -368,13 +368,15 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="inserirRegistroButton" pref="96" max="32767" attributes="1"/>
+                              <Component id="inserirRegistroButton" pref="76" max="32767" attributes="1"/>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Component id="cancelarButton" pref="76" max="32767" attributes="1"/>
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                              <Component id="consultarRegistrosButton" max="32767" attributes="1"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="consultarRegistrosButton" pref="97" max="32767" attributes="1"/>
+                              <Component id="modificarRegistrosButton" max="32767" attributes="1"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="modificarRegistrosButton" pref="95" max="32767" attributes="1"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="removerRegistrosButton" pref="97" max="32767" attributes="1"/>
+                              <Component id="removerRegistrosButton" pref="77" max="32767" attributes="1"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -382,12 +384,13 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="inserirRegistroButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="consultarRegistrosButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="modificarRegistrosButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="removerRegistrosButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cancelarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -429,6 +432,15 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removerRegistrosActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="cancelarButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="cancelarButton.text"/>
+                        <Property name="name" type="java.lang.String" value="cancelarButton" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarButtoninserirRegistroActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

@@ -6,4 +6,29 @@
             <line>17</line>
         </file>
     </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/models/arquivo/Consulta.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestConsulta.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/models/arquivo/Arquivo.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestBusca.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestER.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestEntidade.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestInsercao.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestRelacionamentos.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/TestRemocao.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/controllers/InserirCommand.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/controllers/Command.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/controllers/InserirRegistroCommand.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/tabelaer/TabelaPrincipal.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/models/ER/ListaER.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/ComboDeAtributos.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/ConsultarTabela.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/TabelasCombo.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/ListaTabelas.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/base/ComboBoxEditavel.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/base/ComboBoxNaoEditavel.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/tabelaer/EstadoEntidade.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/tabelaer/EstadoRelacionamento.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/gd/views/tabelaer/EstadoTabela.java</file>
+    </open-files>
 </project-private>

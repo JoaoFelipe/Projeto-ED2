@@ -10,9 +10,9 @@ public class Valor <T> {
     private Atributo tipo;
     private T info;
 
-    public Valor(Atributo tipo, T info) {
+    public Valor(Atributo tipo, Object info) {
         this.tipo = tipo;
-        this.info = info;
+        this.info = (T) tipo.cast(info);
     }
 
     public Atributo getTipo() {

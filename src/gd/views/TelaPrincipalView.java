@@ -12,8 +12,16 @@
 package gd.views;
 
 import gd.GerenciadorDados;
+import gd.controllers.Command;
+import gd.controllers.ConsultaCommand;
+import gd.controllers.ConsultarCommand;
+import gd.controllers.InserirCommand;
 import gd.controllers.JanelaController;
+import gd.controllers.RemoverCommand;
 import gd.controllers.TabelasController;
+import gd.models.ER.Entidade;
+import gd.models.ER.ListaER;
+import gd.models.arquivo.Consulta;
 import gd.views.tabelaer.TabelaPrincipal;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +34,7 @@ public class TelaPrincipalView extends JFrame {
 
 
     private static TelaPrincipalView instancia = null;
+    private Command inserir = null;
 
     public static TelaPrincipalView getInstance() {
         if (TelaPrincipalView.instancia == null)
@@ -36,6 +45,10 @@ public class TelaPrincipalView extends JFrame {
     /** Creates new form TelaPrincipalView */
     public TelaPrincipalView() {
         initComponents();
+        cancelarButton.setVisible(false);
+        cancelarButton.setText("Cancelar");
+        inserir = new InserirCommand(cancelarButton, (TabelaPrincipal) tabelaTable);
+        
     }
 
     /** This method is called from within the constructor to
@@ -63,6 +76,7 @@ public class TelaPrincipalView extends JFrame {
         consultarRegistrosButton = new javax.swing.JButton();
         modificarRegistrosButton = new javax.swing.JButton();
         removerRegistrosButton = new javax.swing.JButton();
+        cancelarButton = new javax.swing.JButton();
         tabelaScrollPane = new javax.swing.JScrollPane();
         tabelaTable = gd.views.tabelaer.TabelaPrincipal.instanciar(tabelaButtonPanel);
         menuBar = new javax.swing.JMenuBar();
@@ -217,19 +231,29 @@ public class TelaPrincipalView extends JFrame {
             }
         });
 
+        cancelarButton.setText(resourceMap.getString("cancelarButton.text")); // NOI18N
+        cancelarButton.setName("cancelarButton"); // NOI18N
+        cancelarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarButtoninserirRegistroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabelaButtonPanelLayout = new javax.swing.GroupLayout(tabelaButtonPanel);
         tabelaButtonPanel.setLayout(tabelaButtonPanelLayout);
         tabelaButtonPanelLayout.setHorizontalGroup(
             tabelaButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabelaButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(inserirRegistroButton, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                .addComponent(inserirRegistroButton, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(consultarRegistrosButton, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(modificarRegistrosButton, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addComponent(consultarRegistrosButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(removerRegistrosButton, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                .addComponent(modificarRegistrosButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(removerRegistrosButton, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
                 .addContainerGap())
         );
         tabelaButtonPanelLayout.setVerticalGroup(
@@ -240,7 +264,8 @@ public class TelaPrincipalView extends JFrame {
                     .addComponent(inserirRegistroButton)
                     .addComponent(consultarRegistrosButton)
                     .addComponent(modificarRegistrosButton)
-                    .addComponent(removerRegistrosButton))
+                    .addComponent(removerRegistrosButton)
+                    .addComponent(cancelarButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -256,7 +281,7 @@ public class TelaPrincipalView extends JFrame {
             .addComponent(tabelaButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(tabelaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addComponent(tabelaScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
         jPanel2Layout.setVerticalGroup(
@@ -274,7 +299,7 @@ public class TelaPrincipalView extends JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(divisaoPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addComponent(divisaoPrincipal)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,11 +447,12 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_excluirTabelaActionPerformed
 
     private void inserirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inserirRegistroActionPerformed
-        ((TabelaPrincipal) tabelaTable).addRow(new Object[]{});
+        inserir = inserir.execute();
     }//GEN-LAST:event_inserirRegistroActionPerformed
 
     private void consultarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarRegistrosActionPerformed
-        JanelaController.abrir(new ConsultarView(GerenciadorDados.getApplication().getMainFrame()));
+        ConsultaCommand command = new ConsultarCommand(new Consulta((Entidade) ListaER.getSelecionado(), null), (TabelaPrincipal) tabelaTable);
+        JanelaController.abrir(new ConsultarView(GerenciadorDados.getApplication().getMainFrame(), command));
     }//GEN-LAST:event_consultarRegistrosActionPerformed
 
     private void modificarRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarRegistrosActionPerformed
@@ -434,16 +460,24 @@ public class TelaPrincipalView extends JFrame {
     }//GEN-LAST:event_modificarRegistrosActionPerformed
 
     private void removerRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerRegistrosActionPerformed
-        JanelaController.abrir(new ConsultarView(GerenciadorDados.getApplication().getMainFrame()));
+        ConsultaCommand command = new RemoverCommand(new Consulta((Entidade) ListaER.getSelecionado(), null), (TabelaPrincipal) tabelaTable);
+        JanelaController.abrir(new ConsultarView(GerenciadorDados.getApplication().getMainFrame(), command));
     }//GEN-LAST:event_removerRegistrosActionPerformed
 
     private void sobreMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sobreMenuItemActionPerformed
         JanelaController.abrir(new SobreView(GerenciadorDados.getApplication().getMainFrame()));
     }//GEN-LAST:event_sobreMenuItemActionPerformed
 
+    private void cancelarButtoninserirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtoninserirRegistroActionPerformed
+        ((TabelaPrincipal) tabelaTable).removeRow();
+        cancelarButton.setVisible(false);
+        inserir = new InserirCommand(cancelarButton, (TabelaPrincipal) tabelaTable);
+    }//GEN-LAST:event_cancelarButtoninserirRegistroActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu arquivoMenu;
+    private javax.swing.JButton cancelarButton;
     private javax.swing.JButton consultarRegistrosButton;
     private javax.swing.JMenuItem consultarRegistrosMenuItem;
     private javax.swing.JButton criarReferenciaButton;

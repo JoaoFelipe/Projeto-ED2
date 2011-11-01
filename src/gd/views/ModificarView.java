@@ -7,6 +7,7 @@ package gd.views;
 import gd.views.tabelaer.TabelaPrincipal;
 import gd.controllers.JanelaController;
 import gd.models.ER.Entidade;
+import gd.models.ER.ListaER;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.application.Action;
 
@@ -31,13 +32,13 @@ public class ModificarView extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new ConsultarTabela((Entidade)TabelaPrincipal.getInstancia().getEr());
+        jTable1 = new ConsultarTabela((Entidade)ListaER.getSelecionado());
         jPanel1 = new javax.swing.JPanel();
         adicionarButton = new javax.swing.JButton();
         adicionarButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tabelaComboBox = new ModificarCombo((Entidade)TabelaPrincipal.getInstancia().getEr())
+        tabelaComboBox = new ModificarCombo((Entidade)ListaER.getSelecionado())
         ;
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();

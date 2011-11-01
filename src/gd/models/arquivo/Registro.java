@@ -136,5 +136,23 @@ public class Registro {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+    
+    public Valor getValorByAttrName(String nome) {
+        for (Valor valor : this.getValores()) {
+            if (valor.getTipo().getNome().equals(nome)) {
+                return valor;
+            }
 
+        }
+        return null;
+    }
+    
+     public Object[] getRow(){
+         Object[] row = new Object[this.getValores().size()]; 
+         for (int i = 0; i < this.getValores().size(); i++) {
+             row[i] = this.getValores().get(i).getInfo();
+             
+         }
+         return row;
+    }
 }

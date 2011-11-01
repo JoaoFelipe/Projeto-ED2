@@ -80,5 +80,6 @@ public abstract class Atributo{
 
     public abstract boolean compara(String operador, Valor valor, Object condicao);
     public abstract List<String> comparadores();
+    public abstract Object cast(Object valor);
 
 }

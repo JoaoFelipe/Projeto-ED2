@@ -20,9 +20,6 @@ public class EstadoRelacionamento implements EstadoTabela {
         getTabela().getPainel().setVisible(false);
     }
 
-    public EntidadeRelacionamento getEr() {
-        return getRelacionamento();
-    }
 
     public Relacionamento getRelacionamento() {
         return relacionamento;
