@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import sun.org.mozilla.javascript.internal.ast.ForInLoop;
 
 public class RemoverCommand extends ConsultaCommand {
 

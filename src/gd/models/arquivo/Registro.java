@@ -126,7 +126,7 @@ public class Registro {
     }
 
     public void setValores(List<Valor> valores) {
-        this.setValores(valores);
+        this.valores = valores;
     }
 
     public int getEstado() {
