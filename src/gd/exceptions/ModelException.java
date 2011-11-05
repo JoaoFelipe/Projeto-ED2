@@ -1,6 +1,6 @@
 package gd.exceptions;
 
-import gd.controllers.JanelaController;
+import gd.controllers.WindowController;
 
 public class ModelException extends Exception{
 
@@ -17,7 +17,7 @@ public class ModelException extends Exception{
     }
 
     public void execute(){
-        JanelaController.mensagem(this.getMessage());
+        WindowController.message(this.getMessage());
     }
 
 }

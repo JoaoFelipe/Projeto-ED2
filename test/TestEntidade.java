@@ -1,13 +1,13 @@
 import gd.exceptions.NonUniqueException;
-import gd.models.ER.ListaER;
+import gd.models.ER.ERList;
 import java.io.File;
 import utils.ArquivoSequencial;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
-import gd.models.ER.EntidadeRelacionamento;
-import gd.models.ER.Entidade;
+import gd.models.ER.EntityRelationship;
+import gd.models.ER.Entity;
 import gd.models.atributos.IntAttr;
-import gd.models.atributos.Atributo;
+import gd.models.atributos.Attribute;
 import java.util.List;
 import java.util.Arrays;
 import org.junit.After;
@@ -32,7 +32,7 @@ public class TestEntidade {
     @Before
     public void setUp() {
         deletarArquivos();
-        ListaER.apagarInstancia();
+        ERList.apagarInstancia();
     }
 
     @After
@@ -42,10 +42,10 @@ public class TestEntidade {
 
     @Test
     public void criarTabela() throws Exception {
-        List<Atributo> attrs = Arrays.asList((Atributo) new IntAttr("cod", true), (Atributo) new IntAttr("idade", false));
-        EntidadeRelacionamento entidade = new Entidade("Teste", attrs);
+        List<Attribute> attrs = Arrays.asList((Attribute) new IntAttr("cod", true), (Attribute) new IntAttr("idade", false));
+        EntityRelationship entidade = new Entity("Teste", attrs);
 
-        EntidadeRelacionamento entidadeTestada = EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Teste", "*cod:int", "idade:int"));
+        EntityRelationship entidadeTestada = EntityRelationship.createER("TABELA", Arrays.asList("Teste", "*cod:int", "idade:int"));
 
         assertEquals(entidade, entidadeTestada);
     }
@@ -53,7 +53,7 @@ public class TestEntidade {
     @Test
     public void naoPermitirCriarTabelaComAtributosDeMesmoNome() throws Exception {
         try {
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Teste", "*cod:int", "cod:char"));
+            EntityRelationship.createER("TABELA", Arrays.asList("Teste", "*cod:int", "cod:char"));
             assertTrue(false);
         } catch (Exception e) {
             assertEquals("Atributo não é único", e.getMessage());
@@ -63,7 +63,7 @@ public class TestEntidade {
     @Test
     public void naoPermitirCriarTabelaSemChavePrimaria() throws Exception {
         try {
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Teste", "cod:int", "nome:char"));
+            EntityRelationship.createER("TABELA", Arrays.asList("Teste", "cod:int", "nome:char"));
             assertTrue(false);
         } catch (Exception e) {
             assertEquals("Nenhuma chave primária encontrada", e.getMessage());
@@ -73,7 +73,7 @@ public class TestEntidade {
     @Test
     public void naoPermitirCriarTabelaComMaisDeUmaChavePrimaria() throws Exception {
         try {
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Teste", "*cod:int", "*nome:char"));
+            EntityRelationship.createER("TABELA", Arrays.asList("Teste", "*cod:int", "*nome:char"));
             assertTrue(false);
         } catch (Exception e) {
             assertEquals("Mais de uma chave primária encontrada", e.getMessage());
@@ -83,7 +83,7 @@ public class TestEntidade {
     @Test
     public void naoPermitirCriarTabelaSemNome() throws Exception {
         try {
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("", "*cod:int", "nome:char"));
+            EntityRelationship.createER("TABELA", Arrays.asList("", "*cod:int", "nome:char"));
             assertTrue(false);
         } catch (Exception e) {
             assertEquals("O nome não pode estar em branco", e.getMessage());
@@ -92,11 +92,11 @@ public class TestEntidade {
 
     @Test
     public void gravarTabela() throws Exception {
-        List<Atributo> attrs = Arrays.asList((Atributo) new IntAttr("cod", true), (Atributo) new IntAttr("idade", false));
-        Entidade entidade = new Entidade("Teste", attrs);
+        List<Attribute> attrs = Arrays.asList((Attribute) new IntAttr("cod", true), (Attribute) new IntAttr("idade", false));
+        Entity entidade = new Entity("Teste", attrs);
         
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        entidade.grava(arq);
+        entidade.save(arq);
         arq.close();
 
         List<String> listaVerificada = ArquivoSequencial.fileToList(metaDadosPath);
@@ -109,8 +109,8 @@ public class TestEntidade {
     @Test
     public void gravar2Tabelas() throws Exception {
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Teste", "*cod:int", "idade:int")).grava(arq);
-        EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Teste2", "*cod:int", "nome:char30")).grava(arq);
+        EntityRelationship.createER("TABELA", Arrays.asList("Teste", "*cod:int", "idade:int")).save(arq);
+        EntityRelationship.createER("TABELA", Arrays.asList("Teste2", "*cod:int", "nome:char30")).save(arq);
         arq.close();
 
         List<String> listaVerificada = ArquivoSequencial.fileToList(metaDadosPath);
@@ -124,33 +124,33 @@ public class TestEntidade {
 
     @Test
     public void lerTabelasDeArquivoDeEstruturas() throws Exception {
-        List<EntidadeRelacionamento> listaOriginal = Arrays.asList(
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"))
+        List<EntityRelationship> listaOriginal = Arrays.asList(
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
+            EntityRelationship.createER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"))
         );
 
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        for (EntidadeRelacionamento e : listaOriginal) {
-            e.grava(arq);
+        for (EntityRelationship e : listaOriginal) {
+            e.save(arq);
         }
         arq.close();
 
-        ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
+        ERList inst = ERList.instanciarTeste(metaDadosPath, prefix);
 
-        assertArrayEquals(listaOriginal.toArray(), inst.getLista().toArray());
+        assertArrayEquals(listaOriginal.toArray(), inst.getList().toArray());
     }
 
     @Test
     public void naoPermitirAdicionarTabelasDeMesmoNome() throws Exception {
-        List<EntidadeRelacionamento> listaOriginal = Arrays.asList(
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"))
+        List<EntityRelationship> listaOriginal = Arrays.asList(
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"))
         );
 
         boolean ok = false;
-        for (EntidadeRelacionamento e : listaOriginal) {
+        for (EntityRelationship e : listaOriginal) {
             try {
-                ListaER.instanciarTeste(metaDadosPath, prefix).add(e);
+                ERList.instanciarTeste(metaDadosPath, prefix).add(e);
             } catch (NonUniqueException exc) {
                 assertEquals("Não é possível ter tabelas de mesmo nome ou referencias de mesmo <Entidade, Campo>!", exc.getMessage());
                 ok = true;
@@ -162,19 +162,19 @@ public class TestEntidade {
 
     @Test
     public void naoPermitirLerTabelasDeMesmoNomeNoArquivoDeEstruturas() throws Exception {
-        List<EntidadeRelacionamento> listaOriginal = Arrays.asList(
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"))
+        List<EntityRelationship> listaOriginal = Arrays.asList(
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"))
         );
 
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        for (EntidadeRelacionamento e : listaOriginal) {
-            e.grava(arq);
+        for (EntityRelationship e : listaOriginal) {
+            e.save(arq);
         }
         arq.close();
 
         try {
-            ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
+            ERList inst = ERList.instanciarTeste(metaDadosPath, prefix);
             assertTrue(false);
         } catch (NonUniqueException e) {
             assertEquals("Não é possível ter tabelas de mesmo nome ou referencias de mesmo <Entidade, Campo>!", e.getMessage());

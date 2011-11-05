@@ -1,8 +1,8 @@
 package utils;
 
 
-import gd.models.ER.Entidade;
-import gd.models.arquivo.Registro;
+import gd.models.ER.Entity;
+import gd.models.arquivo.Tuple;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class FileUtils {
 
-    public static void gerarArquivo(String nomeArquivo, List<Registro> registros) throws Exception{
+    public static void gerarArquivo(String nomeArquivo, List<Tuple> registros) throws Exception{
 
        RandomAccessFile arquivo = null;
        try {
@@ -32,7 +32,7 @@ public class FileUtils {
             arquivo = new RandomAccessFile(f, "rw");
             //Grava os clientes no arquivo
             for (int i = 0; i < registros.size(); i++) {
-                registros.get(i).grava(arquivo);
+                registros.get(i).save(arquivo);
             }
         } catch (Exception e) {
         } finally {
@@ -43,15 +43,15 @@ public class FileUtils {
 
     }
 
-    public static Object[] lerArquivo(Entidade entidade, String nomeArquivo) throws Exception{
+    public static Object[] lerArquivo(Entity entidade, String nomeArquivo) throws Exception{
 
        RandomAccessFile arquivo = null;
-       List<Registro> lista = new ArrayList<Registro>();
+       List<Tuple> lista = new ArrayList<Tuple>();
        try {
             arquivo = new RandomAccessFile( new File(nomeArquivo), "r");
 
             while (!(arquivo.getFilePointer() == arquivo.length())){
-                lista.add(new Registro(entidade, arquivo));
+                lista.add(new Tuple(entidade, arquivo));
             }
         } catch (Exception e) {
         } finally {

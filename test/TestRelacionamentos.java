@@ -1,14 +1,14 @@
 import utils.ArquivoSequencial;
 import gd.exceptions.NotFoundException;
-import gd.models.ER.Relacionamento;
+import gd.models.ER.Relation;
 import gd.exceptions.NonUniqueException;
 import java.lang.reflect.Field;
-import gd.models.ER.ListaER;
-import gd.models.ER.EntidadeRelacionamento;
+import gd.models.ER.ERList;
+import gd.models.ER.EntityRelationship;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
-import gd.models.ER.Entidade;
+import gd.models.ER.Entity;
 import java.util.List;
 import java.util.Arrays;
 import org.junit.After;
@@ -20,8 +20,8 @@ public class TestRelacionamentos {
 
     String metaDadosPath = "test\\metadados-teste.dat";
     String prefix = "test\\";
-    EntidadeRelacionamento e1 = null;
-    EntidadeRelacionamento e2 = null;
+    EntityRelationship e1 = null;
+    EntityRelationship e2 = null;
 
     public void deletarArquivos() {
         for (String string : Arrays.asList(metaDadosPath)) {
@@ -36,14 +36,14 @@ public class TestRelacionamentos {
     public void setUp() throws Exception {
         deletarArquivos();
         
-        ListaER.apagarInstancia();
-        ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
+        ERList.apagarInstancia();
+        ERList inst = ERList.instanciarTeste(metaDadosPath, prefix);
 
-        e1 = EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int"));
-        e2 = EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"));
+        e1 = EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int"));
+        e2 = EntityRelationship.createER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"));
 
-        ListaER.getInstancia().add(e1);
-        ListaER.getInstancia().add(e2);
+        ERList.getInstance().add(e1);
+        ERList.getInstance().add(e2);
 
     }
 
@@ -55,8 +55,8 @@ public class TestRelacionamentos {
 
     @Test
     public void criaRelacionamento() throws Exception {
-        EntidadeRelacionamento relacionamento = new Relacionamento(e2, "cod_emp", e1, "cod");
-        EntidadeRelacionamento relacionamentoTestado = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
+        EntityRelationship relacionamento = new Relation(e2, "cod_emp", e1, "cod");
+        EntityRelationship relacionamentoTestado = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
         assertEquals(relacionamento, relacionamentoTestado);
     }
     
@@ -64,7 +64,7 @@ public class TestRelacionamentos {
     @Test
     public void naoPermitirCriarRelacionamentoComEntidadeInvalida() throws Exception {
         try {
-            EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependentes", "cod_emp", "Empregado", "cod"));
+            EntityRelationship relacionamento = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependentes", "cod_emp", "Empregado", "cod"));
             assertTrue(false);
         } catch (NotFoundException e){
             assertEquals("Entidade não encontrada", e.getMessage());
@@ -74,7 +74,7 @@ public class TestRelacionamentos {
     @Test
     public void naoPermitirCriarRelacionamentoComCampoDaEntidadeInvalido() throws Exception {
         try {
-            EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "ahh", "Empregado", "cod"));
+            EntityRelationship relacionamento = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "ahh", "Empregado", "cod"));
             assertTrue(false);
         } catch (NotFoundException e){
             assertEquals("Atributo não encontrado na Entidade", e.getMessage());
@@ -84,7 +84,7 @@ public class TestRelacionamentos {
     @Test
     public void naoPermitirCriarRelacionamentoComEntidadeReferenciadaDaEntidadeInvalida() throws Exception {
         try {
-            EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Hahaha", "cod"));
+            EntityRelationship relacionamento = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Hahaha", "cod"));
             assertTrue(false);
         } catch (NotFoundException e){
             assertEquals("Entidade Referenciada não encontrada", e.getMessage());
@@ -94,7 +94,7 @@ public class TestRelacionamentos {
     @Test
     public void naoPermitirCriarRelacionamentoComAtributoDaEntidadeReferenciadaDaEntidadeInvalida() throws Exception {
         try {
-            EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "ahh"));
+            EntityRelationship relacionamento = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "ahh"));
             assertTrue(false);
         } catch (NotFoundException e){
             assertEquals("Atributo não encontrado na Entidade Referenciada", e.getMessage());
@@ -104,7 +104,7 @@ public class TestRelacionamentos {
     @Test
     public void gravarRelacionamento() throws Exception {
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")).grava(arq);
+        EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")).save(arq);
         arq.close();
 
         List<String> listaVerificada = ArquivoSequencial.fileToList(metaDadosPath);
@@ -119,37 +119,37 @@ public class TestRelacionamentos {
     public void lerReferenciasDeArquivoDeEstruturas() throws Exception {
         
 
-        List<EntidadeRelacionamento> listaOriginal = Arrays.asList(
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int")),
-            EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"))
+        List<EntityRelationship> listaOriginal = Arrays.asList(
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
+            EntityRelationship.createER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int")),
+            EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"))
         );
 
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        for (EntidadeRelacionamento e : listaOriginal) {
-            e.grava(arq);
+        for (EntityRelationship e : listaOriginal) {
+            e.save(arq);
         }
         arq.close();
-        ListaER.apagarInstancia();
-        ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
+        ERList.apagarInstancia();
+        ERList inst = ERList.instanciarTeste(metaDadosPath, prefix);
 
-        assertArrayEquals(listaOriginal.toArray(), inst.getLista().toArray());
+        assertArrayEquals(listaOriginal.toArray(), inst.getList().toArray());
     }
 
     @Test
     public void naoPermitirAdicionarReferenciasDeMesmaEntidadeAtributo() throws Exception {
 
-        ListaER.getInstancia().add(EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregados", "*cod:int", "nome:char30", "idade:int")));
+        ERList.getInstance().add(EntityRelationship.createER("TABELA", Arrays.asList("Empregados", "*cod:int", "nome:char30", "idade:int")));
 
-        List<EntidadeRelacionamento> listaOriginal = Arrays.asList(
-            EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")),
-            EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregados", "cod"))
+        List<EntityRelationship> listaOriginal = Arrays.asList(
+            EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")),
+            EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregados", "cod"))
         );
 
         boolean ok = false;
-        for (EntidadeRelacionamento e : listaOriginal) {
+        for (EntityRelationship e : listaOriginal) {
             try {
-                ListaER.getInstancia().add(e);
+                ERList.getInstance().add(e);
             } catch (NonUniqueException exc) {
                 assertEquals("Não é possível ter tabelas de mesmo nome ou referencias de mesmo <Entidade, Campo>!", exc.getMessage());
                 ok = true;
@@ -161,25 +161,25 @@ public class TestRelacionamentos {
 
     @Test
     public void naoPermitirLerReferenciasDeMesmoEntidadeAtributoNoArquivoDeEstruturas() throws Exception {
-        ListaER.getInstancia().add(EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregados", "*cod:int", "nome:char30", "idade:int")));
+        ERList.getInstance().add(EntityRelationship.createER("TABELA", Arrays.asList("Empregados", "*cod:int", "nome:char30", "idade:int")));
 
-        List<EntidadeRelacionamento> listaOriginal = Arrays.asList(
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int", "cod_emp:int")),
-            EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregados", "*cod:int", "nome:char30", "idade:int")),
-            EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")),
-            EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregados", "cod"))
+        List<EntityRelationship> listaOriginal = Arrays.asList(
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int")),
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int", "cod_emp:int")),
+            EntityRelationship.createER("TABELA", Arrays.asList("Empregados", "*cod:int", "nome:char30", "idade:int")),
+            EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod")),
+            EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregados", "cod"))
         );
 
         DataOutputStream arq = new DataOutputStream(new FileOutputStream(metaDadosPath));
-        for (EntidadeRelacionamento e : listaOriginal) {
-            e.grava(arq);
+        for (EntityRelationship e : listaOriginal) {
+            e.save(arq);
         }
         arq.close();
 
-        ListaER.apagarInstancia();
+        ERList.apagarInstancia();
         try {
-            ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
+            ERList inst = ERList.instanciarTeste(metaDadosPath, prefix);
             assertTrue(false);
         } catch (NonUniqueException e) {
             assertEquals("Não é possível ter tabelas de mesmo nome ou referencias de mesmo <Entidade, Campo>!", e.getMessage());
@@ -188,16 +188,16 @@ public class TestRelacionamentos {
 
     @Test
     public void aoCriarRelacionamentoAReferenciaDeveSerAdicionadaAEntidade() throws Exception {
-        EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
+        EntityRelationship relacionamento = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
 
         Class c = relacionamento.getClass();
-        Field f = c.getDeclaredField("entidade");
+        Field f = c.getDeclaredField("entity");
         f.setAccessible(true);
-        Entidade e = (Entidade) f.get(relacionamento);
+        Entity e = (Entity) f.get(relacionamento);
 
 
-        assertEquals(e.getRelacionamentos().size(), 1);
-        assertEquals(e.getRelacionamentos().get(0), relacionamento);
+        assertEquals(e.getRelation().size(), 1);
+        assertEquals(e.getRelation().get(0), relacionamento);
     }
 
 }

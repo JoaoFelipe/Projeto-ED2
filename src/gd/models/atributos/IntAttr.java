@@ -1,24 +1,24 @@
 package gd.models.atributos;
 
-import gd.models.arquivo.Valor;
+import gd.models.arquivo.Value;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.List;
 
-public class IntAttr extends Atributo{
+public class IntAttr extends Attribute{
 
-    private String nome;
+    private String name;
     private boolean pk;
 
-    public IntAttr(String nome, boolean pk) {
-        this.nome = nome;
+    public IntAttr(String name, boolean pk) {
+        this.name = name;
         this.pk = pk;
     }
 
     @Override
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -27,17 +27,17 @@ public class IntAttr extends Atributo{
     }
 
     @Override
-    public String getTipo() {
+    public String getType() {
         return "int";
     }
 
     @Override
-    public int getTamanho() {
+    public int getSize() {
         return 4;
     }
 
     @Override
-    public Class getClasse() {
+    public Class getClassEx() {
         return Integer.class;
     }
 
@@ -50,7 +50,7 @@ public class IntAttr extends Atributo{
             return false;
         }
         final IntAttr other = (IntAttr) obj;
-        if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
         if (this.pk != other.pk) {
@@ -60,75 +60,75 @@ public class IntAttr extends Atributo{
     }
 
     @Override
-    public int getHash(Valor valor) {
-        Integer i = (Integer) (valor.getInfo());
+    public int getHash(Value value) {
+        Integer i = (Integer) (value.getInfo());
         return i.hashCode();
     }
 
     @Override
-    public Valor ler(RandomAccessFile in) throws IOException{
-        return new Valor<Integer>(this, in.readInt());
+    public Value read(RandomAccessFile in) throws IOException{
+        return new Value<Integer>(this, in.readInt());
     }
 
     @Override
-    public Valor getDefault() {
-        return new Valor<Integer>(this, new Integer(0));
+    public Value getDefault() {
+        return new Value<Integer>(this, new Integer(0));
     }
 
     @Override
-    public void grava(RandomAccessFile in, Valor valor) throws IOException {
-        in.writeInt(((Integer) valor.getInfo()).intValue());
+    public void save(RandomAccessFile in, Value value) throws IOException {
+        in.writeInt(((Integer) value.getInfo()).intValue());
     }
 
-    public boolean buscaEqual(Valor valor, Integer condicao){
-        return ((Integer) valor.getInfo()).compareTo(condicao) == 0;
+    public boolean equalSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) == 0;
     }
 
-    public boolean buscaLT(Valor valor, Integer condicao){
-        return ((Integer) valor.getInfo()).compareTo(condicao) < 0;
+    public boolean lowerThanSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) < 0;
     }
 
-    public boolean buscaLE(Valor valor, Integer condicao){
-        return ((Integer) valor.getInfo()).compareTo(condicao) <= 0;
+    public boolean lowerEqualSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) <= 0;
     }
 
-    public boolean buscaGT(Valor valor, Integer condicao){
-        return ((Integer) valor.getInfo()).compareTo(condicao) > 0;
+    public boolean higherThanSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) > 0;
     }
 
-    public boolean buscaGE(Valor valor, Integer condicao){
-        return ((Integer) valor.getInfo()).compareTo(condicao) >= 0;
+    public boolean higherEqualSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) >= 0;
     }
 
     @Override
-    public boolean compara(String operador, Valor valor, Object condicao) {
-        if(operador.equals("="))
-            return buscaEqual(valor, (Integer)condicao);
-        else if(operador.equals("!="))
-            return !buscaEqual(valor, (Integer)condicao);
-        else if(operador.equals(">"))
-            return buscaGT(valor, (Integer)condicao);
-        else if(operador.equals("<"))
-            return buscaLT(valor, (Integer)condicao);
-        else if(operador.equals(">="))
-            return buscaGE(valor, (Integer)condicao);
-        else if(operador.equals("<="))
-            return buscaLE(valor, (Integer)condicao);
+    public boolean compare(String operator, Value value, Object condition) {
+        if(operator.equals("="))
+            return equalSearch(value, (Integer)condition);
+        else if(operator.equals("!="))
+            return !equalSearch(value, (Integer)condition);
+        else if(operator.equals(">"))
+            return higherThanSearch(value, (Integer)condition);
+        else if(operator.equals("<"))
+            return lowerThanSearch(value, (Integer)condition);
+        else if(operator.equals(">="))
+            return higherEqualSearch(value, (Integer)condition);
+        else if(operator.equals("<="))
+            return lowerEqualSearch(value, (Integer)condition);
         else
             return true;
     }
 
     @Override
-    public List<String> comparadores() {
+    public List<String> comparators() {
         return Arrays.asList("=", "!=", ">", "<", ">=", "<=");
     }
     
     @Override
-    public Object cast(Object valor) {
-        if (valor instanceof Integer){
-            return valor;
+    public Object cast(Object value) {
+        if (value instanceof Integer){
+            return value;
         } else {
-            return Integer.parseInt(valor+"");
+            return Integer.parseInt(value+"");
         }
     }
 }

@@ -1,11 +1,12 @@
 import java.util.List;
 import java.util.ArrayList;
-import gd.models.arquivo.Valor;
-import gd.models.arquivo.Arquivo;
-import gd.models.arquivo.Registro;
-import gd.models.ER.EntidadeRelacionamento;
-import gd.models.ER.Entidade;
-import gd.models.ER.ListaER;
+import gd.models.arquivo.Value;
+import gd.models.arquivo.HashFile;
+import gd.models.arquivo.Tuple;
+import gd.models.ER.EntityRelationship;
+import gd.models.ER.Entity;
+import gd.models.ER.ERList;
+import gd.models.arquivo.ConsistencyStrategy;
 import java.io.File;
 import java.util.Arrays;
 import org.junit.After;
@@ -22,8 +23,8 @@ public class TestModifica {
     String arqE2 = "test\\Empregado.dat";
     String metaDadosPath = "test\\metadados-teste.dat";
     String prefix = "test\\";
-    Entidade e1 = null;
-    Entidade e2 = null;
+    Entity e1 = null;
+    Entity e2 = null;
 
     public void deletarArquivos() {
         for (String string : Arrays.asList(metaDadosPath, arqE1, arqE2, masterE1, masterE2)) {
@@ -38,17 +39,17 @@ public class TestModifica {
     public void setUp() throws Exception {
         deletarArquivos();
 
-        ListaER.apagarInstancia();
-        ListaER inst = ListaER.instanciarTeste(metaDadosPath, prefix);
+        ERList.apagarInstancia();
+        ERList inst = ERList.instanciarTeste(metaDadosPath, prefix);
 
-        e1 = (Entidade) EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int"));
-        e2 = (Entidade) EntidadeRelacionamento.criarER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"));
+        e1 = (Entity) EntityRelationship.createER("TABELA", Arrays.asList("Empregado", "*cod:int", "nome:char30", "idade:int"));
+        e2 = (Entity) EntityRelationship.createER("TABELA", Arrays.asList("Dependente", "*cod:int", "nome:char30", "idade:int", "cod_emp:int"));
 
 
-        ListaER.getInstancia().add(e1);
-        ListaER.getInstancia().add(e2);
+        ERList.getInstance().add(e1);
+        ERList.getInstance().add(e2);
 
-        EntidadeRelacionamento relacionamento = EntidadeRelacionamento.criarER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
+        EntityRelationship relacionamento = EntityRelationship.createER("REFERENCIA", Arrays.asList("Dependente", "cod_emp", "Empregado", "cod"));
 
     }
 
@@ -59,261 +60,273 @@ public class TestModifica {
 
     @Test
     public void modificarElemento0NaPosicao0TrocaNome() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e1.buscarAtributo("nome"), "Bia"));
-        assertEquals(true, arquivo.modifica(new Valor(e1.getPk(), 0), 0, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.open(prefix);
+        arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("nome"), "Bia"));
+        assertEquals(true, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Bia", 20)),
-            new Registro(e1),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1, Arrays.asList(0, "Bia", 20)),
+            new Tuple(e1),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
     }
 
     @Test
     public void modificarElementoTrocando2Atributos() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1),
-            new Registro(e1, Arrays.asList(1, "Bia", 20)),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1),
+            new Tuple(e1, Arrays.asList(1, "Bia", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e1.buscarAtributo("nome"), "Ana"));
-        mudancas.add(new Valor(e1.buscarAtributo("idade"), 30));
-        assertEquals(true, arquivo.modifica(new Valor(e1.getPk(), 1), 0, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.open(prefix);
+        arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("nome"), "Ana"));
+        mudancas.add(new Value(e1.findAttribute("idade"), 30));
+        assertEquals(true, arquivo.modify(new Value(e1.getPk(), 1), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1),
-            new Registro(e1, Arrays.asList(1, "Ana", 30)),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1),
+            new Tuple(e1, Arrays.asList(1, "Ana", 30)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
     }
 
     @Test
     public void modificarElemento0NaPosicao1ComConflitoTrocarNome() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1, Arrays.asList(4, "Eliana", 20)),
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1, Arrays.asList(4, "Eliana", 20)),
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e1.buscarAtributo("nome"), "Livia Lutterback Dias"));
-        assertEquals(true, arquivo.modifica(new Valor(e1.getPk(), 0), 0, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.open(prefix);
+        arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("nome"), "Livia Lutterback Dias"));
+        assertEquals(true, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1, Arrays.asList(4, "Eliana", 20)),
-            new Registro(e1, Arrays.asList(0, "Livia Lutterback Dias", 20)),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1, Arrays.asList(4, "Eliana", 20)),
+            new Tuple(e1, Arrays.asList(0, "Livia Lutterback Dias", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
     }
 
     @Test
     public void falhaAoModificarRegistroInexistente() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1),
-            new Registro(e1),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1),
+            new Tuple(e1),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e1.buscarAtributo("nome"), "Lívia"));
-        assertEquals(false, arquivo.modifica(new Valor(e1.getPk(), 0), 0, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.open(prefix);
+        arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("nome"), "Lívia"));
+        assertEquals(false, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1),
-            new Registro(e1),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1),
+            new Tuple(e1),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
     }
 
 
     @Test
     public void modificarDependenteTrocaNome() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        gerarArquivo(prefix+e2.getNome()+".dat", Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+        gerarArquivo(prefix+e2.getName()+".dat", Arrays.asList(
+            new Tuple(e2, Arrays.asList(0, "A", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
 
-        Arquivo arquivo = new Arquivo(e2);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e2.buscarAtributo("nome"), "B"));
-        assertEquals(true, arquivo.modifica(new Valor(e2.getPk(), 0), 1, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e2);
+        arquivo.open(prefix);
+        arquivo.setStrategy(ConsistencyStrategy.CASCADE);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e2.findAttribute("nome"), "B"));
+        assertEquals(true, arquivo.modify(new Value(e2.getPk(), 0), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
         gerarArquivo(masterE2, Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "B", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+            new Tuple(e2, Arrays.asList(0, "B", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
-        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
+        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getName()+".dat"));
     }
 
     @Test
     public void modificarMestreEmCascataTrocaNome() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        gerarArquivo(prefix+e2.getNome()+".dat", Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+        gerarArquivo(prefix+e2.getName()+".dat", Arrays.asList(
+            new Tuple(e2, Arrays.asList(0, "A", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e1.buscarAtributo("nome"), "Bia"));
-        assertEquals(true, arquivo.modifica(new Valor(e2.getPk(), 5), 1, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.open(prefix);
+        arquivo.setStrategy(ConsistencyStrategy.CASCADE);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("nome"), "Bia"));
+        assertEquals(true, arquivo.modify(new Value(e2.getPk(), 5), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Bia", 20)),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Bia", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
         gerarArquivo(masterE2, Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+            new Tuple(e2, Arrays.asList(0, "A", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
-        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
+        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getName()+".dat"));
     }
 
     @Test
     public void modificarDependenteTrocaCod() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        gerarArquivo(prefix+e2.getNome()+".dat", Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+        gerarArquivo(prefix+e2.getName()+".dat", Arrays.asList(
+            new Tuple(e2, Arrays.asList(0, "A", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        List<Valor> mudancas = new ArrayList<Valor>();
-        mudancas.add(new Valor(e1.buscarAtributo("cod"), "1"));
-        assertEquals(true, arquivo.modifica(new Valor(e1.getPk(), 0), 1, mudancas));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.open(prefix);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("cod"), "1"));
+        arquivo.setStrategy(ConsistencyStrategy.CASCADE);
+        assertEquals(true, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1, Arrays.asList(1, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1, Arrays.asList(1, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
         gerarArquivo(masterE2, Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 1)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+            new Tuple(e2, Arrays.asList(0, "A", 5, 1)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
-        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
+        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getName()+".dat"));
     }
-
+    
     @Test
-    public void restringirModificarTrocaCod() throws Exception {
-        gerarArquivo(prefix+e1.getNome()+".dat", Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+    public void restringirModificarDependenteCod() throws Exception {
+        gerarArquivo(prefix+e1.getName()+".dat", Arrays.asList(
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
-        gerarArquivo(prefix+e2.getNome()+".dat", Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+        gerarArquivo(prefix+e2.getName()+".dat", Arrays.asList(
+            new Tuple(e2, Arrays.asList(0, "A", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
 
-        Arquivo arquivo = new Arquivo(e1);
-        arquivo.abrir(prefix);
-        assertEquals(false, arquivo.remove(new Valor(e1.getPk(), 0), 0));
-        arquivo.fechar();
+        HashFile arquivo = new HashFile(e1);
+        arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
+        arquivo.open(prefix);
+        List<Value> mudancas = new ArrayList<Value>();
+        mudancas.add(new Value(e1.findAttribute("cod"), "1"));
+        assertEquals(false, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
+        arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Registro(e1, Arrays.asList(0, "Ana", 20)),
-            new Registro(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Registro(e1),
-            new Registro(e1)
+            new Tuple(e1, Arrays.asList(0, "Ana", 20)),
+            new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
+            new Tuple(e1),
+            new Tuple(e1)
         ));
 
         gerarArquivo(masterE2, Arrays.asList(
-            new Registro(e2, Arrays.asList(0, "A", 5, 0)),
-            new Registro(e2),
-            new Registro(e2),
-            new Registro(e2)
+            new Tuple(e2, Arrays.asList(0, "A", 5, 0)),
+            new Tuple(e2),
+            new Tuple(e2),
+            new Tuple(e2)
         ));
-        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getNome()+".dat"));
-        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getNome()+".dat"));
+        assertArrayEquals(lerArquivo(e1, masterE1), lerArquivo(e1, prefix+e1.getName()+".dat"));
+        assertArrayEquals(lerArquivo(e2, masterE2), lerArquivo(e2, prefix+e2.getName()+".dat"));
     }
+
+   
 }
