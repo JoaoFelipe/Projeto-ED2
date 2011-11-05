@@ -7,7 +7,7 @@ import java.io.File;
 
 public abstract class EntityRelationship {
     
-    //Padrão...
+    //Padrão Factory Method: A criação de entidades e relacionamentos foi delegada para o createER
 
     public static EntityRelationship createER(String type, List<String> defs) throws ModelException {
         if (type.equals("TABELA")) {

@@ -10,8 +10,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class MainTable extends JTable {
 
-    //Padrões Singleton
-    //State
+    //Padrão Singleton
+    //Padrão State: o comportamento da tabela depende do seu estado, ou seja, 
+    //depende se está selecionado uma entidade, um relacionamento ou se nada está 
+    //selecionado
     
     private tableModel model = null;
     private static MainTable instance = null;

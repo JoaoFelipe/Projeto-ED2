@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 
 public abstract class Attribute{
     
-    //Padrão
+    //Padrão Factory Method: A criação de abributos em suas respectivas classes 
+    //antes que fossem definidas, foi delegada para o createAttribute
 
     public static Attribute createAttribute(String name, String type, Boolean pk){
         if (type.contains("char")){
