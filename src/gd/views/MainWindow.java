@@ -30,11 +30,15 @@ public class MainWindow extends JFrame {
     private MainWindow() {
         initComponents();
         
-        cancelButton.setVisible(false);
-        cancelButton.setText("Cancelar");
-        insertCommand = new InsertCommand(cancelButton, (MainTable) tupleTable);      
+        this.setInsertDefault();  
     }
 
+    public void setInsertDefault(){
+        cancelButton.setVisible(false);
+        cancelButton.setText("Cancelar");
+        insertCommand = new InsertCommand(cancelButton, (MainTable) tupleTable);    
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

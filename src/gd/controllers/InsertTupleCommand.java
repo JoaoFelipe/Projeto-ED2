@@ -34,7 +34,11 @@ public class InsertTupleCommand implements Command {
         HashFile hashFile = new HashFile(entity);
         try {
             hashFile.open();
-            hashFile.insert(tuple);
+            if (!hashFile.insert(tuple)) {
+                JOptionPane.showMessageDialog(MainWindow.getInstance(), "Não foi possível inserir o registro!", "Erro!", JOptionPane.ERROR_MESSAGE);
+                hashFile.close();
+                return this;
+            }
             hashFile.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(MainWindow.getInstance(), "Não foi possível abrir o arquivo!", "Erro!", JOptionPane.ERROR_MESSAGE);

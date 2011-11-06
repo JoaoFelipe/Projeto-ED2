@@ -196,7 +196,7 @@ public class HashFile {
 
         Tuple current = this.readTuple(result.getPosition());
 
-        if (!result.isFound() && !current.isUsed() && referenceExists(current)) {
+        if (!result.isFound() && !current.isUsed() && referenceExists(tuple)) {
             this.saveTuple(tuple, result.getPosition());
             this.entity.setNumberOfTuples(this.entity.getNumberOfTuples() + 1);
         }

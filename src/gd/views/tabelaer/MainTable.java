@@ -41,11 +41,12 @@ public class MainTable extends JTable {
 
     @Override
     public tableModel getModel() {
-        return (tableModel) this.getModel();
+        return model;
     }
     
     public void setModel(List<String> param, List<Class> classes, boolean editable){
-        super.setModel(new tableModel(param.toArray(), classes, editable));
+        model = new tableModel(param.toArray(), classes, editable);
+        super.setModel(model);
     }
 
     public void setState(EntityRelationship er) {

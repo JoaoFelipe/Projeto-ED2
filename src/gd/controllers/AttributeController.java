@@ -7,6 +7,7 @@ import gd.models.ER.Entity;
 import gd.models.ER.EntityRelationship;
 import gd.models.atributos.Attribute;
 import gd.models.atributos.AttributeCollection;
+import gd.views.MainWindow;
 import gd.views.tabelaer.MainTable;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,6 +48,8 @@ public class AttributeController {
             MainTable table = MainTable.getInstance();
             ERList.setSelected(er);
             table.setState(er);
+            MainWindow.getInstance().setInsertDefault();
+   
         } catch (ModelException ex) {
             ex.execute();
         }
