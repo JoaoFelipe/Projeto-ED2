@@ -2,6 +2,8 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
       <Properties>
         <Property name="name" type="java.lang.String" value="menuBar" noResource="true"/>
@@ -168,7 +170,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainSplit" alignment="0" max="32767" attributes="0"/>
+              <Component id="mainSplit" alignment="0" pref="624" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -216,7 +218,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="listLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="listScrollPane" pref="198" max="32767" attributes="0"/>
+                          <Component id="listScrollPane" pref="184" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="listButtonPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -258,9 +260,14 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="restrictRadioButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="cascadeRadioButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <Component id="createTableButton" alignment="1" pref="154" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="createReferenceButton" max="32767" attributes="0"/>
@@ -283,6 +290,10 @@
                                   <Component id="createReferenceButton" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="restrictRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cascadeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -320,6 +331,25 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createReferenceActionPerformed"/>
                       </Events>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="restrictRadioButton">
+                      <Properties>
+                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                          <ComponentRef name="buttonGroup1"/>
+                        </Property>
+                        <Property name="selected" type="boolean" value="true"/>
+                        <Property name="text" type="java.lang.String" resourceKey="restrictRadioButton.text"/>
+                        <Property name="name" type="java.lang.String" value="restrictRadioButton" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="cascadeRadioButton">
+                      <Properties>
+                        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                          <ComponentRef name="buttonGroup1"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" resourceKey="cascadeRadioButton.text"/>
+                        <Property name="name" type="java.lang.String" value="cascadeRadioButton" noResource="true"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>

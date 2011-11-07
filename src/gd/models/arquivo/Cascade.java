@@ -25,9 +25,11 @@ public class Cascade extends ConsistencyStrategy{
                     newChanges.add(change);
                 }
                 else {
-                    Attribute type = change.getType();
-                    Attribute newType = Attribute.createAttribute(relation.getField(), type.getType(), false);
-                    newChanges.add(new Value(newType, change.getInfo()));
+                    
+//                    Attribute type = change.getType();
+//                    Attribute newType = Attribute.createAttribute(relation.getField(), type.getType(), false);
+                    
+                    newChanges.add(new Value(relation.getEntity().getAttributeByName(relation.getField()), change.getInfo()));
                 }
             }
             temp.modify(pk, newChanges);

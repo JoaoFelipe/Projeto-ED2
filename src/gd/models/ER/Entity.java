@@ -140,8 +140,18 @@ public class Entity extends EntityRelationship {
 
     public Attribute getPk(){
         for (Attribute attr : attributes) {
-            if (attr.getPK())
+            if (attr.getPK()) {
                 return attr;
+            }
+        }
+        return null;
+    }
+    
+    public Attribute getAttributeByName(String name){
+        for (Attribute attr : attributes) {
+            if (attr.getName().equals(name)) {
+                return attr;
+            }
         }
         return null;
     }

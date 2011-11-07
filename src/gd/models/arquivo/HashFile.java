@@ -190,17 +190,16 @@ public class HashFile {
         return resp;
     }
 
-    public boolean insert(Tuple tuple) throws IOException {
+    public boolean insert(Tuple tuple, boolean ignore) throws IOException {
         boolean resp = true;
         Result result = find(tuple.getPK());
 
         Tuple current = this.readTuple(result.getPosition());
 
-        if (!result.isFound() && !current.isUsed() && referenceExists(tuple)) {
+        if (!result.isFound() && !current.isUsed() && (ignore || referenceExists(tuple))) {
             this.saveTuple(tuple, result.getPosition());
             this.entity.setNumberOfTuples(this.entity.getNumberOfTuples() + 1);
-        }
-        else {
+        } else {
             resp = false;
         }
 
@@ -209,6 +208,10 @@ public class HashFile {
         }
 
         return resp;
+    }
+    
+    public boolean insert(Tuple tuple) throws IOException {
+        return insert(tuple, false);
     }
 
     public boolean referenceExists(Tuple current) throws IOException {

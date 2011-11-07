@@ -51,13 +51,18 @@ public abstract class ConsistencyStrategy {
                 Value change = changes.get(i);
                 for (int j = 0; j < newValues.size(); j++) {
                     Value val = newValues.get(j);
-                    if (change.getType().equals(val.getType()))
-                        newValues.set(j, change);
+                    if (change.getType().equals(val.getType())) {
+                        val.setInfo(change.getInfo());
+                        
+//                        newValues.set(j, change);
+                    }
                 }
             }
             tuple.setValues(newValues);
-            hashFile.saveTuple(tuple, result.getPosition());
-            return true;
+            hashFile.saveTuple(new Tuple(hashFile.getEntity(), 2), result.getPosition());
+            hashFile.getEntity().setNumberOfTuples(hashFile.getEntity().getNumberOfTuples() -1);
+            return hashFile.insert(tuple, true);
+//            hashFile.saveTuple(tuple, result.getPosition());
         }
         return false;
         

@@ -48,5 +48,9 @@ public class Value <T> {
     public void setType(Attribute type) {
         this.type = type;
     }
+    
+    public void setInfo(Object info) {
+        this.info = (T) type.cast(info);
+    }
 
 }

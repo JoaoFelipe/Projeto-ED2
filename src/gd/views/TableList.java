@@ -1,6 +1,6 @@
 package gd.views;
 
-import gd.controllers.AttributeController;
+import gd.controllers.TableController;
 import gd.views.base.ListBox;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
@@ -14,11 +14,11 @@ public class TableList extends ListBox {
     }
 
     public void update() {
-        AttributeController.entityListToListModel((DefaultListModel) this.getModel());
+        TableController.entityListToListModel((DefaultListModel) this.getModel());
     }
 
     public void valueChanged(ListSelectionEvent e) {
-        AttributeController.selectEntityRelationship(this.getSelectedIndex());
+        TableController.selectEntityRelationship(this.getSelectedIndex());
     }
 
     public String getSelectedName() {

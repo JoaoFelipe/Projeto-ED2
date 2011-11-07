@@ -46,12 +46,17 @@ public class SearchController {
             Entity entity = hashFile.getEntity();
 
             List<Value> mudancas = Arrays.asList(new Value(entity.findAttribute(attributeName), attributeValue));
-            hashFile.setStrategy(ConsistencyStrategy.RESTRICT);
             hashFile.open();
+            boolean modified = true;
             for (Value valor : search.getPKs()) {
-                hashFile.modify(valor, mudancas);
+                modified &= hashFile.modify(valor, mudancas);
             }
             hashFile.close();
+            
+            if (!modified) {
+                JOptionPane.showMessageDialog(MainWindow.getInstance(), "Alguns registros não foram modificados", "Erro!", JOptionPane.ERROR_MESSAGE);
+
+            }
             
             TableController.tupleToTableModel(new Search(hashFile, null).compile(), model);
             WindowController.closeDialog(dialog);

@@ -1,6 +1,6 @@
 package gd.views;
 
-import gd.controllers.AttributeController;
+import gd.controllers.TableController;
 import gd.views.base.EditableComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -10,7 +10,7 @@ public class AttributeOptionsComboBox extends EditableComboBox {
         super();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         this.setModel(model);
-        AttributeController.attributesListToComboBoxModel(model);
+        TableController.attributesListToComboBoxModel(model);
     }
 
 }

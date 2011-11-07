@@ -271,9 +271,9 @@ public class TestModifica {
         arquivo.close();
 
         gerarArquivo(masterE1, Arrays.asList(
-            new Tuple(e1, Arrays.asList(1, "Ana", 20)),
+            new Tuple(e1, 2),
             new Tuple(e1, Arrays.asList(5, "Fabiana", 20)),
-            new Tuple(e1),
+            new Tuple(e1, Arrays.asList(1, "Ana", 20)),
             new Tuple(e1)
         ));
 

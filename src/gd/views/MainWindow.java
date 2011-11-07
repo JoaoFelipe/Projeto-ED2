@@ -10,6 +10,7 @@ import gd.controllers.RemoveCommand;
 import gd.controllers.TableController;
 import gd.models.ER.Entity;
 import gd.models.ER.ERList;
+import gd.models.arquivo.ConsistencyStrategy;
 import gd.models.arquivo.Search;
 import gd.views.tabelaer.MainTable;
 import javax.swing.JFrame;
@@ -22,8 +23,9 @@ public class MainWindow extends JFrame {
     private Command insertCommand = null;
 
     public static MainWindow getInstance() {
-        if (MainWindow.instance == null)
+        if (MainWindow.instance == null) {
             MainWindow.instance = new MainWindow();
+        }
         return MainWindow.instance;
     }
 
@@ -33,10 +35,16 @@ public class MainWindow extends JFrame {
         this.setInsertDefault();  
     }
 
-    public void setInsertDefault(){
+    public final void setInsertDefault(){
         cancelButton.setVisible(false);
         cancelButton.setText("Cancelar");
         insertCommand = new InsertCommand(cancelButton, (MainTable) tupleTable);    
+    }
+    
+    public int getModifyMode(){
+        return restrictRadioButton.isSelected()? 
+                ConsistencyStrategy.RESTRICT:
+                ConsistencyStrategy.CASCADE;
     }
     
     /** This method is called from within the constructor to
@@ -48,6 +56,7 @@ public class MainWindow extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         mainPanel = new javax.swing.JPanel();
         mainSplit = new javax.swing.JSplitPane();
         listPanel = new javax.swing.JPanel();
@@ -58,6 +67,8 @@ public class MainWindow extends JFrame {
         createTableButton = new javax.swing.JButton();
         removeTableButton = new javax.swing.JButton();
         createReferenceButton = new javax.swing.JButton();
+        restrictRadioButton = new javax.swing.JRadioButton();
+        cascadeRadioButton = new javax.swing.JRadioButton();
         tablePanel = new javax.swing.JPanel();
         tableButtonPanel = new javax.swing.JPanel();
         insertTupleButton = new javax.swing.JButton();
@@ -132,15 +143,28 @@ public class MainWindow extends JFrame {
             }
         });
 
+        buttonGroup1.add(restrictRadioButton);
+        restrictRadioButton.setSelected(true);
+        restrictRadioButton.setText(resourceMap.getString("restrictRadioButton.text")); // NOI18N
+        restrictRadioButton.setName("restrictRadioButton"); // NOI18N
+
+        buttonGroup1.add(cascadeRadioButton);
+        cascadeRadioButton.setText(resourceMap.getString("cascadeRadioButton.text")); // NOI18N
+        cascadeRadioButton.setName("cascadeRadioButton"); // NOI18N
+
         javax.swing.GroupLayout listButtonPanelLayout = new javax.swing.GroupLayout(listButtonPanel);
         listButtonPanel.setLayout(listButtonPanelLayout);
         listButtonPanelLayout.setHorizontalGroup(
             listButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listButtonPanelLayout.createSequentialGroup()
+            .addGroup(listButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(listButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(createTableButton, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                .addGroup(listButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(listButtonPanelLayout.createSequentialGroup()
+                        .addComponent(restrictRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cascadeRadioButton))
+                    .addComponent(createTableButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, listButtonPanelLayout.createSequentialGroup()
                         .addComponent(createReferenceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removeTableButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -155,7 +179,10 @@ public class MainWindow extends JFrame {
                 .addGroup(listButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(removeTableButton)
                     .addComponent(createReferenceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(listButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(restrictRadioButton)
+                    .addComponent(cascadeRadioButton)))
         );
 
         javax.swing.GroupLayout listPanelLayout = new javax.swing.GroupLayout(listPanel);
@@ -176,7 +203,7 @@ public class MainWindow extends JFrame {
                 .addContainerGap()
                 .addComponent(listLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addComponent(listScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(listButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -287,7 +314,7 @@ public class MainWindow extends JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainSplit)
+            .addComponent(mainSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,16 +466,22 @@ public class MainWindow extends JFrame {
     }//GEN-LAST:event_insertTupleActionPerformed
 
     private void searchTuplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTuplesActionPerformed
-        AbstractSearchCommand command = new SearchCommand(new Search((Entity) ERList.getSelected(), null), (MainTable) tupleTable);
+        Search search = new Search((Entity) ERList.getSelected(), null);
+        MainTable table = (MainTable) tupleTable;
+        AbstractSearchCommand command = new SearchCommand(search, table);
         WindowController.open(new SearchView(DataManager.getApplication().getMainFrame(), command));
     }//GEN-LAST:event_searchTuplesActionPerformed
 
     private void changeTuplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTuplesActionPerformed
-        WindowController.open(new ChangeTuplesView(DataManager.getApplication().getMainFrame(), new Search((Entity) ERList.getSelected(), null),(MainTable) tupleTable));
+        Search search = new Search((Entity) ERList.getSelected(), null, this.getModifyMode());
+        MainTable table = (MainTable) tupleTable;
+        WindowController.open(new ChangeTuplesView(DataManager.getApplication().getMainFrame(), search, table));
     }//GEN-LAST:event_changeTuplesActionPerformed
 
     private void removeTuplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTuplesActionPerformed
-        AbstractSearchCommand command = new RemoveCommand(new Search((Entity) ERList.getSelected(), null), (MainTable) tupleTable);
+        Search search = new Search((Entity) ERList.getSelected(), null, this.getModifyMode());
+        MainTable table = (MainTable) tupleTable;
+        AbstractSearchCommand command = new RemoveCommand(search, table);
         WindowController.open(new SearchView(DataManager.getApplication().getMainFrame(), command));
     }//GEN-LAST:event_removeTuplesActionPerformed
 
@@ -466,7 +499,9 @@ public class MainWindow extends JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu aboutMenu;
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JRadioButton cascadeRadioButton;
     private javax.swing.JButton changeTuplesButton;
     private javax.swing.JMenuItem changeTuplesMenuItem;
     private javax.swing.JButton createReferenceButton;
@@ -489,6 +524,7 @@ public class MainWindow extends JFrame {
     private javax.swing.JMenuItem removeTableMenuItem;
     private javax.swing.JButton removeTuplesButton;
     private javax.swing.JMenuItem removeTuplesMenuItem;
+    private javax.swing.JRadioButton restrictRadioButton;
     private javax.swing.JButton searchTuplesButton;
     private javax.swing.JMenuItem searchTuplesMenuItem;
     private javax.swing.JPanel tableButtonPanel;

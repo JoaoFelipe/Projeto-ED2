@@ -28,6 +28,12 @@ public class Search {
         this.searches = new ArrayList<SearchDefinition>();
     }
 
+    public Search(Entity entity, List<Value> pks, int mode) {
+        this.file = new HashFile(entity);
+        this.file.setStrategy(mode);
+        this.pks = pks;
+        this.searches = new ArrayList<SearchDefinition>();
+    }
 
     public Search search(Attribute attr, String operator, Object value) {
         if (attr.getPK() && operator.equals("=")){
