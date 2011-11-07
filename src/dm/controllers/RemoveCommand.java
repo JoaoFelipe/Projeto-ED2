@@ -1,7 +1,7 @@
 package dm.controllers;
 
-import dm.models.file.HashFile;
-import dm.models.file.Search;
+import dm.models.HashFile;
+import dm.models.Search;
 import dm.views.MainWindow;
 import dm.views.maintable.MainTable;
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package dm.controllers;
 
-import dm.models.file.Search;
+import dm.models.Search;
 
 abstract public class AbstractSearchCommand implements Command {
 

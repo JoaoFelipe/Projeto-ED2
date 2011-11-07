@@ -1,15 +1,15 @@
 package tests;
 
 import dm.exceptions.NonUniqueException;
-import dm.models.ER.ERList;
+import dm.models.ERList;
 import java.io.File;
 import utils.ArquivoSequencial;
 import java.io.FileOutputStream;
 import java.io.DataOutputStream;
-import dm.models.ER.EntityRelationship;
-import dm.models.ER.Entity;
-import dm.models.attributes.IntAttr;
-import dm.models.attributes.Attribute;
+import dm.models.EntityRelationship;
+import dm.models.Entity;
+import dm.models.IntAttr;
+import dm.models.Attribute;
 import java.util.List;
 import java.util.Arrays;
 import org.junit.After;

@@ -63,7 +63,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new dm.views.SearchTable((dm.models.ER.Entity)dm.models.ER.ERList.getSelected())"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new dm.views.SearchTable((dm.models.Entity)dm.models.ERList.getSelected())"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -169,7 +169,7 @@
             <Property name="name" type="java.lang.String" value="attributeComboBox" noResource="true"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new dm.views.EntityAttributesComboBox((dm.models.ER.Entity)dm.models.ER.ERList.getSelected())&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new dm.views.EntityAttributesComboBox((dm.models.Entity)dm.models.ERList.getSelected())&#xa;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="valueLabel">

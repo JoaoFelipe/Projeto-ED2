@@ -1,8 +1,8 @@
 package dm.views.maintable;
 
-import dm.models.ER.Entity;
-import dm.models.ER.EntityRelationship;
-import dm.views.base.TableModelEx;
+import dm.models.Entity;
+import dm.models.EntityRelationship;
+import dm.views.TableModelEx;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JTable;

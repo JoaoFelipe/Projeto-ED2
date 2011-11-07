@@ -1,10 +1,10 @@
 package tests;
 
-import dm.models.file.HashFile;
-import dm.models.file.Tuple;
-import dm.models.ER.EntityRelationship;
-import dm.models.ER.Entity;
-import dm.models.ER.ERList;
+import dm.models.HashFile;
+import dm.models.Tuple;
+import dm.models.EntityRelationship;
+import dm.models.Entity;
+import dm.models.ERList;
 import java.io.File;
 import java.util.Arrays;
 import org.junit.After;

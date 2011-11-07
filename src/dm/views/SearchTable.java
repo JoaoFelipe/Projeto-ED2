@@ -1,8 +1,6 @@
 package dm.views;
 
-import dm.models.ER.Entity;
-import dm.views.base.ComboBoxEditor;
-import dm.views.base.ComboBoxRenderer;
+import dm.models.Entity;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.JTable;

@@ -8,10 +8,10 @@ import dm.controllers.InsertCommand;
 import dm.controllers.WindowController;
 import dm.controllers.RemoveCommand;
 import dm.controllers.TableController;
-import dm.models.ER.Entity;
-import dm.models.ER.ERList;
-import dm.models.file.ConsistencyStrategy;
-import dm.models.file.Search;
+import dm.models.Entity;
+import dm.models.ERList;
+import dm.models.ConsistencyStrategy;
+import dm.models.Search;
 import dm.views.maintable.MainTable;
 import javax.swing.JFrame;
 

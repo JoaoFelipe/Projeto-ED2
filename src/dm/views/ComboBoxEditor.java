@@ -1,4 +1,4 @@
-package dm.views.base;
+package dm.views;
 
 import java.util.List;
 import javax.swing.DefaultCellEditor;

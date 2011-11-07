@@ -2,11 +2,11 @@ package dm.views.maintable;
 
 import dm.controllers.TableController;
 import dm.models.CollectionUtil;
-import dm.models.ER.Entity;
-import dm.models.ER.EntityRelationship;
-import dm.models.file.HashFile;
-import dm.models.file.Search;
-import dm.models.attributes.AttributeCollection;
+import dm.models.Entity;
+import dm.models.EntityRelationship;
+import dm.models.HashFile;
+import dm.models.Search;
+import dm.models.AttributeCollection;
 import dm.views.MainWindow;
 import java.io.IOException;
 import java.util.List;

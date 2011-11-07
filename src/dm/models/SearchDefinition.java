@@ -1,6 +1,6 @@
-package dm.models.file;
+package dm.models;
 
-import dm.models.attributes.Attribute;
+import dm.models.Attribute;
 
 public class SearchDefinition {
     

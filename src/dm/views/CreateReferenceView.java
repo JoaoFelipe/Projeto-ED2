@@ -7,7 +7,6 @@ package dm.views;
 import dm.controllers.WindowController;
 import dm.controllers.TableController;
 import dm.exceptions.ModelException;
-import dm.views.base.NotEditableComboBox;
 import org.jdesktop.application.Action;
 
 public class CreateReferenceView extends javax.swing.JDialog {

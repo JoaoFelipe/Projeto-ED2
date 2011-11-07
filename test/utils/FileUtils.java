@@ -1,8 +1,8 @@
 package utils;
 
 
-import dm.models.ER.Entity;
-import dm.models.file.Tuple;
+import dm.models.Entity;
+import dm.models.Tuple;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;

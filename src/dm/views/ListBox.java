@@ -1,4 +1,4 @@
-package dm.views.base;
+package dm.views;
 
 import javax.swing.event.ListSelectionListener;
 

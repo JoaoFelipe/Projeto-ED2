@@ -7,13 +7,13 @@ package tests;
  * and open the template in the editor.
  */
 
-import dm.models.file.Value;
-import dm.models.file.HashFile;
-import dm.models.file.Result;
-import dm.models.ER.Entity;
-import dm.models.file.Tuple;
-import dm.models.ER.ERList;
-import dm.models.ER.EntityRelationship;
+import dm.models.Value;
+import dm.models.HashFile;
+import dm.models.Result;
+import dm.models.Entity;
+import dm.models.Tuple;
+import dm.models.ERList;
+import dm.models.EntityRelationship;
 import java.util.Arrays;
 import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;

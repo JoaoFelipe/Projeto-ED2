@@ -1,7 +1,7 @@
 package dm.views.maintable;
 
-import dm.models.ER.EntityRelationship;
-import dm.models.ER.Relation;
+import dm.models.EntityRelationship;
+import dm.models.Relation;
 import java.util.Arrays;
 
 public class RelationState implements TableState {

@@ -1,9 +1,9 @@
 package tests;
 
-import dm.models.attributes.DoubleAttr;
-import dm.models.attributes.CharAttr;
-import dm.models.attributes.IntAttr;
-import dm.models.attributes.Attribute;
+import dm.models.DoubleAttr;
+import dm.models.CharAttr;
+import dm.models.IntAttr;
+import dm.models.Attribute;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

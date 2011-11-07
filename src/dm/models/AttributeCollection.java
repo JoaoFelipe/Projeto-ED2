@@ -1,4 +1,4 @@
-package dm.models.attributes;
+package dm.models;
 
 import dm.models.Process;
 

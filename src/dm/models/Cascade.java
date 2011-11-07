@@ -1,6 +1,6 @@
-package dm.models.file;
+package dm.models;
 
-import dm.models.ER.Relation;
+import dm.models.Relation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

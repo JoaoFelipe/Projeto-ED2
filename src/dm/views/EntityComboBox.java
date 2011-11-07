@@ -2,7 +2,6 @@ package dm.views;
 
 import dm.controllers.Command;
 import dm.controllers.TableController;
-import dm.views.base.NotEditableComboBox;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;

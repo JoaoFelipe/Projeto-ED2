@@ -1,8 +1,8 @@
-package dm.models.file;
+package dm.models;
 
-import dm.models.ER.Entity;
-import dm.models.ER.Relation;
-import dm.models.attributes.Attribute;
+import dm.models.Entity;
+import dm.models.Relation;
+import dm.models.Attribute;
 import java.io.IOException;
 import java.util.List;
 

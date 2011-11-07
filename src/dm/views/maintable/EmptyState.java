@@ -1,6 +1,6 @@
 package dm.views.maintable;
 
-import dm.models.ER.EntityRelationship;
+import dm.models.EntityRelationship;
 import java.util.Arrays;
 
 public class EmptyState implements TableState {

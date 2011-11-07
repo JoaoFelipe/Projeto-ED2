@@ -1,4 +1,4 @@
-package dm.models.file;
+package dm.models;
 
 public class Result {
 

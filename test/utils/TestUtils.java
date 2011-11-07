@@ -1,9 +1,9 @@
 package utils;
 
-import dm.models.file.Tuple;
-import dm.models.ER.EntityRelationship;
-import dm.models.ER.Entity;
-import dm.models.ER.ERList;
+import dm.models.Tuple;
+import dm.models.EntityRelationship;
+import dm.models.Entity;
+import dm.models.ERList;
 import java.io.File;
 import org.junit.Before;
 import java.util.Arrays;

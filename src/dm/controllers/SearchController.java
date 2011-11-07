@@ -4,10 +4,10 @@
  */
 package dm.controllers;
 
-import dm.models.ER.Entity;
-import dm.models.file.HashFile;
-import dm.models.file.Search;
-import dm.models.file.Value;
+import dm.models.Entity;
+import dm.models.HashFile;
+import dm.models.Search;
+import dm.models.Value;
 import dm.views.MainWindow;
 import dm.views.SearchTable;
 import java.io.IOException;

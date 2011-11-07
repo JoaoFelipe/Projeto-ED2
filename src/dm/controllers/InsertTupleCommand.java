@@ -1,9 +1,9 @@
 package dm.controllers;
 
-import dm.models.ER.Entity;
-import dm.models.ER.ERList;
-import dm.models.file.HashFile;
-import dm.models.file.Tuple;
+import dm.models.Entity;
+import dm.models.ERList;
+import dm.models.HashFile;
+import dm.models.Tuple;
 import dm.views.MainWindow;
 import dm.views.maintable.MainTable;
 import java.io.IOException;

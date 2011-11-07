@@ -1,16 +1,16 @@
 package tests;
 
 import java.util.ArrayList;
-import dm.models.file.Search;
-import dm.models.file.HashFile;
-import dm.models.file.Tuple;
-import dm.models.file.Value;
-import dm.models.attributes.Attribute;
-import dm.models.ER.EntityRelationship;
+import dm.models.Search;
+import dm.models.HashFile;
+import dm.models.Tuple;
+import dm.models.Value;
+import dm.models.Attribute;
+import dm.models.EntityRelationship;
 import java.util.Arrays;
-import dm.models.ER.ERList;
+import dm.models.ERList;
 import java.io.File;
-import dm.models.ER.Entity;
+import dm.models.Entity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

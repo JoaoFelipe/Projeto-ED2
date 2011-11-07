@@ -1,17 +1,16 @@
-package dm.models.attributes;
+package dm.models;
 
-import dm.models.file.Value;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.List;
 
-public class DoubleAttr extends Attribute{
+public class IntAttr extends Attribute{
 
     private String name;
     private boolean pk;
 
-    public DoubleAttr(String name, boolean pk) {
+    public IntAttr(String name, boolean pk) {
         this.name = name;
         this.pk = pk;
     }
@@ -28,17 +27,17 @@ public class DoubleAttr extends Attribute{
 
     @Override
     public String getType() {
-        return "double";
+        return "int";
     }
 
     @Override
     public int getSize() {
-        return 8;
+        return 4;
     }
 
     @Override
     public Class getClassEx() {
-        return Double.class;
+        return Integer.class;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class DoubleAttr extends Attribute{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DoubleAttr other = (DoubleAttr) obj;
+        final IntAttr other = (IntAttr) obj;
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
@@ -61,59 +60,59 @@ public class DoubleAttr extends Attribute{
 
     @Override
     public int getHash(Value value) {
-        Double d = (Double) value.getInfo();
-        return d.hashCode();
+        Integer i = (Integer) (value.getInfo());
+        return i.hashCode();
     }
 
     @Override
     public Value read(RandomAccessFile in) throws IOException{
-        return new Value<Double>(this, in.readDouble());
+        return new Value<Integer>(this, in.readInt());
     }
 
     @Override
     public Value getDefault() {
-        return new Value<Double>(this, new Double(0));
+        return new Value<Integer>(this, new Integer(0));
     }
 
     @Override
     public void save(RandomAccessFile in, Value value) throws IOException {
-        in.writeDouble(((Double) value.getInfo()).doubleValue());
+        in.writeInt(((Integer) value.getInfo()).intValue());
     }
 
-    public boolean equalSearch(Value value, Double condition){
-        return ((Double) value.getInfo()).compareTo(condition) == 0;
+    public boolean equalSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) == 0;
     }
 
-    public boolean lowerThanSearch(Value value, Double condition){
-        return ((Double) value.getInfo()).compareTo(condition) < 0;
+    public boolean lowerThanSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) < 0;
     }
 
-    public boolean lowerEqualSearch(Value value, Double condition){
-        return ((Double) value.getInfo()).compareTo(condition) <= 0;
+    public boolean lowerEqualSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) <= 0;
     }
 
-    public boolean higherThanSearch(Value value, Double condition){
-        return ((Double) value.getInfo()).compareTo(condition) > 0;
+    public boolean higherThanSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) > 0;
     }
 
-    public boolean higherEqualSearch(Value value, Double condition){
-        return ((Double) value.getInfo()).compareTo(condition) >= 0;
+    public boolean higherEqualSearch(Value value, Integer condition){
+        return ((Integer) value.getInfo()).compareTo(condition) >= 0;
     }
 
     @Override
     public boolean compare(String operator, Value value, Object condition) {
         if(operator.equals("="))
-            return equalSearch(value, (Double)condition);
+            return equalSearch(value, (Integer)condition);
         else if(operator.equals("!="))
-            return !equalSearch(value, (Double)condition);
+            return !equalSearch(value, (Integer)condition);
         else if(operator.equals(">"))
-            return higherThanSearch(value, (Double)condition);
+            return higherThanSearch(value, (Integer)condition);
         else if(operator.equals("<"))
-            return lowerThanSearch(value, (Double)condition);
+            return lowerThanSearch(value, (Integer)condition);
         else if(operator.equals(">="))
-            return higherEqualSearch(value, (Double)condition);
+            return higherEqualSearch(value, (Integer)condition);
         else if(operator.equals("<="))
-            return lowerEqualSearch(value, (Double)condition);
+            return lowerEqualSearch(value, (Integer)condition);
         else
             return true;
     }
@@ -125,10 +124,10 @@ public class DoubleAttr extends Attribute{
     
     @Override
     public Object cast(Object value) {
-        if (value instanceof Double){
+        if (value instanceof Integer){
             return value;
         } else {
-            return Double.parseDouble(value+"");
+            return Integer.parseInt(value+"");
         }
     }
 }

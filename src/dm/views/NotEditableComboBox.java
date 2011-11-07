@@ -1,4 +1,4 @@
-package dm.views.base;
+package dm.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

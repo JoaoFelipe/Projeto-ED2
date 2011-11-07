@@ -1,6 +1,5 @@
-package dm.models.attributes;
+package dm.models;
 
-import dm.models.file.Value;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;

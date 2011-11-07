@@ -1,7 +1,6 @@
 package dm.views;
 
 import dm.controllers.TableController;
-import dm.views.base.ListBox;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
 

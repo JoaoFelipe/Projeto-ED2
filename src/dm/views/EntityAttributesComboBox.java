@@ -1,8 +1,7 @@
 package dm.views;
 
 import dm.controllers.TableController;
-import dm.models.ER.Entity;
-import dm.views.base.NotEditableComboBox;
+import dm.models.Entity;
 import javax.swing.DefaultComboBoxModel;
 
 public class EntityAttributesComboBox extends NotEditableComboBox {

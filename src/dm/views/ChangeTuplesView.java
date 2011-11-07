@@ -3,7 +3,7 @@ package dm.views;
 import dm.controllers.SearchController;
 import dm.views.maintable.MainTable;
 import dm.controllers.WindowController;
-import dm.models.file.Search;
+import dm.models.Search;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.application.Action;
 
@@ -32,13 +32,13 @@ public class ChangeTuplesView extends javax.swing.JDialog {
     private void initComponents() {
 
         searchScrollPane = new javax.swing.JScrollPane();
-        searchTable = new dm.views.SearchTable((dm.models.ER.Entity)dm.models.ER.ERList.getSelected());
+        searchTable = new dm.views.SearchTable((dm.models.Entity)dm.models.ERList.getSelected());
         conditionPanel = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
         attributeLabel = new javax.swing.JLabel();
-        attributeComboBox = new dm.views.EntityAttributesComboBox((dm.models.ER.Entity)dm.models.ER.ERList.getSelected())
+        attributeComboBox = new dm.views.EntityAttributesComboBox((dm.models.Entity)dm.models.ERList.getSelected())
         ;
         valueLabel = new javax.swing.JLabel();
         valueTextField = new javax.swing.JTextField();

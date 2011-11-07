@@ -1,4 +1,4 @@
-package dm.views.base;
+package dm.views;
 
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;

@@ -1,7 +1,6 @@
-package dm.models.ER;
+package dm.models;
 
 import dm.exceptions.ModelException;
-import dm.models.attributes.Attribute;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.Set;
 import dm.exceptions.NonUniqueException;
 import dm.exceptions.NotFoundException;
 import dm.models.CollectionUtil;
-import dm.models.attributes.AttributeCollection;
 
 public class Entity extends EntityRelationship {
 

@@ -1,4 +1,4 @@
-package dm.models.ER;
+package dm.models;
 
 import dm.exceptions.ModelException;
 import java.io.DataInputStream;
