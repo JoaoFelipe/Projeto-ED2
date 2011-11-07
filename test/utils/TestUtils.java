@@ -1,9 +1,9 @@
 package utils;
 
-import gd.models.arquivo.Tuple;
-import gd.models.ER.EntityRelationship;
-import gd.models.ER.Entity;
-import gd.models.ER.ERList;
+import dm.models.file.Tuple;
+import dm.models.ER.EntityRelationship;
+import dm.models.ER.Entity;
+import dm.models.ER.ERList;
 import java.io.File;
 import org.junit.Before;
 import java.util.Arrays;
