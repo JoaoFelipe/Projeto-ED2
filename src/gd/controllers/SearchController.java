@@ -5,7 +5,6 @@
 package gd.controllers;
 
 import gd.models.ER.Entity;
-import gd.models.arquivo.ConsistencyStrategy;
 import gd.models.arquivo.HashFile;
 import gd.models.arquivo.Search;
 import gd.models.arquivo.Value;

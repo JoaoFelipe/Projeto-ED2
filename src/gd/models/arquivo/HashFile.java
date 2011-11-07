@@ -2,12 +2,10 @@ package gd.models.arquivo;
 
 import gd.models.ER.Entity;
 import gd.models.ER.Relation;
-import gd.models.atributos.Attribute;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class HashFile {
@@ -104,14 +102,14 @@ public class HashFile {
 
     public void open(String prefix, int size) throws IOException {
         this.setPrefix(prefix);
-        File file = new File(prefix + entity.getName() + ".dat");
-        this.setFile(new RandomAccessFile(file, "rw"));
-        if (file.length() == 0) {
+        File f = new File(prefix + entity.getName() + ".dat");
+        this.setFile(new RandomAccessFile(f, "rw"));
+        if (f.length() == 0) {
             this.size = size;
             this.create();
         }
         else {
-            this.size = (int) (file.length() / tupleSize);
+            this.size = (int) (f.length() / tupleSize);
         }
         this.countTuples();
     }

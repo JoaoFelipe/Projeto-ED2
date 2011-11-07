@@ -16,9 +16,9 @@ public abstract class ConsistencyStrategy {
     //diferente nas classes cascade e restrict que herdam desta
 
     public final static int RESTRICT = 0;
-    public static int CASCADE = 1;
+    public final static int CASCADE = 1;
     
-    HashFile hashFile = null;
+    private HashFile hashFile = null;
 
     public ConsistencyStrategy(HashFile hashFile) {
         this.hashFile = hashFile; 
@@ -30,14 +30,14 @@ public abstract class ConsistencyStrategy {
     
     public boolean modify(Value value, List<Value> changes) throws IOException {
         
-        Result result = hashFile.find(value);
+        Result result = getHashFile().find(value);
         if (result.isFound()) {
-            for (Relation relation : hashFile.getEntity().getRelation()) {
-                if (relation.getReferencedEntity() == hashFile.getEntity()) {
+            for (Relation relation : getHashFile().getEntity().getRelation()) {
+                if (relation.getReferencedEntity() == getHashFile().getEntity()) {
                     Entity referrer = relation.getEntity();
                     HashFile temp = new HashFile(referrer);
                     Attribute searched = referrer.findAttribute(relation.getField());
-                    Search search = new Search(temp, null).search(searched, "=", result.getPosition()).compile(hashFile.getPrefix());
+                    Search search = new Search(temp, null).search(searched, "=", result.getPosition()).compile(getHashFile().getPrefix());
 
                     if (!verifyAndApplyModify(temp, search, relation, changes)){
                         return false;
@@ -45,7 +45,7 @@ public abstract class ConsistencyStrategy {
                    
                 }
             }
-            Tuple tuple = hashFile.readTuple(result.getPosition());
+            Tuple tuple = getHashFile().readTuple(result.getPosition());
             List<Value> newValues = tuple.getValues();
             for (int i = 0; i < changes.size(); i++) {
                 Value change = changes.get(i);
@@ -59,25 +59,25 @@ public abstract class ConsistencyStrategy {
                 }
             }
             tuple.setValues(newValues);
-            hashFile.saveTuple(new Tuple(hashFile.getEntity(), 2), result.getPosition());
-            hashFile.getEntity().setNumberOfTuples(hashFile.getEntity().getNumberOfTuples() -1);
-            return hashFile.insert(tuple, true);
+            getHashFile().saveTuple(new Tuple(getHashFile().getEntity(), 2), result.getPosition());
+            getHashFile().getEntity().setNumberOfTuples(getHashFile().getEntity().getNumberOfTuples() -1);
+            return getHashFile().insert(tuple, true);
 //            hashFile.saveTuple(tuple, result.getPosition());
         }
         return false;
         
     }
     public boolean remove(Value value) throws IOException {
-        Result result = hashFile.find(value);
+        Result result = getHashFile().find(value);
         if (result.isFound()) {
 
-            for (Relation relation : hashFile.getEntity().getRelation()) {
-                if (relation.getReferencedEntity() == hashFile.getEntity()) {
+            for (Relation relation : getHashFile().getEntity().getRelation()) {
+                if (relation.getReferencedEntity() == getHashFile().getEntity()) {
                     Entity referrer = relation.getEntity();
                     HashFile temp = new HashFile(referrer);
                     Attribute searched = referrer.findAttribute(relation.getField());
                     Search search = new Search(temp, null).search(searched, "=", result.getPosition()).
-                            compile(hashFile.getPrefix());
+                            compile(getHashFile().getPrefix());
                     
                     if (!verifyAndApplyRemove(temp, search, relation)){
                         return false;
@@ -85,10 +85,18 @@ public abstract class ConsistencyStrategy {
                 }
             }
 
-            hashFile.saveTuple(new Tuple(hashFile.getEntity(), 2), result.getPosition());
+            getHashFile().saveTuple(new Tuple(getHashFile().getEntity(), 2), result.getPosition());
             return true;
         }
         return false;
+    }
+
+    public HashFile getHashFile() {
+        return hashFile;
+    }
+
+    public void setHashFile(HashFile hashFile) {
+        this.hashFile = hashFile;
     }
     
 }

@@ -1,8 +1,6 @@
 package gd.models.arquivo;
 
-import gd.models.ER.Entity;
 import gd.models.ER.Relation;
-import gd.models.atributos.Attribute;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ public class Cascade extends ConsistencyStrategy{
     @Override
     public boolean verifyAndApplyModify(HashFile temp, Search search, Relation relation, List<Value> changes) throws IOException {
         temp.setStrategy(ConsistencyStrategy.CASCADE);
-        temp.open(hashFile.getPrefix());
+        temp.open(getHashFile().getPrefix());
         for (Value pk : search.getPKs()) {
             List<Value> newChanges = new ArrayList<Value>();
             for (Value change : changes) {
@@ -41,7 +39,7 @@ public class Cascade extends ConsistencyStrategy{
     @Override
     public boolean verifyAndApplyRemove(HashFile temp, Search search, Relation relation) throws IOException {
         temp.setStrategy(ConsistencyStrategy.CASCADE);
-        temp.open(hashFile.getPrefix());
+        temp.open(getHashFile().getPrefix());
         for (Value pk : search.getPKs()) {
             temp.remove(pk);
         }
