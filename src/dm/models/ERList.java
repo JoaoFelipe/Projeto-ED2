@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import dm.exceptions.NonUniqueException;
-import dm.models.CollectionUtil;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 
@@ -85,7 +84,9 @@ public class ERList {
                     }
                 }
             } catch (EOFException e) {
-                add(EntityRelationship.createER(type, attrs));
+                if (!type.equals("")) {
+                    add(EntityRelationship.createER(type, attrs));
+                }
             } catch (FileNotFoundException e) {
             } finally {
                 if (file != null) {

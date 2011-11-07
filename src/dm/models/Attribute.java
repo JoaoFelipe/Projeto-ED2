@@ -2,8 +2,11 @@ package dm.models;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,21 +38,28 @@ public abstract class Attribute{
         Matcher m = p.matcher(text);
         if (m.matches()){
             String name = m.group(2);
-            boolean pk = (m.group(1) != null);
-            if (m.group(3).equals("int")){
-                return new IntAttr(name, pk);
-            } else if (m.group(3).equals("double")){
-                return new DoubleAttr(name, pk);
-            } else if (m.group(3).contains("char")) {
-                p = Pattern.compile("char(.+)");
-                m = p.matcher(m.group(3));
-                if (m.matches()){
-                    int size = Integer.parseInt(m.group(1));
-                    return new CharAttr(name, pk, size);
-                } else {
-                    return new CharAttr(name, pk, 1);
+            name = name.toLowerCase(Locale.ENGLISH);
+            name = Normalizer.normalize(name, Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+            name = name.trim();
+            
+            if (!name.isEmpty()) {
+                boolean pk = (m.group(1) != null);
+                if (m.group(3).equals("int")){
+                    return new IntAttr(name, pk);
+                } else if (m.group(3).equals("double")){
+                    return new DoubleAttr(name, pk);
+                } else if (m.group(3).contains("char")) {
+                    p = Pattern.compile("char(.+)");
+                    m = p.matcher(m.group(3));
+                    if (m.matches()){
+                        int size = Integer.parseInt(m.group(1));
+                        return new CharAttr(name, pk, size);
+                    } else {
+                        return new CharAttr(name, pk, 1);
+                    }
                 }
             }
+               
         }
         return null;
     }

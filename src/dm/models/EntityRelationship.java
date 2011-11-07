@@ -14,7 +14,7 @@ public abstract class EntityRelationship {
             return new Entity(defs);
         } else if (type.equals("REFERENCIA")) {
             Relation relation = new Relation(defs);
-            relation.addToEntity();
+        
             return relation;
         } else {
             return null;

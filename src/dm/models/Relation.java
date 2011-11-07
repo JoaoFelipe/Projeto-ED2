@@ -26,7 +26,6 @@ public class Relation extends EntityRelationship {
         if (defs.size() != 4) {
             throw new NotFoundException("Elementos não encontrados");
         }
-        this.validate();
     }
 
     public void validate() throws ModelException {
@@ -42,6 +41,7 @@ public class Relation extends EntityRelationship {
         if (getReferencedEntity().findAttribute(referencedField) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade Referenciada");
         }
+        this.addToEntity();
     }
 
     @Override
