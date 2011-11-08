@@ -32,6 +32,7 @@ public class MainWindow extends JFrame {
     private MainWindow() {
         initComponents();
         
+        tupleTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
         this.setInsertDefault();  
     }
 

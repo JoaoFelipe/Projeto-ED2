@@ -28,7 +28,13 @@ public class InsertTupleCommand implements Command {
 
         List list = new ArrayList();
         for (int i = 0; i < table.getColumnCount(); i++) {
-            list.add(table.getModel().getValueAt(table.getRowCount() - 1, i));
+            Object object = table.getModel().getValueAt(table.getRowCount() - 1, i);
+            if (object != null) {
+                list.add(object);
+            } else {
+                JOptionPane.showMessageDialog(MainWindow.getInstance(), "Não foi possível inserir o registro!", "Erro!", JOptionPane.ERROR_MESSAGE);
+                return this;
+            }
         }
         Tuple tuple = new Tuple(entity, list);
         HashFile hashFile = new HashFile(entity);
