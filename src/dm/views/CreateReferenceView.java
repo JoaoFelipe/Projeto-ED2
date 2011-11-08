@@ -43,11 +43,12 @@ public class CreateReferenceView extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(CreateReferenceView.class);
+        setTitle(resourceMap.getString("aboutBox.title")); // NOI18N
         setModal(true);
         setName("aboutBox"); // NOI18N
         setResizable(false);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(CreateReferenceView.class);
         attributeLabel.setText(resourceMap.getString("attributeLabel.text")); // NOI18N
         attributeLabel.setName("attributeLabel"); // NOI18N
 

@@ -2,8 +2,11 @@ package dm.models;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -179,7 +182,11 @@ public class CharAttr extends Attribute{
 
     @Override
     public Object cast(Object value) {
-        return value + "";
+        String temp = value + "";
+//        temp = temp.toLowerCase(Locale.ENGLISH);
+        temp = Normalizer.normalize(temp, Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        temp = temp.trim();
+        return temp;
     }
 
 }

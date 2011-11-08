@@ -16,8 +16,10 @@ public class CreateTableView extends javax.swing.JDialog {
     public CreateTableView(java.awt.Frame parent, TableList tables) {
         super(parent);
         this.tables = tables;
+
         initComponents();
 
+        attributeTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
     }
 
     @Action public void closeAboutBox() {
@@ -51,6 +53,8 @@ public class CreateTableView extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(CreateTableView.class);
+        setTitle(resourceMap.getString("aboutBox.title")); // NOI18N
         setModal(true);
         setName("aboutBox"); // NOI18N
         setResizable(false);
@@ -62,7 +66,6 @@ public class CreateTableView extends javax.swing.JDialog {
         attributeTable.setName("attributeTable"); // NOI18N
         attributeScrollPane.setViewportView(attributeTable);
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(CreateTableView.class);
         removeButton.setText(resourceMap.getString("removeButton.text")); // NOI18N
         removeButton.setName("removeButton"); // NOI18N
         removeButton.addActionListener(new java.awt.event.ActionListener() {

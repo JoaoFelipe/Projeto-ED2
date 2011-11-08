@@ -14,6 +14,7 @@ public class SearchView extends javax.swing.JDialog {
         super(parent);
         initComponents();
         this.command = command;
+        searchTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
     }
 
     @Action
@@ -38,6 +39,8 @@ public class SearchView extends javax.swing.JDialog {
         removeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(SearchView.class);
+        setTitle(resourceMap.getString("aboutBox.title")); // NOI18N
         setModal(true);
         setName("aboutBox"); // NOI18N
         setResizable(false);
@@ -50,7 +53,6 @@ public class SearchView extends javax.swing.JDialog {
 
         jPanel1.setName("jPanel1"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(SearchView.class);
         addButton.setText(resourceMap.getString("addButton.text")); // NOI18N
         addButton.setName("addButton"); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {

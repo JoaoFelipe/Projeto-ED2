@@ -17,6 +17,7 @@ public class ChangeTuplesView extends javax.swing.JDialog {
         initComponents();
         this.search = search;
         this.table = table;
+        searchTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
     }
 
     @Action public void closeAboutBox() {
@@ -46,6 +47,8 @@ public class ChangeTuplesView extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(ChangeTuplesView.class);
+        setTitle(resourceMap.getString("aboutBox.title")); // NOI18N
         setModal(true);
         setName("aboutBox"); // NOI18N
         setResizable(false);
@@ -58,7 +61,6 @@ public class ChangeTuplesView extends javax.swing.JDialog {
 
         conditionPanel.setName("conditionPanel"); // NOI18N
 
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(dm.DataManager.class).getContext().getResourceMap(ChangeTuplesView.class);
         addButton.setText(resourceMap.getString("addButton.text")); // NOI18N
         addButton.setName("addButton"); // NOI18N
         addButton.addActionListener(new java.awt.event.ActionListener() {

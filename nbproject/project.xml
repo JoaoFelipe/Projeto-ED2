@@ -13,7 +13,7 @@
             </test-roots>
         </data>
         <swingapp xmlns="http://www.netbeans.org/ns/form-swingapp/1">
-            <application-class name="gd.DataManager"/>
+            <application-class name="dm.DataManager"/>
         </swingapp>
     </configuration>
 </project>
