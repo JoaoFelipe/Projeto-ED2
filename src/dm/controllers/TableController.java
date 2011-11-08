@@ -107,7 +107,7 @@ public class TableController {
         file.close();
     }
     
-        public static void attributesListToComboBoxModel(DefaultComboBoxModel model) {
+    public static void attributesListToComboBoxModel(DefaultComboBoxModel model) {
         ComboModelCollection.convert(Attribute.allOptions(), model);
     }
     
@@ -143,7 +143,7 @@ public class TableController {
         }
     }
     
-        public static void insertAttribute(AttributeTable table, String name, String type) {
+    public static void insertAttribute(AttributeTable table, String name, String type) {
         Attribute attribute = Attribute.createAttribute(name+":"+type);
         
         DefaultTableModel model = (DefaultTableModel) table.getModel();

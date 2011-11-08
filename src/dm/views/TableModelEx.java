@@ -35,7 +35,7 @@ public class TableModelEx extends DefaultTableModel {
     }
 
     public boolean isEditable() {
-        return editable;
+        return true;//editable;
     }
 
     public void setEditable(boolean editable) {

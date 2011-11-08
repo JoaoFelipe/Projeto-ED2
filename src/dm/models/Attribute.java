@@ -16,6 +16,9 @@ public abstract class Attribute{
     //antes que fossem definidas, foi delegada para o createAttribute
 
     public static Attribute createAttribute(String name, String type, Boolean pk){
+        name = name.toLowerCase(Locale.ENGLISH);
+        name = Normalizer.normalize(name, Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+        name = name.trim();
         if (type.contains("char")){
             Pattern p = Pattern.compile("char(.+)");
             Matcher m = p.matcher(type);
