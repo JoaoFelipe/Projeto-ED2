@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
 
-public class TestConsulta {
+public class ConsultaTest {
 
     String metaDadosPath = "test\\metadados-teste.dat";
     String arqE2 = "test\\Empregado.dat";

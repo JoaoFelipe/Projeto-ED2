@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TestEntidade {
+public class EntidadeTest {
 
     String metaDadosPath = "test\\metadados-teste.dat";
     String prefix = "test\\";

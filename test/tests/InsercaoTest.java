@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
-public class TestInsercao {
+public class InsercaoTest {
 
     String masterE1 = "test\\EmpregadoMaster.dat";
     String masterE2 = "test\\DependenteMaster.dat";

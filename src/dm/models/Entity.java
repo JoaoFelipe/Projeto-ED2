@@ -47,12 +47,12 @@ public class Entity extends EntityRelationship {
             throw new NotFoundException("O nome não pode estar em branco");
         }
         name = name.trim();
-        name = name.toLowerCase(Locale.ENGLISH);
-        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
-        name = Normalizer.normalize(name, Form.NFD).replaceAll("[^\\p{ASCII}]", "");
         if (name == null || name.isEmpty()) {
             throw new NotFoundException("O nome não pode estar em branco");
         }
+        name = name.toLowerCase(Locale.ENGLISH);
+        name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        name = Normalizer.normalize(name, Form.NFD).replaceAll("[^\\p{ASCII}]", "");
         
         int count = 0;
         Set<String> set = new HashSet<String>();

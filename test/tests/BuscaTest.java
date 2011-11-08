@@ -25,7 +25,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
-public class TestBusca {
+public class BuscaTest {
 
     String metaDadosPath = "test\\metadados-teste.dat";
     String arqE1 = "test\\Dependente.dat";

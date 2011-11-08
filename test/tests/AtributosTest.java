@@ -7,7 +7,7 @@ import dm.models.Attribute;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TestAtributos {
+public class AtributosTest {
 
     @Test
     public void criarAtributoInt() {

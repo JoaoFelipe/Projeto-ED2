@@ -15,7 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static utils.FileUtils.*;
 
-public class TestRemocao {
+public class RemocaoTest {
 
     String masterE1 = "test\\EmpregadoMaster.dat";
     String masterE2 = "test\\DependenteMaster.dat";
