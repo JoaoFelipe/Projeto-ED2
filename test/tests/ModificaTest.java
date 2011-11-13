@@ -73,7 +73,7 @@ public class ModificaTest {
         arquivo.open(prefix);
         arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("nome"), "Bia"));
+        mudancas.add(new Value(e1.getAttributeByName("nome"), "Bia"));
         assertEquals(true, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
         arquivo.close();
 
@@ -99,8 +99,8 @@ public class ModificaTest {
         arquivo.open(prefix);
         arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("nome"), "Ana"));
-        mudancas.add(new Value(e1.findAttribute("idade"), 30));
+        mudancas.add(new Value(e1.getAttributeByName("nome"), "Ana"));
+        mudancas.add(new Value(e1.getAttributeByName("idade"), 30));
         assertEquals(true, arquivo.modify(new Value(e1.getPk(), 1), mudancas));
         arquivo.close();
 
@@ -126,7 +126,7 @@ public class ModificaTest {
         arquivo.open(prefix);
         arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("nome"), "Livia Lutterback Dias"));
+        mudancas.add(new Value(e1.getAttributeByName("nome"), "Livia Lutterback Dias"));
         assertEquals(true, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
         arquivo.close();
 
@@ -152,7 +152,7 @@ public class ModificaTest {
         arquivo.open(prefix);
         arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("nome"), "Lívia"));
+        mudancas.add(new Value(e1.getAttributeByName("nome"), "Lívia"));
         assertEquals(false, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
         arquivo.close();
 
@@ -186,7 +186,7 @@ public class ModificaTest {
         arquivo.open(prefix);
         arquivo.setStrategy(ConsistencyStrategy.CASCADE);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e2.findAttribute("nome"), "B"));
+        mudancas.add(new Value(e2.getAttributeByName("nome"), "B"));
         assertEquals(true, arquivo.modify(new Value(e2.getPk(), 0), mudancas));
         arquivo.close();
 
@@ -227,7 +227,7 @@ public class ModificaTest {
         arquivo.open(prefix);
         arquivo.setStrategy(ConsistencyStrategy.CASCADE);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("nome"), "Bia"));
+        mudancas.add(new Value(e1.getAttributeByName("nome"), "Bia"));
         assertEquals(true, arquivo.modify(new Value(e2.getPk(), 5), mudancas));
         arquivo.close();
 
@@ -267,7 +267,7 @@ public class ModificaTest {
         HashFile arquivo = new HashFile(e1);
         arquivo.open(prefix);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("cod"), "1"));
+        mudancas.add(new Value(e1.getAttributeByName("cod"), "1"));
         arquivo.setStrategy(ConsistencyStrategy.CASCADE);
         assertEquals(true, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
         arquivo.close();
@@ -309,7 +309,7 @@ public class ModificaTest {
         arquivo.setStrategy(ConsistencyStrategy.RESTRICT);
         arquivo.open(prefix);
         List<Value> mudancas = new ArrayList<Value>();
-        mudancas.add(new Value(e1.findAttribute("cod"), "1"));
+        mudancas.add(new Value(e1.getAttributeByName("cod"), "1"));
         assertEquals(false, arquivo.modify(new Value(e1.getPk(), 0), mudancas));
         arquivo.close();
 

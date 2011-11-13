@@ -80,12 +80,12 @@ public abstract class Attribute{
     }
 
     public String getRepr() {
-        return (getPK() ? "*": "")+getName()+":"+getType();
+        return (isPK() ? "*": "")+getName()+":"+getType();
     }
 
     public abstract String getName();
     public abstract String getType();
-    public abstract boolean getPK();
+    public abstract boolean isPK();
     public abstract int getSize();
     public abstract Class getClassEx();
     public abstract int getHash(Value value);

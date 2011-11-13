@@ -31,7 +31,7 @@ public class ERList {
         this.prefix = prefix;
     }
 
-    public EntityRelationship find(String name) throws ModelException {
+    public EntityRelationship find(String name) {
         for (EntityRelationship er : getList()) {
             if (er.getName().equals(name)) {
                 return er;
@@ -106,7 +106,7 @@ public class ERList {
         return instance;
     }
 
-    public List<EntityRelationship> getList() throws ModelException {
+    public List<EntityRelationship> getList(){
         return list;
     }
 

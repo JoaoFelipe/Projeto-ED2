@@ -257,7 +257,7 @@ public class HashFile {
         for (int i = 0; i < size; i++) {
             Tuple tuple = this.readTuple(i);
             if (tuple.isUsed()) {
-                temp.insert(tuple);
+                temp.insert(tuple, true);
             }
         }
         temp.close();
@@ -310,6 +310,10 @@ public class HashFile {
     
     public boolean modify(Value value, List<Value> changes) throws IOException {
         return strategy.modify(value, changes);
+    }
+    
+    public boolean modify(Value value, List<Value> changes, boolean ignore) throws IOException {
+        return strategy.modify(value, changes, ignore);
     }
 
 //    public boolean remove(Value value, int onDelete) throws IOException {

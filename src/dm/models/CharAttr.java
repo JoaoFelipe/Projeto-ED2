@@ -35,7 +35,7 @@ public class CharAttr extends Attribute{
     }
 
     @Override
-    public boolean getPK() {
+    public boolean isPK() {
         return pk;
     }
 

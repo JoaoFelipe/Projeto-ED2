@@ -22,7 +22,7 @@ public class SearchController {
     private static void searchByTable(Search search, SearchTable searchTable) throws IOException {
         Entity entity = search.getHashFile().getEntity();
         for (int i = 0; i < searchTable.getModel().getRowCount(); i++) {
-            search.search(entity.findAttribute((String) searchTable.getValueAt(i, 0)), (String) searchTable.getValueAt(i, 1), searchTable.getValueAt(i, 2));
+            search.search((String) searchTable.getValueAt(i, 0), (String) searchTable.getValueAt(i, 1), searchTable.getValueAt(i, 2));
         }
         search.compile();
     }
@@ -44,7 +44,7 @@ public class SearchController {
             HashFile hashFile = search.getHashFile();
             Entity entity = hashFile.getEntity();
 
-            List<Value> mudancas = Arrays.asList(new Value(entity.findAttribute(attributeName), attributeValue));
+            List<Value> mudancas = Arrays.asList(new Value(entity.getAttributeByName(attributeName), attributeValue));
             hashFile.open();
             boolean modified = true;
             for (Value valor : search.getPKs()) {

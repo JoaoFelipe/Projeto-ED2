@@ -67,9 +67,9 @@ public class AtributosTest {
     @Test
     public void pegarPKDoAtributo() {
         Attribute atributo = Attribute.createAttribute("*c:int");
-        assertEquals(true, atributo.getPK());
+        assertEquals(true, atributo.isPK());
         atributo = Attribute.createAttribute("d:int");
-        assertEquals(false, atributo.getPK());
+        assertEquals(false, atributo.isPK());
     }
 
     @Test

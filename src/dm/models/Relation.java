@@ -35,10 +35,10 @@ public class Relation extends EntityRelationship {
         if (getReferencedEntity() == null) {
             throw new NotFoundException("Entidade Referenciada não encontrada");
         }
-        if (entity.findAttribute(getField()) == null) {
+        if (entity.getAttributeByName(getField()) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade");
         }
-        if (getReferencedEntity().findAttribute(referencedField) == null) {
+        if (getReferencedEntity().getAttributeByName(referencedField) == null) {
             throw new NotFoundException("Atributo não encontrado na Entidade Referenciada");
         }
         this.addToEntity();

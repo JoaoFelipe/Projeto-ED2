@@ -60,7 +60,7 @@ public class Entity extends EntityRelationship {
             if (!set.add(attr.getName())){
                 throw new NonUniqueException("Atributo não é único");
             }
-            if (attr.getPK()) {
+            if (attr.isPK()) {
                 count++;
             }
         }
@@ -72,14 +72,7 @@ public class Entity extends EntityRelationship {
         }
     }
 
-    public Attribute findAttribute(String name){
-        for (Attribute attr : attributes) {
-            if (attr.getName().equals(name)){
-                return attr;
-            }
-        }
-        return null;
-    }
+
 
     @Override
     public void save(DataOutputStream out) throws ModelException {
@@ -129,13 +122,13 @@ public class Entity extends EntityRelationship {
     public List<String> getSearchableAttributes(){
         List<String> resp = new ArrayList<String>();
         resp.addAll(CollectionUtil.process(attributes, AttributeCollection.processes.getName()));
-//        for (Relation relacionamento : relations) {
-//            if (relacionamento.getEntidade() == this){
+        for (Relation relation : relations) {
+            if (relation.getEntity() == this){
 //                resp.add(relacionamento.getEntidadeReferenciada().getName()+"-"+relacionamento.getCampoReferenciado());
-//            } else {
-//                resp.add("#"+relacionamento.getEntidade().getName());
-//            }
-//        }
+            } else {
+                resp.add("#"+relation.getEntity().getName());
+            }
+        }
         return resp;
     }
 
@@ -149,7 +142,7 @@ public class Entity extends EntityRelationship {
 
     public Attribute getPk(){
         for (Attribute attr : attributes) {
-            if (attr.getPK()) {
+            if (attr.isPK()) {
                 return attr;
             }
         }
@@ -164,6 +157,7 @@ public class Entity extends EntityRelationship {
         }
         return null;
     }
+
 
     public int getNumberOfTuples() {
         return numberOfTuples;

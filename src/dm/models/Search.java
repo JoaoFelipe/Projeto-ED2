@@ -13,30 +13,30 @@ public class Search {
     //condições sob as quais será realizada uma busca, e estas serão compiladas no fim
 
     private HashFile file = null;
-    private List<SearchDefinition> searches = null;
+    private List<SearchDefinitionInterface> searches = null;
     private List<Value> pks = null;
 
     public Search(HashFile file, List<Value> pks) {
         this.file = file;
         this.pks = pks;
-        this.searches = new ArrayList<SearchDefinition>();
+        this.searches = new ArrayList<SearchDefinitionInterface>();
     }
     
     public Search(Entity entity, List<Value> pks) {
         this.file = new HashFile(entity);
         this.pks = pks;
-        this.searches = new ArrayList<SearchDefinition>();
+        this.searches = new ArrayList<SearchDefinitionInterface>();
     }
 
     public Search(Entity entity, List<Value> pks, int mode) {
         this.file = new HashFile(entity);
         this.file.setStrategy(mode);
         this.pks = pks;
-        this.searches = new ArrayList<SearchDefinition>();
+        this.searches = new ArrayList<SearchDefinitionInterface>();
     }
 
     public Search search(Attribute attr, String operator, Object value) {
-        if (attr.getPK() && operator.equals("=")){
+        if (attr.isPK() && operator.equals("=")){
             if (pks == null) {
                 pks = new ArrayList<Value>();
                 pks.add(new Value(attr, value));
@@ -48,6 +48,17 @@ public class Search {
         }
         return this;
     }
+    
+    public Search search(String strAttr, String operator, Object value) {
+        if (strAttr.startsWith("#")){
+            searches.add(new SearchDefinitionRelation(file.getEntity(), strAttr.substring(1), operator, value));
+            return this;
+        } else {
+            Attribute attr = file.getEntity().getAttributeByName(strAttr);
+            return search(attr, operator, value);
+        }
+        
+    }
 
     public Search compile() throws IOException{
         return this.compile("");
@@ -56,34 +67,34 @@ public class Search {
     public Search compile(String prefix) throws IOException{
         file.open(prefix);
         if (getPKs() == null){
-            searchWhenNull();
+            searchWhenNull(prefix);
         } else {
-            search();
+            search(prefix);
         }
         file.close();
         searches.clear();
         return this;
     }
 
-    private void searchWhenNull() throws IOException {
+    private void searchWhenNull(String prefix) throws IOException {
         pks = new ArrayList<Value>();
         for (int i = 0; i < file.getSize(); i++) {
             file.seek(i);
             Tuple tuple = file.readTuple();
-            if (tuple.isUsed() && verifyCondition(tuple)) {
+            if (tuple.isUsed() && verifyCondition(tuple, prefix)) {
                 getPKs().add(tuple.getPK());
             }
         }
     }
 
-    private void search() throws IOException {
+    private void search(String prefix) throws IOException {
         List<Value> tempPKs = new ArrayList<Value>();
         for (Value value : getPKs()) {
             Result result = file.find(value);
             if (result.isFound()) {
                 file.seek(result.getPosition());
                 Tuple tuple = file.readTuple();
-                if (tuple.isUsed() && verifyCondition(tuple)) {
+                if (tuple.isUsed() && verifyCondition(tuple, prefix)) {
                     tempPKs.add(tuple.getPK());
                 }
             }
@@ -91,16 +102,11 @@ public class Search {
         pks = tempPKs;
     }
 
-    private boolean verifyCondition(Tuple tuple) {
+    private boolean verifyCondition(Tuple tuple, String prefix) {
         boolean condition = true;
-        for (Value value : tuple.getValues()) {
-            for (SearchDefinition search : searches) {
-                if (value.getType() == search.getAttribute()){
-                    condition = condition && search.compare(value);
-                }
-            }
+        for (SearchDefinitionInterface search : searches) {
+            condition = condition && search.verifyCondition(tuple, prefix);
         }
-
         return condition;
     }
 

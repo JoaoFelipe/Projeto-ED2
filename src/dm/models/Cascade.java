@@ -30,7 +30,7 @@ public class Cascade extends ConsistencyStrategy{
                     newChanges.add(new Value(relation.getEntity().getAttributeByName(relation.getField()), change.getInfo()));
                 }
             }
-            temp.modify(pk, newChanges);
+            temp.modify(pk, newChanges, true);
         }
         temp.close();
         return true;

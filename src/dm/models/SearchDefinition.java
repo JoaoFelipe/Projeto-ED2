@@ -2,7 +2,7 @@ package dm.models;
 
 import dm.models.Attribute;
 
-public class SearchDefinition {
+public class SearchDefinition implements SearchDefinitionInterface {
     
     private Attribute attribute;
     private String operator;
@@ -15,32 +15,18 @@ public class SearchDefinition {
         this.value = attr.cast(value);
     }
 
-    public Attribute getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(Attribute attr) {
-        this.attribute = attr;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
-
-    public void setOperator(String operator) {
-        this.operator = operator;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = attribute.cast(value);
-    }
-
     public boolean compare(Value searched){
         return attribute.compare(operator, searched, value);
+    }
+    
+    public boolean verifyCondition(Tuple tuple, String prefix) {
+        boolean condition = true;
+        for (Value value : tuple.getValues()) {
+            if (value.getType() == attribute){
+                condition = condition && this.compare(value);
+            }
+        }
+        return condition;
     }
 
 }

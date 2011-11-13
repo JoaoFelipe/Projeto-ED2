@@ -57,9 +57,9 @@ public class ConsultaTest {
         ));
 
         cod = e1.getPk();
-        nome = e1.findAttribute("nome");
-        idade = e1.findAttribute("idade");
-        salario = e1.findAttribute("salario");
+        nome = e1.getAttributeByName("nome");
+        idade = e1.getAttributeByName("idade");
+        salario = e1.getAttributeByName("salario");
     }
 
     @After
@@ -69,7 +69,7 @@ public class ConsultaTest {
 
     @Test
     public void TestComparaInt() {
-        Attribute atributo = e1.findAttribute("cod");
+        Attribute atributo = e1.getAttributeByName("cod");
         assertEquals(true, atributo.compare("=", new Value(atributo, 1), 1));
         assertEquals(false, atributo.compare("=", new Value(atributo, 1), 2));
 
@@ -93,7 +93,7 @@ public class ConsultaTest {
 
     @Test
     public void TestComparaDouble() {
-        Attribute atributo = e1.findAttribute("salario");
+        Attribute atributo = e1.getAttributeByName("salario");
         assertEquals(true, atributo.compare("=", new Value(atributo, 1.0), 1.0));
         assertEquals(false, atributo.compare("=", new Value(atributo, 1.0), 2.0));
 
@@ -117,7 +117,7 @@ public class ConsultaTest {
 
     @Test
     public void TestComparaChar() {
-        Attribute atributo = e1.findAttribute("nome");
+        Attribute atributo = e1.getAttributeByName("nome");
         assertEquals(true, atributo.compare("LIKE", new Value(atributo, "teste"), "teste"));
         assertEquals(true, atributo.compare("LIKE", new Value(atributo, "teste"), "%est%"));
         assertEquals(true, atributo.compare("LIKE", new Value(atributo, "teste"), "t%e"));
@@ -172,7 +172,9 @@ public class ConsultaTest {
 
         Object[] esperado = Arrays.asList(new Value(cod, 0)).toArray();
         Object[] codigos = consulta.search(nome, "=", "Ana").compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        
+        codigos = consulta.search("nome", "=", "Ana").compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
     }
 
@@ -189,7 +191,12 @@ public class ConsultaTest {
                 search(salario, ">", 1000.50).
                 search(salario, "<", 3000.0).
                 compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        
+        codigos = consulta.
+                search("salario", ">", 1000.50).
+                search("salario", "<", 3000.0).
+                compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
     }
 
@@ -205,7 +212,11 @@ public class ConsultaTest {
                 search(idade, ">=", 20).
                 search(cod, "<", 2).
                 compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        codigos = consulta.
+                search("idade", ">=", 20).
+                search("cod", "<", 2).
+                compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
     }
 
@@ -223,7 +234,11 @@ public class ConsultaTest {
                 search(salario, ">", 1000.0).
                 search(salario, "<", 3000.0).
                 compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        codigos = consulta.
+                search("salario", ">", 1000.0).
+                search("salario", "<", 3000.0).
+                compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
 
         esperado = Arrays.asList(
@@ -233,7 +248,10 @@ public class ConsultaTest {
         codigos = consulta.
                 search(salario, ">", 1000.50).
                 compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        codigos = consulta.
+                search("salario", ">", 1000.50).
+                compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
     }
     
@@ -248,7 +266,10 @@ public class ConsultaTest {
         Object[] codigos = consulta.
                 search(cod, "=", 0).
                 compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        codigos = consulta.
+                search("cod", "=", 0).
+                compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
 
     }
@@ -263,7 +284,11 @@ public class ConsultaTest {
                 search(cod, "=", 0).
                 search(cod, "=", 1).
                 compile(prefix).getPKs().toArray();
-
+        assertArrayEquals(esperado, codigos);
+        codigos = consulta.
+                search("cod", "=", 0).
+                search("cod", "=", 1).
+                compile(prefix).getPKs().toArray();
         assertArrayEquals(esperado, codigos);
 
     }

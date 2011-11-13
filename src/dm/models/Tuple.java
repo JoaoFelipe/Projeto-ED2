@@ -22,7 +22,7 @@ public class Tuple {
         for (int i= 0; i < attrs.size(); i++) {
             Attribute attr = attrs.get(i);
             Value value = new Value(attr, attrValues.get(i));
-            if (attr.getPK()){
+            if (attr.isPK()){
                 pk = value;
             }
             this.values.add(value);
@@ -40,7 +40,7 @@ public class Tuple {
 
         for (Attribute attr : entity.getAttributes()) {
             Value value = attr.getDefault();
-            if (attr.getPK()){
+            if (attr.isPK()){
                 pk = value;
             }
             this.values.add(value);
@@ -57,7 +57,7 @@ public class Tuple {
         this.state = in.readInt();
         for (Attribute attr : entity.getAttributes()) {
             Value value = attr.read(in);
-            if (attr.getPK()){
+            if (attr.isPK()){
                 pk = value;
             }
             this.values.add(value);

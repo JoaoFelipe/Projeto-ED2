@@ -155,7 +155,7 @@ public class TableController {
                     return;
                 }
             }
-            model.addRow(new Object[]{attribute.getName(), attribute.getType(), attribute.getPK()});
+            model.addRow(new Object[]{attribute.getName(), attribute.getType(), attribute.isPK()});
         } else {
             WindowController.message("Atributo Inválido!");
         }

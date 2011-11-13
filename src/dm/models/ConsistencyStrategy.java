@@ -28,21 +28,40 @@ public abstract class ConsistencyStrategy {
     public abstract boolean verifyAndApplyModify(HashFile temp, Search search, Relation relation, List<Value> changes) throws IOException;
     public abstract boolean verifyAndApplyRemove(HashFile temp, Search search, Relation relation) throws IOException;
     
+    private Value getPk(List<Value> changes) {
+        for (Value value : changes) {
+            if (value.getType().isPK()) {
+                return value;
+            }
+        }
+        return null;
+    }
+    
     public boolean modify(Value value, List<Value> changes) throws IOException {
+        return modify(value, changes, false);
+    }
+    
+    public boolean modify(Value value, List<Value> changes, boolean ignore) throws IOException {
         
         Result result = getHashFile().find(value);
         if (result.isFound()) {
-            for (Relation relation : getHashFile().getEntity().getRelation()) {
-                if (relation.getReferencedEntity() == getHashFile().getEntity()) {
-                    Entity referrer = relation.getEntity();
-                    HashFile temp = new HashFile(referrer);
-                    Attribute searched = referrer.findAttribute(relation.getField());
-                    Search search = new Search(temp, null).search(searched, "=", result.getPosition()).compile(getHashFile().getPrefix());
+            Value pk = getPk(changes);
+            if (pk != null) {
+                if (getHashFile().find(pk).isFound()){
+                    return false;
+                }
+                
+                for (Relation relation : getHashFile().getEntity().getRelation()) {
+                    if (relation.getReferencedEntity() == getHashFile().getEntity()) {
+                        Entity referrer = relation.getEntity();
+                        HashFile temp = new HashFile(referrer);
+                        Search search = new Search(temp, null).search(relation.getField(), "=", result.getPosition()).compile(getHashFile().getPrefix());
 
-                    if (!verifyAndApplyModify(temp, search, relation, changes)){
-                        return false;
+                        if (!verifyAndApplyModify(temp, search, relation, changes)){
+                            return false;
+                        }
+
                     }
-                   
                 }
             }
             Tuple tuple = getHashFile().readTuple(result.getPosition());
@@ -59,9 +78,16 @@ public abstract class ConsistencyStrategy {
                 }
             }
             tuple.setValues(newValues);
+            Tuple bak = getHashFile().readTuple(result.getPosition());
             getHashFile().saveTuple(new Tuple(getHashFile().getEntity(), 2), result.getPosition());
             getHashFile().getEntity().setNumberOfTuples(getHashFile().getEntity().getNumberOfTuples() -1);
-            return getHashFile().insert(tuple, true);
+            if (getHashFile().insert(tuple, ignore)) {
+                return true;
+            } else {
+                getHashFile().saveTuple(bak, result.getPosition());
+                getHashFile().getEntity().setNumberOfTuples(getHashFile().getEntity().getNumberOfTuples() +1);
+                return false;
+            }
 //            hashFile.saveTuple(tuple, result.getPosition());
         }
         return false;
@@ -70,15 +96,13 @@ public abstract class ConsistencyStrategy {
     public boolean remove(Value value) throws IOException {
         Result result = getHashFile().find(value);
         if (result.isFound()) {
-
             for (Relation relation : getHashFile().getEntity().getRelation()) {
                 if (relation.getReferencedEntity() == getHashFile().getEntity()) {
                     Entity referrer = relation.getEntity();
                     HashFile temp = new HashFile(referrer);
-                    Attribute searched = referrer.findAttribute(relation.getField());
-                    Search search = new Search(temp, null).search(searched, "=", result.getPosition()).
+                    Search search = new Search(temp, null).search(relation.getField(), "=", result.getPosition()).
                             compile(getHashFile().getPrefix());
-                    
+
                     if (!verifyAndApplyRemove(temp, search, relation)){
                         return false;
                     }
