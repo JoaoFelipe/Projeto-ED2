@@ -7,50 +7,19 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/tests/ModificaTest.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/DataManager.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/AbstractSearchCommand.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/Command.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/InsertCommand.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/InsertTupleCommand.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/RemoveCommand.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/SearchCommand.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/SearchController.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/WindowController.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/exceptions/ModelException.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/exceptions/NonUniqueException.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/exceptions/NotFoundException.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/CollectionUtil.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/ComboModelCollection.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Filter.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Process.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/maintable/EmptyState.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/maintable/EntityState.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/maintable/MainTable.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/maintable/RelationState.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/maintable/TableState.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/ERList.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/TableController.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Entity.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Attribute.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Relation.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/EntityRelationship.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Tuple.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/CharAttr.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Value.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/TableModelEx.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/AttributeCollection.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Cascade.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/ConsistencyStrategy.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/DoubleAttr.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/ERCollection.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/tests/ConsultaRelacionamentosTest.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/SearchDefinitionRelation.java</file>
         <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/HashFile.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Restrict.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Result.java</file>
         <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Search.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/SearchDefinition.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/resources/DataManager.properties</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/AttributeOptionsComboBox.java</file>
-        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/views/AttributeTable.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/controllers/SearchController.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Entity.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Relation.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/ConsistencyStrategy.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/test/tests/ConsultaTest.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Restrict.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Tuple.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Cascade.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Result.java</file>
+        <file>file:/C:/Users/casa/Documents/NetBeansProjects/GerenciadorDados/src/dm/models/Value.java</file>
     </open-files>
 </project-private>

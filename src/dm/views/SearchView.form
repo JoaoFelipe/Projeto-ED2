@@ -57,7 +57,7 @@
             <Property name="rowHeight" type="int" value="25"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new dm.views.SearchTable((dm.models.Entity)dm.models.ERList.getSelected())"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new dm.views.SearchTable(command.getEntity())"/>
           </AuxValues>
         </Component>
       </SubComponents>

@@ -5,15 +5,22 @@ import dm.controllers.Command;
 import dm.controllers.AbstractSearchCommand;
 import dm.controllers.SearchCommand;
 import dm.controllers.InsertCommand;
+import dm.controllers.RelationSearchCommand;
 import dm.controllers.WindowController;
 import dm.controllers.RemoveCommand;
 import dm.controllers.TableController;
+import dm.exceptions.ModelException;
 import dm.models.Entity;
 import dm.models.ERList;
 import dm.models.ConsistencyStrategy;
+import dm.models.Relation;
 import dm.models.Search;
 import dm.views.maintable.MainTable;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MainWindow extends JFrame {
 
@@ -31,15 +38,19 @@ public class MainWindow extends JFrame {
 
     private MainWindow() {
         initComponents();
-        
         tupleTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        cancelButton.setVisible(false);
         this.setInsertDefault();  
     }
 
     public final void setInsertDefault(){
+        if (cancelButton.isVisible()) {
+            ((TableModelEx) tupleTable.getModel()).removeRow(tupleTable.getRowCount()-1);
+        }
         cancelButton.setVisible(false);
+        dicaLabel.setText("");
         cancelButton.setText("Cancelar");
-        insertCommand = new InsertCommand(cancelButton, (MainTable) tupleTable);    
+        insertCommand = new InsertCommand(cancelButton, dicaLabel, (MainTable) tupleTable);    
     }
     
     public int getModifyMode(){
@@ -77,6 +88,7 @@ public class MainWindow extends JFrame {
         changeTuplesButton = new javax.swing.JButton();
         removeTuplesButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        dicaLabel = new javax.swing.JLabel();
         tableScrollPane = new javax.swing.JScrollPane();
         tupleTable = dm.views.maintable.MainTable.instantiate(tableButtonPanel);
         menuBar = new javax.swing.JMenuBar();
@@ -255,56 +267,69 @@ public class MainWindow extends JFrame {
             }
         });
 
+        dicaLabel.setText(resourceMap.getString("dicaLabel.text")); // NOI18N
+        dicaLabel.setName("dicaLabel"); // NOI18N
+
         javax.swing.GroupLayout tableButtonPanelLayout = new javax.swing.GroupLayout(tableButtonPanel);
         tableButtonPanel.setLayout(tableButtonPanelLayout);
         tableButtonPanelLayout.setHorizontalGroup(
             tableButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tableButtonPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(insertTupleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchTuplesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(changeTuplesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(removeTuplesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+                .addGroup(tableButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tableButtonPanelLayout.createSequentialGroup()
+                        .addComponent(insertTupleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchTuplesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(changeTuplesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(removeTuplesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+                    .addComponent(dicaLabel))
                 .addContainerGap())
         );
         tableButtonPanelLayout.setVerticalGroup(
             tableButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tableButtonPanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tableButtonPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dicaLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tableButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(insertTupleButton)
                     .addComponent(searchTuplesButton)
                     .addComponent(changeTuplesButton)
                     .addComponent(removeTuplesButton)
                     .addComponent(cancelButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tableScrollPane.setName("tableScrollPane"); // NOI18N
 
         tupleTable.setName("tupleTable"); // NOI18N
+        tupleTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tupleTableMouseClicked(evt);
+            }
+        });
         tableScrollPane.setViewportView(tupleTable);
 
         javax.swing.GroupLayout tablePanelLayout = new javax.swing.GroupLayout(tablePanel);
         tablePanel.setLayout(tablePanelLayout);
         tablePanelLayout.setHorizontalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tableButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(tablePanelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
+            .addComponent(tableButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tablePanelLayout.setVerticalGroup(
             tablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tablePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(tableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tableButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -315,7 +340,7 @@ public class MainWindow extends JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainSplit, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+            .addComponent(mainSplit)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,6 +492,7 @@ public class MainWindow extends JFrame {
     }//GEN-LAST:event_insertTupleActionPerformed
 
     private void searchTuplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTuplesActionPerformed
+        this.setInsertDefault();
         Search search = new Search((Entity) ERList.getSelected(), null);
         MainTable table = (MainTable) tupleTable;
         AbstractSearchCommand command = new SearchCommand(search, table);
@@ -474,12 +500,14 @@ public class MainWindow extends JFrame {
     }//GEN-LAST:event_searchTuplesActionPerformed
 
     private void changeTuplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeTuplesActionPerformed
+        this.setInsertDefault();
         Search search = new Search((Entity) ERList.getSelected(), null, this.getModifyMode());
         MainTable table = (MainTable) tupleTable;
         WindowController.open(new ChangeTuplesView(DataManager.getApplication().getMainFrame(), search, table));
     }//GEN-LAST:event_changeTuplesActionPerformed
 
     private void removeTuplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTuplesActionPerformed
+        this.setInsertDefault();
         Search search = new Search((Entity) ERList.getSelected(), null, this.getModifyMode());
         MainTable table = (MainTable) tupleTable;
         AbstractSearchCommand command = new RemoveCommand(search, table);
@@ -493,8 +521,27 @@ public class MainWindow extends JFrame {
     private void cancelButtoninserirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtoninserirRegistroActionPerformed
         ((MainTable) tupleTable).removeRow();
         cancelButton.setVisible(false);
-        insertCommand = new InsertCommand(cancelButton, (MainTable) tupleTable);
+        dicaLabel.setText("");
+        insertCommand = new InsertCommand(cancelButton, dicaLabel, (MainTable) tupleTable);
     }//GEN-LAST:event_cancelButtoninserirRegistroActionPerformed
+
+    private void tupleTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tupleTableMouseClicked
+        // TODO add your handling code here:
+        int row = tupleTable.rowAtPoint(evt.getPoint());
+        int col = tupleTable.columnAtPoint(evt.getPoint());
+        if (evt.getButton()==MouseEvent.BUTTON3 && row == tupleTable.getRowCount()-1 && cancelButton.isVisible() ) {
+                String atrName = (String) tupleTable.getModel().getColumnName(col);
+                Entity entity = (Entity) ERList.getSelected();
+                Relation relation = entity.getRelationFK(atrName);
+                if (relation != null) {
+                    Search search = new Search(relation.getReferencedEntity(), null);
+                    MainTable table = (MainTable) tupleTable;
+                    WindowController.open(new SearchView(DataManager.getApplication().getMainFrame(), new RelationSearchCommand(search, col, table)));
+                }
+        }
+
+        
+    }//GEN-LAST:event_tupleTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -509,6 +556,7 @@ public class MainWindow extends JFrame {
     private javax.swing.JMenuItem createReferenceMenuItem;
     private javax.swing.JButton createTableButton;
     private javax.swing.JMenuItem createTableMenuItem;
+    private javax.swing.JLabel dicaLabel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton insertTupleButton;

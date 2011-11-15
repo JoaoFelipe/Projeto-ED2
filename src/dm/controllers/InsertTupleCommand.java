@@ -10,16 +10,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class InsertTupleCommand implements Command {
 
     private JButton cancel;
     private MainTable table;
+    private JLabel dica;
 
-    public InsertTupleCommand(JButton cancel, MainTable table) {
+    public InsertTupleCommand(JButton cancel, JLabel dica, MainTable table) {
         this.cancel = cancel;
         this.table = table;
+        this.dica = dica;
     }
 
     @Override
@@ -51,7 +54,8 @@ public class InsertTupleCommand implements Command {
         }
 
         cancel.setVisible(false);
-        return new InsertCommand(cancel, table);
+        dica.setText(""); 
+        return new InsertCommand(cancel, dica, table);
 
     }
 }

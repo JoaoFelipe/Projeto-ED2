@@ -167,4 +167,13 @@ public class Entity extends EntityRelationship {
         this.numberOfTuples = numberOfTuples;
     }
 
+    public Relation getRelationFK(String attribute) {
+        for (Relation relation : getRelation()) {
+            if (relation.getField().equals(attribute)){
+                 return relation;    
+            }
+        }
+        return null;
+    }
+    
 }

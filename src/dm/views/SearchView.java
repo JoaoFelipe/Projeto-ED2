@@ -12,9 +12,10 @@ public class SearchView extends javax.swing.JDialog {
 
     public SearchView(java.awt.Frame parent, AbstractSearchCommand command) {
         super(parent);
-        initComponents();
         this.command = command;
+        initComponents();
         searchTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        
     }
 
     @Action
@@ -31,7 +32,7 @@ public class SearchView extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        searchTable = new dm.views.SearchTable((dm.models.Entity)dm.models.ERList.getSelected());
+        searchTable = new dm.views.SearchTable(command.getEntity());
         jPanel1 = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();

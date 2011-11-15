@@ -170,7 +170,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="mainSplit" alignment="0" pref="624" max="32767" attributes="0"/>
+              <Component id="mainSplit" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -368,19 +368,19 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="tableButtonPanel" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="10" pref="10" max="10" attributes="0"/>
-                          <Component id="tableScrollPane" pref="423" max="32767" attributes="0"/>
+                          <Component id="tableScrollPane" pref="462" max="32767" attributes="0"/>
                           <EmptySpace min="10" pref="10" max="10" attributes="0"/>
                       </Group>
+                      <Component id="tableButtonPanel" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="tableScrollPane" pref="252" max="32767" attributes="0"/>
+                          <Component id="tableScrollPane" pref="232" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="tableButtonPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -396,25 +396,32 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="insertTupleButton" pref="76" max="32767" attributes="1"/>
-                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Component id="cancelButton" pref="76" max="32767" attributes="1"/>
-                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                              <Component id="searchTuplesButton" max="32767" attributes="1"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="changeTuplesButton" max="32767" attributes="1"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="removeTuplesButton" pref="77" max="32767" attributes="1"/>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="insertTupleButton" pref="83" max="32767" attributes="1"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cancelButton" pref="83" max="32767" attributes="1"/>
+                                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                                      <Component id="searchTuplesButton" pref="86" max="32767" attributes="1"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="changeTuplesButton" pref="86" max="32767" attributes="1"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="removeTuplesButton" pref="84" max="32767" attributes="1"/>
+                                  </Group>
+                                  <Component id="dicaLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="dicaLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="insertTupleButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="searchTuplesButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -422,7 +429,7 @@
                                   <Component id="removeTuplesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -473,6 +480,12 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtoninserirRegistroActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JLabel" name="dicaLabel">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" resourceKey="dicaLabel.text"/>
+                        <Property name="name" type="java.lang.String" value="dicaLabel" noResource="true"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JScrollPane" name="tableScrollPane">
@@ -492,8 +505,11 @@
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tupleTableMouseClicked"/>
+                      </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="dm.views.tabelaer.MainTable.instantiate(tableButtonPanel)"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="dm.views.maintable.MainTable.instantiate(tableButtonPanel)"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>

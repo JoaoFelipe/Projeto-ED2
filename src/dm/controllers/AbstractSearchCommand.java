@@ -1,5 +1,6 @@
 package dm.controllers;
 
+import dm.models.Entity;
 import dm.models.Search;
 
 abstract public class AbstractSearchCommand implements Command {
@@ -16,6 +17,10 @@ abstract public class AbstractSearchCommand implements Command {
 
     public void setSearch(Search search) {
         this.search = search;
+    }
+    
+    public Entity getEntity() {
+        return search.getHashFile().getEntity();
     }
     
     public abstract Command execute();
